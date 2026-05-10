@@ -1,0 +1,116 @@
+import { Meta, ColorPalette, ColorItem, Typeset } from '@storybook/blocks';
+
+<Meta title="Design System/Tokens" />
+
+# Design Tokens
+
+FlexPrice uses Tailwind CSS for its design tokens, defined in `tailwind.config.js` and `src/index.css`. This page documents the core foundations of our visual language.
+
+## Colors
+
+Our color system maps to functional roles using `hsl` CSS variables, allowing for seamless dark mode support.
+
+<ColorPalette>
+  <ColorItem 
+    title="Background & Foreground" 
+    subtitle="Theme backgrounds and main text" 
+    colors={{ 
+      Background: 'var(--background)', 
+      Foreground: 'var(--foreground)',
+    }} 
+  />
+  <ColorItem 
+    title="Brand Primary" 
+    subtitle="Primary action colors" 
+    colors={{ 
+      Navy: '#092E44',
+      Blue: '#3293D9', 
+      'Blue Light': '#E5F0FF' 
+    }} 
+  />
+  <ColorItem 
+    title="Surfaces" 
+    subtitle="Cards, popovers, and muted areas" 
+    colors={{ 
+      Card: 'var(--card)', 
+      Popover: 'var(--popover)',
+      Muted: 'var(--muted)',
+      Accent: 'var(--accent)'
+    }} 
+  />
+  <ColorItem 
+    title="Status & Semantic" 
+    subtitle="Destructive actions and charts" 
+    colors={{ 
+      Destructive: 'var(--destructive)', 
+      'Chart 1 (Red)': 'var(--chart-1)',
+      'Chart 2 (Green)': 'var(--chart-2)',
+      'Chart 3 (Blue)': 'var(--chart-3)',
+      'Chart 4 (Yellow)': 'var(--chart-4)',
+      'Chart 5 (Orange)': 'var(--chart-5)'
+    }} 
+  />
+  <ColorItem 
+    title="Borders & Inputs" 
+    subtitle="Dividers and form elements" 
+    colors={{ 
+      Border: 'var(--border)', 
+      Input: 'var(--input)',
+      Ring: 'var(--ring)'
+    }} 
+  />
+</ColorPalette>
+
+## Typography
+
+FlexPrice uses standard sans-serif font families for application UI.
+
+**Fonts:** `Geist`, `Inter`, `Open Sans`, `Qanelas`
+
+### Base Scale (Inter)
+<Typeset 
+  fontSizes={[
+    Number('12'),
+    Number('14'),
+    Number('16'),
+    Number('20'),
+    Number('24'),
+    Number('32'),
+  ]}
+  fontWeight={400}
+  sampleText="The quick brown fox jumps over the lazy dog."
+  fontFamily="Inter, sans-serif"
+/>
+
+## Border Radius
+
+We use a standard base radius of `6px` across the application to maintain a sharp, professional B2B SaaS feel.
+
+<div className="flex gap-4 mt-4">
+  <div className="border border-gray-300 p-4 rounded-[6px] w-32 h-32 flex flex-col items-center justify-center bg-gray-50">
+    <div className="font-mono text-sm">6px</div>
+    <div className="text-xs text-gray-500 mt-1">Default</div>
+  </div>
+  <div className="border border-gray-300 p-4 rounded-full w-32 h-32 flex flex-col items-center justify-center bg-gray-50">
+    <div className="font-mono text-sm">9999px</div>
+    <div className="text-xs text-gray-500 mt-1">Full (Pill)</div>
+  </div>
+</div>
+
+## CSS Variables
+
+We use standard Shadcn/UI variable mapping in `index.css`:
+```css
+:root {
+  --background: #f8fafc;
+  --foreground: 0 0% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 3.9%;
+  --primary: 0 0% 9%;
+  --primary-foreground: 0 0% 98%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: '#64748B';
+  --border: 0 0% 89.8%;
+  --radius: 6px;
+}
+```
