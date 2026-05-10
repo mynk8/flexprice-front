@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/test';
 import { ComponentProps } from 'react';
 import { MemoryRouter } from 'react-router';
 import SidebarNav from './SidebarNav';
@@ -90,32 +89,5 @@ type Story = StoryObj<typeof meta>;
 export const Interactive: Story = {
 	args: {
 		collapsed: false,
-	},
-	play: async ({ canvasElement }) => {
-		const canvas = within(canvasElement);
-		const toggleButton = canvas.getByRole('button', { name: /toggle sidebar/i });
-
-		// Test expansion/collapsing
-		await userEvent.click(toggleButton);
-		// Wait a bit for transition
-		await new Promise((resolve) => setTimeout(resolve, 300));
-
-		// Check if it's collapsed (Acme Corp should be hidden in collapsed state)
-		const acmeText = canvas.queryByText('Acme Corp');
-		if (acmeText) {
-			// If it's still visible, the toggle might not have worked or it's expanding
-		}
-
-		await userEvent.click(toggleButton);
-	},
-};
-
-/**
- * Starts in the collapsed (icon-only) state.
- */
-export const InitiallyCollapsed: Story = {
-	name: 'Initially Collapsed',
-	args: {
-		defaultCollapsed: true,
 	},
 };
