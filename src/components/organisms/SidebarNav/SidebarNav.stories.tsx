@@ -49,15 +49,24 @@ const meta = {
 			control: 'boolean',
 			description: 'Initial uncontrolled collapsed state.',
 		},
+		onCollapsedChange: {
+			action: 'collapsed-changed',
+			description: 'Callback triggered when the sidebar is toggled.',
+			table: { disable: true },
+		},
 		items: {
 			control: false,
+			description: 'Navigation items tree. (Hidden from controls to prevent clutter)',
 		},
 		header: {
 			control: false,
+			description: 'Optional custom header slot.',
 		},
 		footer: {
 			control: false,
+			description: 'Optional custom footer slot.',
 		},
+		className: { control: false },
 	},
 	args: {
 		activeRoute: '/customers',

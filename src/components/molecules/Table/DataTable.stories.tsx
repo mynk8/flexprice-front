@@ -59,6 +59,9 @@ const meta = {
 		loadingRowCount: { control: 'number' },
 		sort: { control: false },
 		pagination: { control: false },
+		columns: { control: false },
+		data: { control: false },
+		tableClassName: { control: false },
 	},
 } satisfies Meta<DataTableProps<Customer>>;
 

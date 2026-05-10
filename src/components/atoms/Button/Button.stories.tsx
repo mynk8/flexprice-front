@@ -57,6 +57,8 @@ const meta = {
 		},
 		onClick: { action: 'clicked' },
 		children: { control: 'text' },
+		prefixIcon: { control: false },
+		suffixIcon: { control: false },
 	},
 	args: {
 		onClick: fn(),

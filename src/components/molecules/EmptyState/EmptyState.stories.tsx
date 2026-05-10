@@ -39,7 +39,8 @@ const meta = {
 		heading: { control: 'text' },
 		description: { control: 'text' },
 		buttonLabel: { control: 'text' },
-		buttonAction: { action: 'cta-clicked' },
+		buttonAction: { action: 'cta-clicked', table: { disable: true } },
+		icon: { control: false },
 	},
 	args: {
 		buttonAction: fn(),

@@ -47,7 +47,9 @@ const meta = {
 		},
 		isLoading: { control: 'boolean' },
 		disabled: { control: 'boolean' },
-		onChange: { action: 'search-changed' },
+		onChange: { action: 'search-changed', table: { disable: true } },
+		value: { control: 'text' },
+		className: { control: false },
 	},
 	args: {
 		placeholder: 'Search...',

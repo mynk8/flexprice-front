@@ -98,7 +98,8 @@ const meta = {
 	tags: ['autodocs'],
 	argTypes: {
 		title: { control: 'text' },
-		onAddCharge: { action: 'add-charge-clicked' },
+		onAddCharge: { action: 'add-charge-clicked', table: { disable: true } },
+		tiers: { control: false },
 	},
 	args: {
 		onAddCharge: fn(),
