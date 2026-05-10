@@ -26,7 +26,18 @@ const SidebarNav: FC<{ items: NavItem[] }> = ({ items }) => {
 	const location = useLocation();
 	const { state } = useSidebar();
 	const isCollapsed = state === 'collapsed';
-	const [openItemTitle, setOpenItemTitle] = useState<string | null>(null);
+
+	const [openItemTitle, setOpenItemTitle] = useState<string | null>(() => {
+		// Initialize the open section based on the current route
+		for (const item of items) {
+			if (item.items && item.items.length > 0) {
+				const isMainItemActive = location.pathname.startsWith(item.url) && item.url !== '#';
+				const isSubItemActive = item.items?.some((subItem) => location.pathname.startsWith(subItem.url));
+				if (isMainItemActive || isSubItemActive) return item.title;
+			}
+		}
+		return null;
+	});
 
 	const handleToggle = (itemTitle: string, isOpen: boolean) => {
 		if (isOpen) {

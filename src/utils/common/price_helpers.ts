@@ -290,6 +290,5 @@ export const calculateTieredPrice = (usage: number, tiers: any[], mode: 'volume'
 		}
 		return total;
 	}
-
 	return 0;
 };
