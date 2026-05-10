@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useDebounce } from 'use-debounce';
+import { useId, useRef, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 import { Search, X } from 'lucide-react';
 import Input from '@/components/atoms/Input';
 
@@ -18,6 +18,8 @@ export interface SearchBarProps {
 	disabled?: boolean;
 	/** Additional CSS classes for the input container. */
 	className?: string;
+	/** Accessible label for the search input. Defaults to 'Search'. */
+	'aria-label'?: string;
 }
 
 /**
@@ -38,25 +40,31 @@ const SearchBar = ({
 	isLoading = false,
 	disabled = false,
 	className,
+	'aria-label': ariaLabel = 'Search',
 }: SearchBarProps) => {
+	const generatedId = useId();
 	const [localValue, setLocalValue] = useState(value);
-	const [debouncedValue] = useDebounce(localValue, debounceMs);
 
-	useEffect(() => {
+	// Sync prop to state if it changes externally
+	const prevValueRef = useRef(value);
+	if (prevValueRef.current !== value) {
 		setLocalValue(value);
-	}, [value]);
+		prevValueRef.current = value;
+	}
 
-	useEffect(() => {
-		onChange?.(debouncedValue);
-	}, [debouncedValue, onChange]);
+	const debouncedOnChange = useDebouncedCallback((val: string) => {
+		onChange?.(val);
+	}, debounceMs);
 
 	const handleChange = (next: string) => {
 		setLocalValue(next);
+		debouncedOnChange(next);
 	};
 
 	const handleClear = () => {
 		setLocalValue('');
 		onChange?.('');
+		debouncedOnChange.cancel();
 	};
 
 	const suffixContent = isLoading ? (
@@ -81,7 +89,8 @@ const SearchBar = ({
 			disabled={disabled}
 			suffix={suffixContent}
 			className={className}
-			id='search-bar'
+			id={generatedId}
+			aria-label={ariaLabel}
 		/>
 	);
 };

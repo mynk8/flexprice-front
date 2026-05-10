@@ -60,7 +60,7 @@ const SidebarItem: FC<SidebarItemProps> = (item) => {
 
 	const mainButtonContent = (
 		<>
-			{Icon && <Icon absoluteStrokeWidth className={cn('!size-5 !stroke-[1.5px] mr-1', iconActive ? 'text-primary' : 'text-foreground')} />}
+			{Icon && <Icon absoluteStrokeWidth className={cn('!size-5 !stroke-[1.5px] mr-1', iconActive ? 'text-blue' : 'text-foreground')} />}
 			<span className='text-[14px] select-none font-normal'>{item.title}</span>
 		</>
 	);
@@ -128,7 +128,7 @@ const SidebarItem: FC<SidebarItemProps> = (item) => {
 												{SubIcon && (
 													<SubIcon
 														absoluteStrokeWidth
-														className={cn('!size-4 !stroke-[1.5px]', subActive ? 'text-primary' : 'text-muted-foreground')}
+														className={cn('!size-4 !stroke-[1.5px]', subActive ? 'text-blue' : 'text-muted-foreground')}
 													/>
 												)}
 												<span>{subItem.title}</span>

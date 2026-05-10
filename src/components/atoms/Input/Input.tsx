@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useId } from 'react';
 import { cn } from '@/lib/utils';
 import Label from '../Label';
 import { sizes, SizeVariant } from '@/lib/sizing';
@@ -124,7 +125,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 			disabled,
 			placeholder,
 			suffix,
-			id,
+			id: propsId,
 			value,
 			inputPrefix,
 			labelClassName,
@@ -135,6 +136,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 		},
 		ref,
 	) => {
+		const generatedId = useId();
+		const id = propsId || generatedId;
 		const inputRef = React.useRef<HTMLInputElement | null>(null);
 		const [cursorPosition, setCursorPosition] = React.useState<number | null>(null);
 

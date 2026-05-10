@@ -60,6 +60,13 @@ const meta = {
 			table: { defaultValue: { summary: 'default' } },
 		},
 		value: { control: 'text' },
+		onChange: { action: 'changed', table: { disable: true } },
+		inputPrefix: { control: false },
+		suffix: { control: false },
+		formatOptions: { control: false },
+		id: { control: false },
+		labelClassName: { control: false },
+		className: { control: false },
 	},
 	args: {
 		placeholder: 'Enter value',

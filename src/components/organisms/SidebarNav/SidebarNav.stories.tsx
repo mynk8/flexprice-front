@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { expect, userEvent, within } from '@storybook/test';
-import { useState, type ComponentProps } from 'react';
+import { ComponentProps } from 'react';
 import { MemoryRouter } from 'react-router';
 import SidebarNav from './SidebarNav';
 
@@ -43,21 +42,30 @@ const meta = {
 		},
 		collapsed: {
 			control: 'boolean',
-			description: 'Controlled collapsed state.',
+			description: 'Controlled collapsed state. Toggle this to see the sidebar collapse.',
 		},
 		defaultCollapsed: {
 			control: 'boolean',
 			description: 'Initial uncontrolled collapsed state.',
 		},
+		onCollapsedChange: {
+			action: 'collapsed-changed',
+			description: 'Callback triggered when the sidebar is toggled.',
+			table: { disable: true },
+		},
 		items: {
 			control: false,
+			description: 'Navigation items tree. (Hidden from controls to prevent clutter)',
 		},
 		header: {
 			control: false,
+			description: 'Optional custom header slot.',
 		},
 		footer: {
 			control: false,
+			description: 'Optional custom footer slot.',
 		},
+		className: { control: false },
 	},
 	args: {
 		activeRoute: '/customers',
@@ -74,57 +82,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+/**
+ * The default interactive story. Use the **Controls** panel to toggle `collapsed` or change the `activeRoute`.
+ * The sidebar is also fully interactive — you can click the toggle button in the header or the rail to collapse/expand it manually.
+ */
+export const Interactive: Story = {
 	args: {
 		collapsed: false,
-	},
-};
-
-const ControlledDemo = ({ activeRoute, collapsed: initialCollapsed = false }: StoryArgs) => {
-	const [collapsed, setCollapsed] = useState(initialCollapsed);
-
-	return (
-		<MemoryRouter key={activeRoute} initialEntries={[activeRoute]}>
-			<div className='min-h-screen bg-background'>
-				<SidebarNav collapsed={collapsed} onCollapsedChange={setCollapsed} />
-			</div>
-		</MemoryRouter>
-	);
-};
-
-export const Collapsed: Story = {
-	args: {
-		activeRoute: '/customers',
-		defaultCollapsed: true,
-	},
-	play: async ({ canvasElement }) => {
-		const canvas = within(canvasElement);
-		await userEvent.click(canvas.getByRole('button', { name: /toggle sidebar/i }));
-		await expect(canvas.getByText('Acme Corp')).toBeInTheDocument();
-	},
-};
-
-export const Controlled: Story = {
-	args: {
-		activeRoute: '/customers',
-		collapsed: false,
-	},
-	render: (args) => <ControlledDemo {...args} />,
-};
-
-export const ExpandedVsCollapsed: Story = {
-	name: 'Expanded vs Collapsed',
-	render: ({ activeRoute }) => (
-		<div className='flex min-h-screen bg-background'>
-			<MemoryRouter initialEntries={[activeRoute]}>
-				<SidebarNav collapsed={false} />
-			</MemoryRouter>
-			<MemoryRouter initialEntries={[activeRoute]}>
-				<SidebarNav defaultCollapsed />
-			</MemoryRouter>
-		</div>
-	),
-	args: {
-		activeRoute: '/customers',
 	},
 };

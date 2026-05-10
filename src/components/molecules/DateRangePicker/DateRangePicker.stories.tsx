@@ -21,7 +21,7 @@ import { subDays, subMonths, startOfMonth, endOfMonth } from 'date-fns';
  * - `className` — Custom classes for the trigger button width
  */
 const meta = {
-	title: 'Atoms/DateRangePicker',
+	title: 'Molecules/DateRangePicker',
 	component: DateRangePicker,
 	parameters: {
 		docs: {
@@ -38,7 +38,14 @@ const meta = {
 		disabled: { control: 'boolean' },
 		startDate: { control: 'date' },
 		endDate: { control: 'date' },
-		onChange: { action: 'range-changed' },
+		onChange: { action: 'range-changed', table: { disable: true } },
+		minDate: { control: 'date' },
+		maxDate: { control: 'date' },
+		className: { control: 'text' },
+		labelClassName: { control: 'text' },
+		popoverClassName: { control: 'text' },
+		popoverTriggerClassName: { control: 'text' },
+		popoverContentClassName: { control: 'text' },
 	},
 	args: {
 		onChange: fn(),

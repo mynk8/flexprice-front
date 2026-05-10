@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { BarChart3, CodeXml, GalleryHorizontalEnd, Home, Landmark, Layers2, Puzzle, Settings } from 'lucide-react';
 import {
 	Sidebar,
@@ -148,26 +148,20 @@ const SidebarNav = ({
 	header,
 	footer,
 }: SidebarNavProps) => {
-	const controlled = collapsed !== undefined;
-	const [localCollapsed, setLocalCollapsed] = useState(defaultCollapsed);
-	const isCollapsed = controlled ? collapsed : localCollapsed;
+	const [localOpen, setLocalOpen] = useState(!defaultCollapsed);
 
-	useEffect(() => {
-		if (!controlled) {
-			setLocalCollapsed(defaultCollapsed);
-		}
-	}, [defaultCollapsed, controlled]);
+	const isControlled = collapsed !== undefined;
+	const isOpen = isControlled ? !collapsed : localOpen;
 
-	const setOpen = (open: boolean) => {
-		const next = !open;
-		if (!controlled) {
-			setLocalCollapsed(next);
+	const handleOpenChange = (open: boolean) => {
+		if (!isControlled) {
+			setLocalOpen(open);
 		}
-		onCollapsedChange?.(next);
+		onCollapsedChange?.(!open);
 	};
 
 	return (
-		<SidebarProvider open={!isCollapsed} onOpenChange={setOpen}>
+		<SidebarProvider open={isOpen} onOpenChange={handleOpenChange}>
 			<Sidebar collapsible='icon' className={cn('border-r-[1.5px] border-border py-1 bg-muted/40', className)}>
 				<SidebarHeader>{header ?? <SidebarNavHeader />}</SidebarHeader>
 				<SidebarContent className='gap-0 mt-1'>

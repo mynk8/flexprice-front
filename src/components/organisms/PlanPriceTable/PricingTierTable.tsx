@@ -1,6 +1,8 @@
 import { Plus } from 'lucide-react';
 import Chip from '@/components/atoms/Chip';
 import { Button } from '@/components/atoms/Button';
+import { Card, CardHeader } from '@/components/atoms';
+import { DataTable, ColumnData } from '@/components/molecules';
 
 export interface TierRow {
 	id?: string;
@@ -12,13 +14,11 @@ export interface TierRow {
 	value: string;
 }
 
-const status = {
+const statusMap = {
 	active: { label: 'Active', variant: 'success' },
 	upcoming: { label: 'Upcoming', variant: 'info' },
 	inactive: { label: 'Inactive', variant: 'default' },
 } as const;
-
-const headers = ['Display Name', 'Charge Type', 'Billing Timing', 'Billing Period', 'Status', 'Value'] as const;
 
 export interface PricingTierTableProps {
 	/** Array of tier rows to display in the table. */
@@ -29,7 +29,36 @@ export interface PricingTierTableProps {
 	onAddCharge?: () => void;
 }
 
-const getTierKey = (tier: TierRow) => tier.id ?? `${tier.name}-${tier.chargeType}-${tier.billingPeriod}-${tier.value}`;
+const columns: ColumnData<TierRow>[] = [
+	{
+		title: 'Display Name',
+		render: (row) => <span className='font-medium text-foreground'>{row.name}</span>,
+	},
+	{
+		title: 'Charge Type',
+		render: (row) => <span>{row.chargeType}</span>,
+	},
+	{
+		title: 'Billing Timing',
+		render: (row) => <span>{row.billingTiming}</span>,
+	},
+	{
+		title: 'Billing Period',
+		render: (row) => <span>{row.billingPeriod}</span>,
+	},
+	{
+		title: 'Status',
+		render: (row) => {
+			const state = statusMap[row.status];
+			return <Chip label={state.label} variant={state.variant} />;
+		},
+	},
+	{
+		title: 'Value',
+		align: 'right',
+		render: (row) => <span className='font-medium text-foreground font-mono'>{row.value}</span>,
+	},
+];
 
 /**
  * PricingTierTable displays the different pricing tiers or charges for a plan.
@@ -45,55 +74,21 @@ const getTierKey = (tier: TierRow) => tier.id ?? `${tier.name}-${tier.chargeType
  */
 const PricingTierTable = ({ tiers, title = 'Charges', onAddCharge }: PricingTierTableProps) => {
 	return (
-		<div className='border border-border rounded-[6px] overflow-hidden bg-card'>
-			<div className='flex items-center justify-between px-4 py-3 border-b border-border bg-card'>
-				<h3 className='font-medium text-[14px] text-foreground'>{title}</h3>
-				{onAddCharge && (
-					<Button onClick={onAddCharge} size='sm'>
-						<Plus className='size-4' aria-hidden />
-						<span>Add Charge</span>
-					</Button>
-				)}
+		<Card variant='notched'>
+			<CardHeader
+				title={title}
+				cta={
+					onAddCharge ? (
+						<Button prefixIcon={<Plus />} onClick={onAddCharge}>
+							Add
+						</Button>
+					) : undefined
+				}
+			/>
+			<div className='mt-4'>
+				<DataTable columns={columns} data={tiers} showEmptyRow />
 			</div>
-
-			<table className='w-full text-sm'>
-				<thead className='bg-muted/40 border-b border-border'>
-					<tr>
-						{headers.map((h) => (
-							<th key={h} className='px-4 py-3 text-left text-[13px] font-medium text-muted-foreground first:pl-5'>
-								{h}
-							</th>
-						))}
-					</tr>
-				</thead>
-				<tbody>
-					{tiers.length === 0 ? (
-						<tr>
-							<td colSpan={6} className='px-4 py-8 text-center text-sm text-muted-foreground'>
-								No charges added yet. Click <strong>Add Charge</strong> to get started.
-							</td>
-						</tr>
-					) : (
-						tiers.map((tier) => {
-							const state = status[tier.status];
-
-							return (
-								<tr key={getTierKey(tier)} className='border-b border-border last:border-b-0 hover:bg-muted/40 transition-colors'>
-									<td className='px-4 py-3 pl-5 font-medium text-foreground'>{tier.name}</td>
-									<td className='px-4 py-3 text-muted-foreground'>{tier.chargeType}</td>
-									<td className='px-4 py-3 text-muted-foreground'>{tier.billingTiming}</td>
-									<td className='px-4 py-3 text-muted-foreground'>{tier.billingPeriod}</td>
-									<td className='px-4 py-3'>
-										<Chip label={state.label} variant={state.variant} />
-									</td>
-									<td className='px-4 py-3 font-medium text-foreground font-mono text-right pr-6'>{tier.value}</td>
-								</tr>
-							);
-						})
-					)}
-				</tbody>
-			</table>
-		</div>
+		</Card>
 	);
 };
 

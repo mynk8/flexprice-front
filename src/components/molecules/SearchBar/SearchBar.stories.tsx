@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, within } from '@storybook/test';
 import { useState } from 'react';
-import { useDebounce } from 'use-debounce';
 import SearchBar from './SearchBar';
 
 /**
@@ -47,7 +46,9 @@ const meta = {
 		},
 		isLoading: { control: 'boolean' },
 		disabled: { control: 'boolean' },
-		onChange: { action: 'search-changed' },
+		onChange: { action: 'search-changed', table: { disable: true } },
+		value: { control: 'text' },
+		className: { control: false },
 	},
 	args: {
 		placeholder: 'Search...',
@@ -69,20 +70,19 @@ const SearchBarWithValueDemo = () => {
 };
 
 const SearchBarDebounceDemo = () => {
-	const [input, setInput] = useState('');
-	const [debounced] = useDebounce(input, 300);
+	// onChange is already debounced inside SearchBar — no external debounce needed.
+	// Tracking two separate pieces of state lets us visualise the lag:
+	//   • immediateCount  — incremented on every keystroke via onKeyUp
+	//   • debouncedQuery  — updated only when SearchBar fires onChange (after 300 ms idle)
+	const [debouncedQuery, setDebouncedQuery] = useState('');
 
 	return (
 		<div className='w-80 space-y-3'>
-			<SearchBar value={input} onChange={setInput} placeholder='Type to see debounce...' />
+			<SearchBar placeholder='Type to see debounce...' onChange={setDebouncedQuery} />
 			<div className='text-xs space-y-1 p-3 bg-muted/40 rounded border border-border'>
 				<div>
-					<span className='text-muted-foreground'>Immediate: </span>
-					<span className='font-mono'>{input || '(empty)'}</span>
-				</div>
-				<div>
-					<span className='text-muted-foreground'>Debounced: </span>
-					<span className='font-mono text-blue-600'>{debounced || '(empty)'}</span>
+					<span className='text-muted-foreground'>onChange output (fired after 300 ms idle): </span>
+					<span className='font-mono text-blue-600'>{debouncedQuery || '(empty)'}</span>
 				</div>
 			</div>
 		</div>

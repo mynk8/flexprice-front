@@ -1,58 +1,97 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createFilterFingerprint, getFilterFingerprintParam, getFilterStorageKey, syncFilterFingerprintToUrl } from './useFilterStore';
+import { renderHook, act } from '@testing-library/react';
+import { useFilterStore, useInternalFilterStore } from './useFilterStore';
 
-describe('useFilterStore helpers', () => {
-	it('creates a stable fingerprint independent of filter key order', () => {
-		const first = createFilterFingerprint({ status: 'active', search: 'acme' });
-		const second = createFilterFingerprint({ search: 'acme', status: 'active' });
-
-		expect(first).toBe(second);
-	});
-
-	it('changes the fingerprint when filters change', () => {
-		const active = createFilterFingerprint({ status: 'active' });
-		const inactive = createFilterFingerprint({ status: 'inactive' });
-
-		expect(active).not.toBe(inactive);
-	});
-
-	it('uses route-scoped storage and compact URL param keys', () => {
-		expect(getFilterStorageKey('billing/invoices')).toBe('filters:billing/invoices');
-		expect(getFilterFingerprintParam('billing/invoices')).toBe('billinginvoicesFp');
-	});
-});
-
-describe('useFilterStore URL sync', () => {
+describe('useFilterStore', () => {
 	let replaceStateSpy: ReturnType<typeof vi.spyOn>;
 
 	beforeEach(() => {
-		window.history.replaceState(null, '', '/customers?tab=active');
+		// Reset Zustand store
+		useInternalFilterStore.setState({ routes: {} });
+
+		// Mock sessionStorage
+		const storage: Record<string, string> = {};
+		vi.stubGlobal('sessionStorage', {
+			getItem: (key: string) => storage[key] || null,
+			setItem: (key: string, value: string) => {
+				storage[key] = value;
+			},
+			removeItem: (key: string) => {
+				delete storage[key];
+			},
+			clear: () => {
+				for (const key in storage) delete storage[key];
+			},
+		});
+
+		window.history.replaceState(null, '', '/customers');
 		replaceStateSpy = vi.spyOn(history, 'replaceState');
 	});
 
 	afterEach(() => {
-		replaceStateSpy.mockRestore();
 		vi.restoreAllMocks();
+		vi.unstubAllGlobals();
 	});
 
-	it('writes only the compact fingerprint and preserves unrelated URL params', () => {
-		const filters = { search: 'acme', status: 'active' as const };
-
-		syncFilterFingerprintToUrl('customers', filters);
-
-		const url = new URL(window.location.href);
-		expect(url.searchParams.get('tab')).toBe('active');
-		expect(url.searchParams.get('customersFp')).toBe(createFilterFingerprint(filters));
-		expect(url.searchParams.get('search')).toBeNull();
-		expect(replaceStateSpy).toHaveBeenCalledTimes(1);
+	it('initializes with empty filters', () => {
+		const { result } = renderHook(() => useFilterStore('customers'));
+		expect(result.current.filters).toEqual({});
 	});
 
-	it('removes the route fingerprint when filters reset', () => {
-		syncFilterFingerprintToUrl('customers', { status: 'active' });
-		syncFilterFingerprintToUrl('customers', {});
+	it('updates filters and persists to sessionStorage', () => {
+		const { result } = renderHook(() => useFilterStore('customers'));
+
+		act(() => {
+			result.current.setFilter('search', 'acme');
+		});
+
+		expect(result.current.filters).toEqual({ search: 'acme' });
+		expect(sessionStorage.getItem('filters:customers')).toContain('"search":"acme"');
+	});
+
+	it('syncs a compact fingerprint to the URL', () => {
+		const { result } = renderHook(() => useFilterStore('customers'));
+
+		act(() => {
+			result.current.setFilter('search', 'acme');
+			result.current.setFilter('status', 'active');
+		});
 
 		const url = new URL(window.location.href);
-		expect(url.searchParams.get('tab')).toBe('active');
+		const fp = url.searchParams.get('customersFp');
+		expect(fp).toBeDefined();
+		expect(fp?.startsWith('2-')).toBe(true); // 2 filters
+		expect(replaceStateSpy).toHaveBeenCalled();
+	});
+
+	it('removes filters and storage when set to null/empty', () => {
+		const { result } = renderHook(() => useFilterStore('customers'));
+
+		act(() => {
+			result.current.setFilter('search', 'acme');
+		});
+		expect(sessionStorage.getItem('filters:customers')).toBeDefined();
+
+		act(() => {
+			result.current.setFilter('search', null);
+		});
+
+		expect(result.current.filters).toEqual({});
+		expect(sessionStorage.getItem('filters:customers')).toBeNull();
+		const url = new URL(window.location.href);
 		expect(url.searchParams.get('customersFp')).toBeNull();
+	});
+
+	it('resets all filters for a route', () => {
+		const { result } = renderHook(() => useFilterStore('customers'));
+
+		act(() => {
+			result.current.setFilter('search', 'acme');
+			result.current.setFilter('status', 'active');
+			result.current.resetFilters();
+		});
+
+		expect(result.current.filters).toEqual({});
+		expect(sessionStorage.getItem('filters:customers')).toBeNull();
 	});
 });

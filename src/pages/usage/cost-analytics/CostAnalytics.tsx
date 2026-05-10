@@ -1,14 +1,13 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useBreadcrumbsStore } from '@/store';
-import { Page, Input, DateRangePicker, FeatureMultiSelect, Loader } from '@/components/atoms';
+import { Page, Input, FeatureMultiSelect, Loader } from '@/components/atoms';
 import CostSheetApi from '@/api/CostSheetApi';
 import toast from 'react-hot-toast';
 import { GetCostAnalyticsRequest } from '@/types';
 import { Feature } from '@/models';
 import { API_DOCS_TAGS } from '@/constants/apiDocsTags';
-import { ApiDocsContent, MetricCard } from '@/components/molecules';
-import { CostDataTable } from '@/components/molecules';
+import { ApiDocsContent, MetricCard, DateRangePicker, CostDataTable } from '@/components/molecules';
 
 const CostAnalyticsPage: React.FC = () => {
 	const { updateBreadcrumb } = useBreadcrumbsStore();
@@ -123,8 +122,6 @@ const CostAnalyticsPage: React.FC = () => {
 							placeholder='Select date range'
 							title='Date Range'
 							className='w-full'
-							popoverClassName='w-full'
-							popoverTriggerClassName='w-full'
 						/>
 					</div>
 				</div>

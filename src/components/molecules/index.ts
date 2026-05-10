@@ -10,7 +10,8 @@ export { default as ContactUsDialog } from './ContactUsDialog';
 export { default as Pagination } from './Pagination';
 
 // Tables & Data Display
-export { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, TooltipCell, RedirectCell, DataTable } from './Table';
+export { default as DataTable, Table, TableHeader, TableBody, TableHead, TableRow, TableCell, TooltipCell, RedirectCell } from './Table';
+export { default as DateRangePicker } from './DateRangePicker';
 export type { ColumnData, DataTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from './Table';
 
 // Charts & Analytics

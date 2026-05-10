@@ -196,6 +196,35 @@ Each component has a `*.stories.tsx` co-located with the source. Stories include
 
 ---
 
+## Deployment to Vercel
+
+To host this Storybook on Vercel, follow these steps:
+
+### 1. Build Storybook Locally
+Ensure the build works as expected:
+```bash
+npm run build-storybook
+```
+This generates a static site in the `storybook-static/` directory.
+
+### 2. Deploy via Vercel Dashboard (Recommended)
+1. Push your changes to GitHub.
+2. Log in to [Vercel](https://vercel.com).
+3. Click **New Project** and import your repository.
+4. In the **Build & Development Settings**:
+   - **Framework Preset**: Select `Other`.
+   - **Build Command**: `npm run build-storybook`
+   - **Output Directory**: `storybook-static`
+5. Click **Deploy**.
+
+### 3. Deploy via Vercel CLI
+If you have the [Vercel CLI](https://vercel.com/docs/cli) installed:
+```bash
+vercel --name flexprice-ui --public --prod --build-command "npm run build-storybook" --output storybook-static
+```
+
+---
+
 ## File Structure
 
 ```

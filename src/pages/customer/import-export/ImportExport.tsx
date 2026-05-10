@@ -1,8 +1,7 @@
 import { Button, Chip, Loader, Page, ShortPagination } from '@/components/atoms';
 import { API_DOCS_TAGS } from '@/constants/apiDocsTags';
 import { ApiDocsContent, ColumnData, DataTable, ImportFileDrawer } from '@/components/molecules';
-import { EmptyPage } from '@/components/organisms';
-import GUIDES from '@/constants/guides';
+import { EmptyState } from '@/components/organisms';
 import usePagination from '@/hooks/usePagination';
 import { ImportTask } from '@/models/ImportTask';
 import TaskApi from '@/api/TaskApi';
@@ -91,21 +90,18 @@ const ImportExport = () => {
 
 	if (data?.items.length === 0) {
 		return (
-			<EmptyPage
-				heading='Bulk Imports'
-				onAddClick={() => setdrawerOpen(true)}
-				emptyStateCard={{
-					heading: 'Ready to Import Data?',
-					description: 'Upload your first import file to bring in customer or events data.',
-					buttonLabel: 'Create Import Task',
-					buttonAction: () => {
+			<Page heading='Bulk Imports' headingCTA={<Button onClick={() => setdrawerOpen(true)}>Import File</Button>}>
+				<EmptyState
+					heading='Ready to Import Data?'
+					description='Upload your first import file to bring in customer or events data.'
+					buttonLabel='Create Import Task'
+					buttonAction={() => {
 						setdrawerOpen(true);
-					},
-				}}
-				tutorials={GUIDES.importExport.tutorials}
-				tags={[...API_DOCS_TAGS.Tasks]}>
+					}}
+				/>
+				<ApiDocsContent tags={[...API_DOCS_TAGS.Tasks]} />
 				<ImportFileDrawer taskId={activeTask} isOpen={drawerOpen} onOpenChange={(value) => setdrawerOpen(value)} />
-			</EmptyPage>
+			</Page>
 		);
 	}
 

@@ -2,7 +2,7 @@ import { Select, SelectContent, SelectGroup, SelectItem as ShadcnSelect, SelectT
 import { cn } from '@/lib/utils';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { Circle } from 'lucide-react';
-import React from 'react';
+import React, { useId } from 'react';
 
 export interface SelectOption {
 	value: string;
@@ -24,6 +24,8 @@ export interface SelectProps {
 	placeholder?: string;
 	/** Label text displayed above the select. */
 	label?: string;
+	/** Unique ID for the select. Used for labels and accessibility. */
+	id?: string;
 	/** Whether the field is required (displays a red asterisk). */
 	required?: boolean;
 	/** Helper text displayed below the select. */
@@ -88,6 +90,7 @@ const FlexPriceSelect: React.FC<SelectProps> = ({
 	value,
 	placeholder = 'Select an option',
 	label = '',
+	id: propsId,
 	required = false,
 	description,
 	onChange,
@@ -100,11 +103,16 @@ const FlexPriceSelect: React.FC<SelectProps> = ({
 	trigger,
 	contentClassName,
 }) => {
+	const generatedId = useId();
+	const id = propsId || generatedId;
+
 	return (
 		<div className={cn('space-y-1 ', className)}>
 			{/* Label */}
 			{label && (
-				<label className={cn(' block text-sm font-medium text-zinc break-words', disabled ? 'text-zinc-500' : 'text-zinc-950')}>
+				<label
+					htmlFor={id}
+					className={cn(' block text-sm font-medium text-zinc break-words', disabled ? 'text-zinc-500' : 'text-zinc-950')}>
 					{label}
 					{required && <span className='text-destructive'> *</span>}
 				</label>
@@ -120,7 +128,7 @@ const FlexPriceSelect: React.FC<SelectProps> = ({
 				}}
 				value={value}
 				disabled={disabled}>
-				<SelectTrigger className={cn(disabled && 'cursor-not-allowed', className)}>
+				<SelectTrigger id={id} className={cn(disabled && 'cursor-not-allowed', className)}>
 					{trigger ? (
 						trigger
 					) : (

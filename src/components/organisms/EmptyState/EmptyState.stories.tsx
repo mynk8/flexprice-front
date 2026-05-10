@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { FileText, Users, Layers2, Zap } from 'lucide-react';
 import EmptyState from './EmptyState';
 
 /**
@@ -10,13 +9,11 @@ import EmptyState from './EmptyState';
  * Used throughout FlexPrice on Plans, Customers, Invoices, Credits, and Events pages.
  *
  * ### Structure
- * - Large illustrated icon (60–80px)
  * - Bold headline text
  * - Muted descriptive subtext (max 350px width)
  * - Optional CTA button
  *
  * ### Props
- * - `icon` — React node (typically a Lucide icon at 60px)
  * - `heading` — Primary headline
  * - `description` — Subtext describing what to do next
  * - `buttonLabel` — CTA button text
@@ -39,7 +36,7 @@ const meta = {
 		heading: { control: 'text' },
 		description: { control: 'text' },
 		buttonLabel: { control: 'text' },
-		buttonAction: { action: 'cta-clicked' },
+		buttonAction: { action: 'cta-clicked', table: { disable: true } },
 	},
 	args: {
 		buttonAction: fn(),
@@ -51,7 +48,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	args: {
-		icon: <FileText size={60} strokeWidth={1} />,
 		heading: 'No invoices yet',
 		description:
 			'Invoices are generated automatically when a subscription is billed. Create a customer and add a subscription to get started.',
@@ -116,19 +112,12 @@ export const AllPagesShowcase: Story = {
 	render: () => (
 		<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
 			<div>
-				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Plans</p>
-				<EmptyState
-					icon={<Layers2 size={48} strokeWidth={1} className='text-zinc-400' />}
-					heading='No plans yet'
-					description='Create your first pricing plan.'
-					buttonLabel='Create Plan'
-					buttonAction={fn()}
-				/>
+				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Plans</p>
+				<EmptyState heading='No plans yet' description='Create your first pricing plan.' buttonLabel='Create Plan' buttonAction={fn()} />
 			</div>
 			<div>
-				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Customers</p>
+				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Customers</p>
 				<EmptyState
-					icon={<Users size={48} strokeWidth={1} className='text-zinc-400' />}
 					heading='No customers yet'
 					description='Add customers to manage subscriptions.'
 					buttonLabel='Add Customer'
@@ -136,22 +125,12 @@ export const AllPagesShowcase: Story = {
 				/>
 			</div>
 			<div>
-				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Invoices</p>
-				<EmptyState
-					icon={<FileText size={48} strokeWidth={1} className='text-zinc-400' />}
-					heading='No invoices yet'
-					description='Invoices appear after billing runs.'
-				/>
+				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Invoices</p>
+				<EmptyState heading='No invoices yet' description='Invoices appear after billing runs.' />
 			</div>
 			<div>
-				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Events</p>
-				<EmptyState
-					icon={<Zap size={48} strokeWidth={1} className='text-zinc-400' />}
-					heading='No events received'
-					description='Send usage events via the API.'
-					buttonLabel='View Docs'
-					buttonAction={fn()}
-				/>
+				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Events</p>
+				<EmptyState heading='No events received' description='Send usage events via the API.' buttonLabel='View Docs' buttonAction={fn()} />
 			</div>
 		</div>
 	),

@@ -29,7 +29,7 @@ export interface DateRangePickerProps {
 	maxDate?: Date;
 	/** Callback function triggered when the date range changes. */
 	onChange: (dates: { startDate?: Date; endDate?: Date }) => void;
-	/** Additional CSS classes for the container. */
+	/** Additional CSS classes for the trigger button container. */
 	className?: string;
 	/** Additional CSS classes for the title label. */
 	labelClassName?: string;
@@ -134,10 +134,10 @@ const DateRangePicker = ({
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
-			<div className='flex flex-col'>
+			<div className={cn('flex flex-col', className)}>
 				{title && <div className={cn('text-sm font-medium mb-1 w-full text-start', labelClassName)}>{title}</div>}
-				<div className='relative'>
-					<PopoverTrigger asChild className={popoverTriggerClassName} disabled={disabled}>
+				<div className={cn('relative', popoverClassName)}>
+					<PopoverTrigger asChild disabled={disabled}>
 						<Button
 							variant='outline'
 							disabled={disabled}
@@ -146,9 +146,9 @@ const DateRangePicker = ({
 								!selectedRange?.from || !selectedRange?.to
 									? 'text-muted-foreground opacity-70 hover:text-muted-foreground'
 									: 'text-foreground',
-								!className && (selectedRange?.from && selectedRange?.to ? 'w-[260px]' : 'w-[240px]'),
+								!popoverTriggerClassName && (selectedRange?.from && selectedRange?.to ? 'w-[260px]' : 'w-[240px]'),
 								'transition-all duration-300 ease-in-out',
-								className,
+								popoverTriggerClassName,
 							)}>
 							<CalendarIcon className='mr-0 h-4 w-4' />
 							<span>{displayLabel}</span>
@@ -170,7 +170,7 @@ const DateRangePicker = ({
 				</div>
 			</div>
 
-			<PopoverContent className={cn('w-auto flex gap-4 p-2', popoverClassName, popoverContentClassName)} align='start'>
+			<PopoverContent className={cn('w-auto flex gap-4 p-2', popoverContentClassName)} align='start'>
 				<Calendar
 					disabled={disabled}
 					mode='range'
