@@ -1,6 +1,6 @@
 import { Card, FormHeader, Page, Spacer, Chip } from '@/components/atoms';
 import { UpcomingCreditGrantApplicationsTable } from '@/components/molecules';
-import FlexpriceTable, { ColumnData, RedirectCell } from '@/components/molecules/Table';
+import DataTable, { ColumnData, RedirectCell } from '@/components/molecules/Table';
 import { SubscriptionPreviewLineItemTable } from '@/components/molecules/InvoiceLineItemTable';
 import SubscriptionActionButton from '@/components/organisms/Subscription/SubscriptionActionButton';
 import { getSubscriptionStatus } from '@/components/organisms/Subscription/SubscriptionTable';
@@ -378,7 +378,7 @@ const CustomerSubscriptionDetailsPage: FC = () => {
 				<Card className='card mt-8'>
 					<FormHeader className='mb-0' title='Inherited subscriptions' variant='sub-header' titleClassName='font-semibold' />
 					<div className='mt-4 rounded-[6px] border border-gray-300'>
-						<FlexpriceTable data={inheritedSubscriptionRows} columns={inheritedSubscriptionsColumns} />
+						<DataTable data={inheritedSubscriptionRows} columns={inheritedSubscriptionsColumns} />
 					</div>
 				</Card>
 			)}

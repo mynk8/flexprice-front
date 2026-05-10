@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ActionButton, Chip } from '@/components/atoms';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import formatDate from '@/utils/common/format_date';
 import formatChips from '@/utils/common/format_chips';
 import Customer from '@/models/Customer';
@@ -74,7 +74,7 @@ const CustomerTable: FC<Props> = ({ data, onEdit }) => {
 	];
 
 	return (
-		<FlexpriceTable
+		<DataTable
 			showEmptyRow
 			columns={columns}
 			data={mappedData}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlexpriceTable, type ColumnData } from '@/components/molecules';
+import { DataTable, type ColumnData } from '@/components/molecules';
 import { CostAnalyticItem } from '@/types';
 import { formatNumber, getCurrencySymbol } from '@/utils';
 
@@ -53,7 +53,7 @@ export const CostDataTable: React.FC<CostDataTableProps> = ({ items }) => {
 	return (
 		<>
 			<h1 className='text-lg font-medium text-gray-900 mb-4'>Cost Breakdown</h1>
-			<FlexpriceTable columns={columns} data={tableData} showEmptyRow />
+			<DataTable columns={columns} data={tableData} showEmptyRow />
 		</>
 	);
 };

@@ -19,7 +19,7 @@ import { Button, Card, CardHeader, Chip, CopyIdButton, Divider, Loader, NoDataCa
 import {
 	ApiDocsContent,
 	ColumnData,
-	FlexpriceTable,
+	DataTable,
 	RedirectCell,
 	DropdownMenu,
 	DropdownMenuOption,
@@ -341,7 +341,7 @@ const FeatureDetails = () => {
 						{linkedPrices?.items?.length && linkedPrices?.items?.length > 0 ? (
 							<Card variant='notched'>
 								<CardHeader title='Charges' />
-								<FlexpriceTable showEmptyRow columns={priceColumns} data={linkedPrices?.items ?? []} variant='no-bordered' />
+								<DataTable showEmptyRow columns={priceColumns} data={linkedPrices?.items ?? []} variant='no-bordered' />
 							</Card>
 						) : (
 							<NoDataCard title='Charges' subtitle='No charges linked to the feature yet' />
@@ -352,7 +352,7 @@ const FeatureDetails = () => {
 				{planOrAddonEntitlements.length > 0 ? (
 					<Card variant='notched'>
 						<CardHeader title='Entitlements' />
-						<FlexpriceTable showEmptyRow columns={columns} data={planOrAddonEntitlements} variant='no-bordered' />
+						<DataTable showEmptyRow columns={columns} data={planOrAddonEntitlements} variant='no-bordered' />
 					</Card>
 				) : (
 					<NoDataCard title='Entitlements' subtitle='No entitlements linked to the feature yet' />

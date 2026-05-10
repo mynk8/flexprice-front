@@ -1,5 +1,5 @@
 import { Button, Page, ShortPagination, SectionHeader } from '@/components/atoms';
-import { ColumnData, FlexpriceTable, ApiDocsContent } from '@/components/molecules';
+import { ColumnData, DataTable, ApiDocsContent } from '@/components/molecules';
 import { UserApi } from '@/api/UserApi';
 import { useQuery } from '@tanstack/react-query';
 import { User } from '@/models';
@@ -123,7 +123,7 @@ const ServiceAccountsPage = () => {
 						</Button>
 					</SectionHeader>
 					<div className='pb-12 mt-2'>
-						<FlexpriceTable showEmptyRow columns={serviceAccountColumns} data={serviceAccountsResponse?.items || []} />
+						<DataTable showEmptyRow columns={serviceAccountColumns} data={serviceAccountsResponse?.items || []} />
 						<ShortPagination unit='Service Accounts' totalItems={serviceAccountsResponse?.pagination?.total || 0} />
 					</div>
 				</Page>

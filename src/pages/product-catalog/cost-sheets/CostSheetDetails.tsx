@@ -1,5 +1,5 @@
 import { Button, CardHeader, Chip, Loader, Page, ShortPagination, Spacer, NoDataCard } from '@/components/atoms';
-import { ApiDocsContent, ColumnData, FlexpriceTable, CostSheetDrawer } from '@/components/molecules';
+import { ApiDocsContent, ColumnData, DataTable, CostSheetDrawer } from '@/components/molecules';
 import usePagination, { PAGINATION_PREFIX } from '@/hooks/usePagination';
 import { API_DOCS_TAGS } from '@/constants/apiDocsTags';
 import { DetailsCard } from '@/components/molecules';
@@ -235,7 +235,7 @@ const CostSheetDetails = () => {
 								</Button>
 							}
 						/>
-						<FlexpriceTable columns={chargeColumns} data={pricesResponse?.items ?? []} />
+						<DataTable columns={chargeColumns} data={pricesResponse?.items ?? []} />
 						<ShortPagination
 							unit='charges'
 							totalItems={pricesResponse?.pagination?.total ?? 0}

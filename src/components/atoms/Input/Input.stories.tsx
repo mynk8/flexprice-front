@@ -202,35 +202,37 @@ export const Sizes: Story = {
 
 export const FormExample: Story = {
 	name: 'Usage in a Form (Interactive)',
-	render: () => {
-		const [values, setValues] = useState({ name: '', email: '', amount: '' });
-		return (
-			<div className='space-y-4 w-80 p-6 border rounded-lg'>
-				<h3 className='font-semibold text-sm text-gray-800'>Add Credit Grant</h3>
-				<Input
-					label='Display Name'
-					placeholder='e.g. Welcome Bonus'
-					value={values.name}
-					onChange={(v) => setValues((p) => ({ ...p, name: v }))}
-					id='grant-name'
-				/>
-				<Input
-					label='Amount'
-					variant='formatted-number'
-					inputPrefix={<DollarSign className='size-3.5 text-muted-foreground' />}
-					placeholder='100.00'
-					value={values.amount}
-					onChange={(v) => setValues((p) => ({ ...p, amount: v }))}
-					id='grant-amount'
-				/>
-				<Input
-					label='Customer Email'
-					placeholder='customer@example.com'
-					value={values.email}
-					onChange={(v) => setValues((p) => ({ ...p, email: v }))}
-					id='grant-email'
-				/>
-			</div>
-		);
-	},
+	render: () => <InputFormDemo />,
+};
+
+const InputFormDemo = () => {
+	const [values, setValues] = useState({ name: '', email: '', amount: '' });
+	return (
+		<div className='space-y-4 w-80 p-6 border rounded-lg'>
+			<h3 className='font-semibold text-sm text-foreground'>Add Credit Grant</h3>
+			<Input
+				label='Display Name'
+				placeholder='e.g. Welcome Bonus'
+				value={values.name}
+				onChange={(v) => setValues((p) => ({ ...p, name: v }))}
+				id='grant-name'
+			/>
+			<Input
+				label='Amount'
+				variant='formatted-number'
+				inputPrefix={<DollarSign className='size-3.5 text-muted-foreground' />}
+				placeholder='100.00'
+				value={values.amount}
+				onChange={(v) => setValues((p) => ({ ...p, amount: v }))}
+				id='grant-amount'
+			/>
+			<Input
+				label='Customer Email'
+				placeholder='customer@example.com'
+				value={values.email}
+				onChange={(v) => setValues((p) => ({ ...p, email: v }))}
+				id='grant-email'
+			/>
+		</div>
+	);
 };

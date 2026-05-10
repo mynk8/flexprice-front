@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { ActionButton, Chip, Tooltip } from '@/components/atoms';
-import FlexpriceTable from '../Table/Table';
+import DataTable from '../Table/Table';
 import formatDate from '@/utils/common/format_date';
 import { Subscription, SUBSCRIPTION_STATUS } from '@/models/Subscription';
 import { useNavigate } from 'react-router';
@@ -103,7 +103,7 @@ const SubscriptionTable: FC<Props> = ({ data, onEdit }) => {
 
 	return (
 		<>
-			<FlexpriceTable
+			<DataTable
 				showEmptyRow
 				columns={columns}
 				data={data}

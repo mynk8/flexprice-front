@@ -2,7 +2,7 @@ import { FC, useState, useMemo, useCallback, ReactNode } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
 import { Button, Card, CardHeader, Chip, DatePicker, Dialog, AddButton, Select, Tooltip, NoDataCard } from '@/components/atoms';
-import { FlexpriceTable, ColumnData } from '@/components/molecules';
+import { DataTable, ColumnData } from '@/components/molecules';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import SubscriptionApi from '@/api/SubscriptionApi';
@@ -367,7 +367,7 @@ const SubscriptionAddonsSection: FC<SubscriptionAddonsSectionProps> = ({
 			{processedAddonAssociations.length > 0 ? (
 				<Card variant='notched'>
 					<CardHeader title='Addons' cta={<AddButton onClick={() => setIsAddDialogOpen(true)} disabled={readOnly} />} />
-					<FlexpriceTable showEmptyRow data={processedAddonAssociations} columns={columns} variant='no-bordered' />
+					<DataTable showEmptyRow data={processedAddonAssociations} columns={columns} variant='no-bordered' />
 				</Card>
 			) : (
 				<NoDataCard

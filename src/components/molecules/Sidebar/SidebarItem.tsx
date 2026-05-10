@@ -12,7 +12,7 @@ import {
 	useSidebar,
 } from '@/components/ui';
 // import { ChevronRight } from 'lucide-react';
-import { Link, useLocation, useNavigate } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { cn } from '@/lib/utils';
 
 interface SidebarItemProps extends NavItem {
@@ -22,7 +22,6 @@ interface SidebarItemProps extends NavItem {
 
 const SidebarItem: FC<SidebarItemProps> = (item) => {
 	const location = useLocation();
-	const navigate = useNavigate();
 	const { state } = useSidebar();
 	const isOpen = item.isOpen ?? false;
 	const isCollapsed = state === 'collapsed';
@@ -34,6 +33,8 @@ const SidebarItem: FC<SidebarItemProps> = (item) => {
 	const iconActive = isMainItemActive;
 
 	const handleOpenChange = (open: boolean) => {
+		// Don't propagate events when collapsed - accordion state is hidden anyway
+		if (isCollapsed) return;
 		item.onToggle?.(open);
 	};
 
@@ -47,25 +48,19 @@ const SidebarItem: FC<SidebarItemProps> = (item) => {
 			return; // Let Link handle it naturally - browser will show context menu, open in new tab, etc.
 		}
 
-		// For regular clicks on items with children, toggle accordion
+		// For items with children, open accordion without navigating to main URL on click
+		// User can navigate by clicking sub-items explicitly
 		if (hasChildren) {
 			event.preventDefault(); // Prevent navigation
 			const willOpen = !isOpen;
 			item.onToggle?.(willOpen);
-
-			// If opening and URL is not '#', navigate to it after a small delay
-			if (willOpen && item.url && item.url !== '#') {
-				setTimeout(() => {
-					navigate(item.url);
-				}, 100);
-			}
 		}
 		// For items without children, let Link handle navigation naturally
 	};
 
 	const mainButtonContent = (
 		<>
-			{Icon && <Icon absoluteStrokeWidth className={cn('!size-5 !stroke-[1.5px] mr-1', iconActive ? 'text-blue-600' : 'text-[#3F3F46]')} />}
+			{Icon && <Icon absoluteStrokeWidth className={cn('!size-5 !stroke-[1.5px] mr-1', iconActive ? 'text-primary' : 'text-foreground')} />}
 			<span className='text-[14px] select-none font-normal'>{item.title}</span>
 		</>
 	);
@@ -81,7 +76,7 @@ const SidebarItem: FC<SidebarItemProps> = (item) => {
 					isActive={isMainItemActive}
 					className={cn(
 						'flex items-center gap-2 h-10 px-2 py-[10px] rounded-[6px] text-[14px] cursor-pointer font-normal transition-all duration-200 ease-in-out',
-						isMainItemActive ? 'bg-zinc-200 border border-zinc-300 shadow-sm font-medium' : 'font-thin',
+						isMainItemActive ? 'bg-accent border border-border shadow-sm font-medium' : 'font-thin',
 						item.disabled && 'cursor-not-allowed opacity-50',
 					)}>
 					<Link to={item.url || '#'} onClick={(e) => item.disabled && e.preventDefault()}>
@@ -104,7 +99,7 @@ const SidebarItem: FC<SidebarItemProps> = (item) => {
 						isActive={isMainItemActive}
 						className={cn(
 							'flex items-center gap-2 h-10 px-2 py-[10px] rounded-[6px] text-[14px] cursor-pointer font-normal transition-all duration-200 ease-in-out',
-							isMainItemActive ? 'bg-zinc-200 border border-zinc-300 shadow-sm font-medium' : 'font-thin',
+							isMainItemActive ? 'bg-accent border border-border shadow-sm font-medium' : 'font-thin',
 							item.disabled && 'cursor-not-allowed opacity-50',
 						)}>
 						<Link to={item.url || '#'} onClick={handleMainItemClick}>
@@ -133,7 +128,7 @@ const SidebarItem: FC<SidebarItemProps> = (item) => {
 												{SubIcon && (
 													<SubIcon
 														absoluteStrokeWidth
-														className={cn('!size-4 !stroke-[1.5px]', subActive ? 'text-blue-600' : 'text-[#52525B]')}
+														className={cn('!size-4 !stroke-[1.5px]', subActive ? 'text-primary' : 'text-muted-foreground')}
 													/>
 												)}
 												<span>{subItem.title}</span>

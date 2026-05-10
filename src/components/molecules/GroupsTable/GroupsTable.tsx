@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ActionButton, Chip } from '@/components/atoms';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import { Group } from '@/models/Group';
 import { ENTITY_STATUS } from '@/models';
 import formatDate from '@/utils/common/format_date';
@@ -57,7 +57,7 @@ const GroupsTable: FC<GroupsTableProps> = ({ data, onEdit }) => {
 		},
 	];
 
-	return <FlexpriceTable columns={columns} data={mappedData} showEmptyRow />;
+	return <DataTable columns={columns} data={mappedData} showEmptyRow />;
 };
 
 export default GroupsTable;

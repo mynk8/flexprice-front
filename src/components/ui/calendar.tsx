@@ -69,7 +69,7 @@ function Calendar({ className, classNames, showOutsideDays = true, timezone, onT
 								<SelectTrigger className='h-8 min-w-[84px] w-[84px] border-border bg-background px-2.5 text-xs font-normal shadow-none focus:ring-2 focus:ring-ring focus:ring-offset-1 [&>svg]:h-3.5 [&>svg]:w-3.5'>
 									<SelectValue />
 								</SelectTrigger>
-								<SelectContent align='end' side='top' className='z-[70]'>
+								<SelectContent align='end' side='top' className='z-[120]'>
 									<SelectItem value='local' className='text-xs'>
 										Local
 									</SelectItem>

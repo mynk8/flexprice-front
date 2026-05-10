@@ -13,21 +13,44 @@ import {
 } from '@/utils/common/format_date';
 
 export interface DateRangePickerProps {
+	/** Optional start date for the range. */
 	startDate?: Date;
+	/** Optional end date for the range. */
 	endDate?: Date;
+	/** Placeholder text shown when no range is selected. Defaults to 'Select Range'. */
 	placeholder?: string;
+	/** Whether the picker is disabled. */
 	disabled?: boolean;
+	/** Optional title or label displayed above the picker. */
 	title?: string;
+	/** Earliest selectable date. */
 	minDate?: Date;
+	/** Latest selectable date. */
 	maxDate?: Date;
+	/** Callback function triggered when the date range changes. */
 	onChange: (dates: { startDate?: Date; endDate?: Date }) => void;
+	/** Additional CSS classes for the container. */
 	className?: string;
+	/** Additional CSS classes for the title label. */
 	labelClassName?: string;
+	/** Additional CSS classes for the popover component. */
 	popoverClassName?: string;
+	/** Additional CSS classes for the popover trigger button. */
 	popoverTriggerClassName?: string;
+	/** Additional CSS classes for the popover content. */
 	popoverContentClassName?: string;
 }
 
+/**
+ * DateRangePicker allows users to select a date range using a calendar popover.
+ * Supports timezones (local/UTC), min/max date constraints, and clearing the selection.
+ *
+ * @example
+ * <DateRangePicker
+ *   title="Billing Period"
+ *   onChange={({ startDate, endDate }) => console.log(startDate, endDate)}
+ * />
+ */
 const DateRangePicker = ({
 	startDate,
 	endDate,
@@ -44,7 +67,7 @@ const DateRangePicker = ({
 	popoverContentClassName,
 }: DateRangePickerProps) => {
 	const [open, setOpen] = useState(false);
-	const [selectedRange, setSelectedRange] = useState<{ from: Date; to: Date } | undefined>(undefined);
+	const [selectedRange, setSelectedRange] = useState<{ from?: Date; to?: Date } | undefined>(undefined);
 	const [timezone, setTimezone] = useState<CalendarTimezone>('local');
 
 	const currentMonth = startOfMonth(new Date());
@@ -66,6 +89,7 @@ const DateRangePicker = ({
 				setSelectedRange(range);
 				onChange({ startDate: range.from, endDate: range.to });
 			} else {
+				setSelectedRange(date);
 				onChange({ startDate: date.from, endDate: date.to });
 			}
 		},
@@ -86,7 +110,7 @@ const DateRangePicker = ({
 	);
 
 	useEffect(() => {
-		if (startDate && endDate) {
+		if (startDate || endDate) {
 			setSelectedRange({ from: startDate, to: endDate });
 		} else {
 			setSelectedRange(undefined);
@@ -94,29 +118,34 @@ const DateRangePicker = ({
 	}, [startDate, endDate]);
 
 	const displayRange =
-		selectedRange?.from && selectedRange?.to
+		selectedRange?.from || selectedRange?.to
 			? {
-					from: toCalendarDisplayDate(selectedRange.from, timezone as DateTimezone),
-					to: toCalendarDisplayDate(selectedRange.to, timezone as DateTimezone),
+					from: selectedRange.from ? toCalendarDisplayDate(selectedRange.from, timezone as DateTimezone) : undefined,
+					to: selectedRange.to ? toCalendarDisplayDate(selectedRange.to, timezone as DateTimezone) : undefined,
 				}
 			: undefined;
 
 	const displayLabel =
 		selectedRange?.from && selectedRange?.to
 			? `${formatDateInZone(selectedRange.from, timezone as DateTimezone)} - ${formatDateInZone(selectedRange.to, timezone as DateTimezone)}`
-			: placeholder;
+			: selectedRange?.from
+				? `${formatDateInZone(selectedRange.from, timezone as DateTimezone)} - Select end date`
+				: placeholder;
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
-			<PopoverTrigger className={popoverTriggerClassName} disabled={disabled}>
-				<div className='flex flex-col '>
-					{title && <div className={cn('text-sm font-medium mb-1 w-full text-start', labelClassName)}>{title}</div>}
-					<div className='relative'>
+			<div className='flex flex-col'>
+				{title && <div className={cn('text-sm font-medium mb-1 w-full text-start', labelClassName)}>{title}</div>}
+				<div className='relative'>
+					<PopoverTrigger asChild className={popoverTriggerClassName} disabled={disabled}>
 						<Button
 							variant='outline'
+							disabled={disabled}
 							className={cn(
 								' justify-start text-left font-normal !h-10',
-								!selectedRange?.from || !selectedRange?.to ? 'text-muted-foreground opacity-70 hover:text-muted-foreground' : 'text-black',
+								!selectedRange?.from || !selectedRange?.to
+									? 'text-muted-foreground opacity-70 hover:text-muted-foreground'
+									: 'text-foreground',
 								!className && (selectedRange?.from && selectedRange?.to ? 'w-[260px]' : 'w-[240px]'),
 								'transition-all duration-300 ease-in-out',
 								className,
@@ -124,19 +153,22 @@ const DateRangePicker = ({
 							<CalendarIcon className='mr-0 h-4 w-4' />
 							<span>{displayLabel}</span>
 						</Button>
-						{selectedRange?.from && selectedRange?.to && (
-							<X
-								className='ml-2 h-4 w-4 absolute right-2 top-[12px] cursor-pointer'
-								onClick={(e) => {
-									e.stopPropagation();
-									setSelectedRange(undefined);
-									onChange({ startDate: undefined, endDate: undefined });
-								}}
-							/>
-						)}
-					</div>
+					</PopoverTrigger>
+					{selectedRange?.from && selectedRange?.to && (
+						<button
+							type='button'
+							aria-label='Clear date range'
+							className='absolute right-2 top-[12px] rounded-[4px] text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
+							onClick={(e) => {
+								e.stopPropagation();
+								setSelectedRange(undefined);
+								onChange({ startDate: undefined, endDate: undefined });
+							}}>
+							<X className='h-4 w-4' />
+						</button>
+					)}
 				</div>
-			</PopoverTrigger>
+			</div>
 
 			<PopoverContent className={cn('w-auto flex gap-4 p-2', popoverClassName, popoverContentClassName)} align='start'>
 				<Calendar

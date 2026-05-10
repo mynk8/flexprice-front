@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import Feature, { FEATURE_TYPE } from '@/models/Feature';
 import { ENTITY_STATUS } from '@/models';
 import { ActionButton, Chip } from '@/components/atoms';
@@ -83,7 +83,7 @@ const FeatureTable: FC<Props> = ({ data, onEdit }) => {
 
 	return (
 		<div>
-			<FlexpriceTable
+			<DataTable
 				data={data}
 				columns={columnData}
 				showEmptyRow

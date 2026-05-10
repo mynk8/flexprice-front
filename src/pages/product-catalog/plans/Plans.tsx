@@ -1,5 +1,7 @@
 import { AddButton, Button, Dialog, Page, Chip } from '@/components/atoms';
 import { ApiDocsContent, DropdownMenu, DuplicatePlanDialog, PlanDrawer } from '@/components/molecules';
+import { cn } from '@/lib/utils';
+import { getTypographyClass } from '@/lib/typography';
 import type { DropdownMenuOption } from '@/components/molecules';
 import { ColumnData } from '@/components/molecules/Table';
 import { Plan } from '@/models/Plan';
@@ -306,16 +308,16 @@ const PlansPage = () => {
 					}}
 					emptyStateConfig={{
 						customComponent: (
-							<div className='mx-auto flex h-[360px] w-full flex-col items-center justify-center rounded-[6px] border border-[#E9E9E9] bg-[#fafafa] px-4'>
-								<div className='mb-4 text-center text-[20px] font-medium leading-normal text-gray-700'>Plans</div>
-								<div className='mb-8 max-w-[350px] bg-[#F9F9F9] text-center text-[16px] font-normal leading-normal text-gray-400'>
+							<div className='mx-auto flex h-[360px] w-full flex-col items-center justify-center rounded-[6px] border border-border bg-white px-4 shadow-sm'>
+								<h2 className={cn(getTypographyClass('form-title'), 'mb-2 text-center text-zinc-950')}>Plans</h2>
+								<p className={cn(getTypographyClass('body-large'), 'text-zinc-500 mb-8 text-center max-w-[450px]')}>
 									Create a plan to display pricing and start billing customers.
-								</div>
+								</p>
 								<Button
 									variant='outline'
-									prefixIcon={<WandSparkles className='text-black' />}
+									prefixIcon={<WandSparkles className='text-indigo-600' />}
 									onClick={() => navigate(RouteNames.pricingSetup, { state: { from: 'plans' } })}
-									className='!border-indigo-200 !bg-white !p-5 text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700'>
+									className='border-indigo-200 bg-white px-6 h-10 text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700 shadow-sm font-medium'>
 									<span className='analyzing-prompt-shimmer text-sm font-medium'>Create with AI</span>
 								</Button>
 							</div>

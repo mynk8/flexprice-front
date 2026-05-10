@@ -1,9 +1,10 @@
-import { Page, AddButton, Button, Card } from '@/components/atoms';
+import { Page, AddButton, Card } from '@/components/atoms';
 import { FC, ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { ApiDocsContent } from '@/components/molecules/ApiDocs/ApiDocs';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import EmptyState from './EmptyState';
 
 interface EmptyStateCardItem {
 	icon?: ReactNode;
@@ -27,19 +28,41 @@ export interface TutorialItem {
 	onClick?: () => void;
 }
 
-interface Props {
+export interface EmptyPageProps {
+	/** Callback function triggered when the 'Add' button in the header is clicked. */
 	onAddClick?: () => void;
+	/** Array of tags for API documentation context. */
 	tags?: string[];
+	/** Primary heading text for the page. */
 	heading?: string;
+	/** Optional child elements to render below the empty state card. */
 	children?: ReactNode;
+	/** Custom label for the 'Add' button in the header. */
 	addButtonLabel?: string;
+	/** Configuration for the central empty state card. */
 	emptyStateCard?: EmptyStateCardItem;
+	/** Array of tutorial items to display as cards below the empty state. */
 	tutorials?: TutorialItem[];
 }
 
-const EmptyPage: FC<Props> = ({ onAddClick, tags, heading, children, addButtonLabel, emptyStateCard, tutorials }) => {
+/**
+ * EmptyPage is a high-level organism used to represent a page with no data.
+ * It combines a page header, an EmptyState card, API documentation links, and tutorial cards.
+ *
+ * @example
+ * <EmptyPage
+ *   heading="Invoices"
+ *   emptyStateCard={{
+ *     heading: "No invoices yet",
+ *     description: "Invoices will appear here once subscriptions are billed.",
+ *     buttonLabel: "Create Customer",
+ *     buttonAction: () => navigate('/customers')
+ *   }}
+ *   tutorials={GUIDES.invoices.tutorials}
+ * />
+ */
+const EmptyPage: FC<EmptyPageProps> = ({ onAddClick, tags, heading, children, addButtonLabel, emptyStateCard, tutorials }) => {
 	const card = emptyStateCard;
-	// Use heading as documentTitle if it's a string, otherwise use undefined to avoid "[object Object]"
 	const documentTitle = typeof heading === 'string' ? heading : undefined;
 
 	return (
@@ -58,26 +81,19 @@ const EmptyPage: FC<Props> = ({ onAddClick, tags, heading, children, addButtonLa
 					/>
 				)
 			}>
-			<div className='bg-[#fafafa] border border-[#E9E9E9] rounded-[6px] w-full h-[360px] flex flex-col items-center justify-center mx-auto '>
-				{card?.icon && <div className='mb-8'>{card?.icon}</div>}
-				{card?.heading && <div className=' font-medium text-[20px] leading-normal text-gray-700 mb-4 text-center'>{card?.heading}</div>}
-				{card?.description && (
-					<div className=' font-normal bg-[#F9F9F9] text-[16px] leading-normal text-gray-400 mb-8 text-center max-w-[350px]'>
-						{card?.description}
-					</div>
-				)}
-				{card?.buttonAction && card?.buttonLabel && (
-					<Button variant={'outline'} onClick={card?.buttonAction} className='!p-5 !bg-[#fbfbfb] !border-[#CFCFCF]'>
-						{card?.buttonLabel}
-					</Button>
-				)}
-			</div>
-			{/* Quick Start Section */}
+			{card && (
+				<EmptyState
+					icon={card.icon}
+					heading={card.heading}
+					description={card.description}
+					buttonLabel={card.buttonLabel}
+					buttonAction={card.buttonAction}
+				/>
+			)}
 			<ApiDocsContent tags={tags} />
 			{children}
 
-			{/* card section */}
-			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 '>
+			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10'>
 				{tutorials?.map((item, index) => {
 					const imageUrl =
 						item.imageUrl && item.imageUrl.trim() !== ''
@@ -91,11 +107,9 @@ const EmptyPage: FC<Props> = ({ onAddClick, tags, heading, children, addButtonLa
 									'!aspect-auto bg-gradient-to-r from-[#ffffff] to-[#fcfcfc]',
 								)}
 								onClick={item.onClick}>
-								{/* Image at the top */}
-								<div className='w-full h-[80px] aspect-video rounded-t-[6px] overflow-hidden bg-[#f5f5f5] flex items-center justify-center'>
+								<div className='w-full h-[80px] aspect-video rounded-t-[6px] overflow-hidden bg-muted flex items-center justify-center'>
 									<img src={imageUrl} loading='lazy' className='object-cover bg-gray-100 w-full h-full' alt={' '} />
 								</div>
-								{/* Content below image */}
 								<div className='flex-1 flex flex-col justify-between mt-4'>
 									<div>
 										<h3 className='text-slate-800 text-base font-medium group-hover:text-gray-600 transition-colors duration-200 text-left'>

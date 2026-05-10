@@ -51,8 +51,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ─── Default ─────────────────────────────────────────────────────────────────
-
 export const Default: Story = {
 	args: {
 		featureName: 'API Calls',
@@ -61,8 +59,6 @@ export const Default: Story = {
 		unit: 'calls',
 	},
 };
-
-// ─── Usage Levels ─────────────────────────────────────────────────────────────
 
 export const LowUsage: Story = {
 	name: 'Low Usage (25%)',
@@ -106,8 +102,6 @@ export const AtLimit: Story = {
 	},
 };
 
-// ─── Large Numbers ────────────────────────────────────────────────────────────
-
 export const LargeNumbers: Story = {
 	name: 'Large Numbers (formatted)',
 	args: {
@@ -119,15 +113,13 @@ export const LargeNumbers: Story = {
 	},
 };
 
-// ─── Entitlements Dashboard ───────────────────────────────────────────────────
-
 export const EntitlementsDashboard: Story = {
 	name: 'Subscription Entitlements',
 	render: () => (
-		<div className='space-y-5 w-96 p-6 border rounded-lg bg-white'>
+		<div className='space-y-5 w-96 p-6 border border-border rounded-lg bg-card'>
 			<div className='flex justify-between items-baseline mb-2'>
-				<h3 className='text-sm font-semibold text-gray-800'>Feature Usage</h3>
-				<span className='text-xs text-gray-400'>Growth Plan</span>
+				<h3 className='text-sm font-semibold text-foreground'>Feature Usage</h3>
+				<span className='text-xs text-muted-foreground'>Growth Plan</span>
 			</div>
 			<UsageBar featureName='API Calls' used={2500} limit={10000} unit='calls' />
 			<UsageBar featureName='Data Storage' used={6.8} limit={10} unit='GB' showPercentage />

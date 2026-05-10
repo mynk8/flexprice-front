@@ -5,7 +5,7 @@ import { GroupApi } from '@/api/GroupApi';
 import FeatureApi from '@/api/FeatureApi';
 import { PriceApi } from '@/api/PriceApi';
 import { Card, CardHeader, Loader, NoDataCard, ShortPagination } from '@/components/atoms';
-import { FlexpriceTable, ColumnData, QueryBuilder } from '@/components/molecules';
+import { DataTable, ColumnData, QueryBuilder } from '@/components/molecules';
 import { ChargeValueCell } from '@/components/molecules';
 import { Price, PRICE_STATUS, PRICE_TYPE, PRICE_ENTITY_TYPE } from '@/models';
 import { PriceUnit } from '@/models/PriceUnit';
@@ -495,7 +495,7 @@ const GroupOverviewTab = () => {
 						</div>
 					) : (
 						<>
-							<FlexpriceTable showEmptyRow columns={chargeColumns} data={tableItems} />
+							<DataTable showEmptyRow columns={chargeColumns} data={tableItems} />
 							{priceIds.length > 0 && (totalItems > 0 || page > 1) && (
 								<ShortPagination unit='Charges' totalItems={totalItems} pageSize={limit} prefix={PAGINATION_PREFIX.GROUP_CHARGES} />
 							)}
@@ -527,7 +527,7 @@ const GroupOverviewTab = () => {
 						<Loader />
 					</div>
 				) : (
-					<FlexpriceTable
+					<DataTable
 						columns={featureColumns}
 						data={features}
 						onRowClick={(row) => row?.id && navigate(`${RouteNames.featureDetails}/${row.id}`)}

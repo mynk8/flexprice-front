@@ -1,10 +1,19 @@
 import React from 'react';
 
 export interface SpinnerProps {
+	/** Diameter of the spinner in pixels. Defaults to 24. */
 	size?: number;
+	/** Additional CSS classes for the SVG element. */
 	className?: string;
 }
 
+/**
+ * A basic loading spinner component.
+ * Animates with a rotation effect.
+ *
+ * @example
+ * <Spinner size={20} className="text-blue-500" />
+ */
 const Spinner: React.FC<SpinnerProps> = ({ size = 24, className = '' }) => {
 	return (
 		<svg

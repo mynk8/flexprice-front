@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { SubscriptionUsage } from '@/models/Subscription';
-import { ColumnData, FlexpriceTable } from '@/components/molecules';
+import { ColumnData, DataTable } from '@/components/molecules';
 import { FormHeader } from '@/components/atoms';
 
 export interface UsageTableProps {
@@ -39,7 +39,7 @@ const UsageTable: FC<UsageTableProps> = ({ data }) => {
 		<div className='rounded-[6px] border border-gray-300  mt-2 p-4'>
 			<FormHeader title='Current Meter Usage' variant='sub-header' />
 			<div className='rounded-[6px] border border-gray-300  mt-2 '>
-				<FlexpriceTable columns={columns} data={mappedData} />
+				<DataTable columns={columns} data={mappedData} />
 			</div>
 		</div>
 	);

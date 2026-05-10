@@ -1,6 +1,6 @@
 import { Button, Chip, Loader, Page, ShortPagination } from '@/components/atoms';
 import { API_DOCS_TAGS } from '@/constants/apiDocsTags';
-import { ApiDocsContent, ColumnData, FlexpriceTable, ImportFileDrawer } from '@/components/molecules';
+import { ApiDocsContent, ColumnData, DataTable, ImportFileDrawer } from '@/components/molecules';
 import { EmptyPage } from '@/components/organisms';
 import GUIDES from '@/constants/guides';
 import usePagination from '@/hooks/usePagination';
@@ -132,7 +132,7 @@ const ImportExport = () => {
 			<ImportFileDrawer taskId={activeTask} isOpen={drawerOpen} onOpenChange={(value) => setdrawerOpen(value)} />
 
 			<div>
-				<FlexpriceTable
+				<DataTable
 					onRowClick={(row) => {
 						setactiveTask(row.id);
 						setdrawerOpen(true);

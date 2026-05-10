@@ -1,7 +1,7 @@
 import { FC, useMemo, useState, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { Card, FormHeader, AddButton, Dialog, Button } from '@/components/atoms';
-import FlexpriceTable, { ColumnData, RedirectCell } from '@/components/molecules/Table';
+import DataTable, { ColumnData, RedirectCell } from '@/components/molecules/Table';
 import { SubscriptionResponse } from '@/types/dto/Subscription';
 import { RouteNames } from '@/core/routes/Routes';
 import formatDate from '@/utils/common/format_date';
@@ -183,7 +183,7 @@ const SubscriptionEditInheritingCustomersSection: FC<SubscriptionEditInheritingC
 				<Card variant='notched'>
 					{headerRow}
 					<div className='mt-4'>
-						<FlexpriceTable showEmptyRow={false} data={inheritingSubscriptions} columns={columns} variant='no-bordered' />
+						<DataTable showEmptyRow={false} data={inheritingSubscriptions} columns={columns} variant='no-bordered' />
 					</div>
 				</Card>
 			) : (

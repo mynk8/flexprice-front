@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react';
 import { Subscription, SUBSCRIPTION_STATUS, SUBSCRIPTION_TYPE } from '@/models/Subscription';
-import { ColumnData, FlexpriceTable } from '@/components/molecules';
+import { ColumnData, DataTable } from '@/components/molecules';
 import { Chip, Tooltip } from '@/components/atoms';
 import { isInheritedSubscription } from '@/utils/subscription/isInheritedSubscription';
 import { formatBillingPeriodForDisplay } from '@/utils/common/helper_functions';
@@ -161,7 +161,7 @@ const SubscriptionTable: FC<SubscriptionTableProps> = ({ data, onRowClick, allow
 	}, [allowRedirect, showHierarchyColumn, subscriptionOverrides]);
 
 	return (
-		<FlexpriceTable
+		<DataTable
 			onRowClick={(row) => {
 				onRowClick?.(row);
 			}}

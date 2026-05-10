@@ -11,6 +11,18 @@ const meta: Meta<typeof SortDropdown> = {
 		backgrounds: {
 			default: 'light',
 		},
+		docs: {
+			description: {
+				component:
+					'Sort configuration panel with multi-field support, drag-to-reorder (via dnd-kit sortable), and per-field asc/desc direction. Used in query builder toolbars.',
+			},
+		},
+	},
+	tags: ['autodocs'],
+	argTypes: {
+		disabled: { control: 'boolean' },
+		maxSorts: { control: 'number' },
+		className: { control: false },
 	},
 };
 

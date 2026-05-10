@@ -1,5 +1,5 @@
 import { Spacer, ShortPagination } from '@/components/atoms';
-import FlexpriceTable from '@/components/molecules/Table';
+import DataTable from '@/components/molecules/Table';
 import type { TableConfig, PaginationConfig } from './QueryableDataArea';
 
 interface TableAreaProps<T> {
@@ -11,7 +11,7 @@ interface TableAreaProps<T> {
 const TableArea = <T,>({ data, tableConfig, paginationConfig }: TableAreaProps<T>) => {
 	return (
 		<>
-			<FlexpriceTable
+			<DataTable
 				columns={tableConfig.columns}
 				data={data?.items || []}
 				onRowClick={tableConfig.onRowClick}

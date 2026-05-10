@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
-import { ColumnData, FlexpriceTable, LineItemCoupon } from '@/components/molecules';
+import { ColumnData, DataTable, LineItemCoupon } from '@/components/molecules';
 import PriceOverrideDialog from '@/components/molecules/PriceOverrideDialog/PriceOverrideDialog';
 import CommitmentConfigDialog from '@/components/molecules/CommitmentConfigDialog';
 import { Price, PRICE_TYPE, PRICE_UNIT_TYPE } from '@/models';
@@ -400,7 +400,7 @@ const SubscriptionPriceTable: FC<Props> = ({
 			</div>
 			<div className='rounded-[6px] border border-gray-300'>
 				<div style={{ overflow: 'hidden' }}>
-					<FlexpriceTable columns={CHARGES_TABLE_COLUMNS} data={displayedData} />
+					<DataTable columns={CHARGES_TABLE_COLUMNS} data={displayedData} />
 				</div>
 			</div>
 			{hasMore && (

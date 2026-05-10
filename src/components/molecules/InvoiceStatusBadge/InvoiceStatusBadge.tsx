@@ -1,4 +1,4 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import Chip from '@/components/atoms/Chip';
 import { CheckCircle2, FileText, XCircle, Clock, AlertCircle, RefreshCw, Ban } from 'lucide-react';
 
@@ -10,7 +10,7 @@ export type InvoiceStatus = 'paid' | 'draft' | 'void' | 'overdue' | 'pending' | 
 interface StatusConfig {
 	label: string;
 	variant: 'success' | 'info' | 'failed' | 'warning' | 'default';
-	icon: React.ReactNode;
+	icon: ReactNode;
 }
 
 const STATUS_CONFIG: Record<InvoiceStatus, StatusConfig> = {
@@ -73,7 +73,7 @@ export interface InvoiceStatusBadgeProps {
  * - `overdue` / `uncollectible` → red (failed)
  * - `void` → gray (default)
  */
-const InvoiceStatusBadge: React.FC<InvoiceStatusBadgeProps> = ({ status, showIcon = true, className }) => {
+const InvoiceStatusBadge = ({ status, showIcon = true, className }: InvoiceStatusBadgeProps) => {
 	const config = STATUS_CONFIG[status] ?? {
 		label: status,
 		variant: 'default' as const,

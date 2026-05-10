@@ -2,7 +2,7 @@ import { FC, useState, useMemo } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { Plus, Trash2 } from 'lucide-react';
 import { Button, Card, CardHeader, Chip, Dialog, NoDataCard } from '@/components/atoms';
-import { FlexpriceTable, AddEntitlementDrawer } from '@/components/molecules';
+import { DataTable, AddEntitlementDrawer } from '@/components/molecules';
 import SubscriptionApi from '@/api/SubscriptionApi';
 import EntitlementApi from '@/api/EntitlementApi';
 import { FEATURE_TYPE } from '@/models/Feature';
@@ -220,7 +220,7 @@ const SubscriptionEntitlementsSection: FC<SubscriptionEntitlementsSectionProps> 
 							</Button>
 						}
 					/>
-					<FlexpriceTable showEmptyRow data={entitlements} columns={columns} variant='no-bordered' />
+					<DataTable showEmptyRow data={entitlements} columns={columns} variant='no-bordered' />
 				</Card>
 			) : (
 				<NoDataCard

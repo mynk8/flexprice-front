@@ -72,6 +72,8 @@ export const Default: Story = {
 		variant: 'default',
 		size: 'default',
 		children: 'Create Plan',
+		isLoading: false,
+		asChild: false,
 	},
 	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement);

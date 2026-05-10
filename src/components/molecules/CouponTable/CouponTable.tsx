@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { ActionButton, Chip } from '@/components/atoms';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import { Coupon } from '@/models/Coupon';
 import { COUPON_TYPE } from '@/types/common/Coupon';
 import { ENTITY_STATUS } from '@/models';
@@ -97,7 +97,7 @@ const CouponTable: FC<CouponTableProps> = ({ data, onEdit }) => {
 
 	return (
 		<>
-			<FlexpriceTable
+			<DataTable
 				columns={columns}
 				data={mappedData}
 				showEmptyRow

@@ -10,19 +10,8 @@ export { default as ContactUsDialog } from './ContactUsDialog';
 export { default as Pagination } from './Pagination';
 
 // Tables & Data Display
-export {
-	Table,
-	TableHeader,
-	TableBody,
-	TableHead,
-	TableRow,
-	TableCell,
-	TooltipCell,
-	RedirectCell,
-	default as FlexpriceTable,
-	Toolbar,
-} from './Table';
-export type { ColumnData, FlexpriceTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from './Table';
+export { Table, TableHeader, TableBody, TableHead, TableRow, TableCell, TooltipCell, RedirectCell, DataTable } from './Table';
+export type { ColumnData, DataTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from './Table';
 
 // Charts & Analytics
 export { default as CustomerUsageChart } from './CustomerUsageChart';

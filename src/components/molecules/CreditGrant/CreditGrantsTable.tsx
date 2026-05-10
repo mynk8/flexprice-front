@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActionButton } from '@/components/atoms';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import { CreditGrant } from '@/models';
 import { formatExpirationPeriod } from '@/utils/common/credit_grant_helpers';
 import { formatBillingPeriodForPrice } from '@/utils/common/helper_functions';
@@ -87,7 +87,7 @@ const CreditGrantsTable: React.FC<CreditGrantsTableProps> = ({ data, onDelete, s
 		},
 	];
 
-	return <FlexpriceTable showEmptyRow={showEmptyRow} data={data} columns={columns} />;
+	return <DataTable showEmptyRow={showEmptyRow} data={data} columns={columns} />;
 };
 
 export default CreditGrantsTable;

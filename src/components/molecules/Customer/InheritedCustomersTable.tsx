@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import FlexpriceTable, { ColumnData } from '@/components/molecules/Table';
+import DataTable, { ColumnData } from '@/components/molecules/Table';
 import { AddButton, FormHeader, Button } from '@/components/atoms';
 import Dialog from '@/components/atoms/Dialog';
 import CustomerMultiSearchSelect from '@/components/molecules/Customer/CustomerMultiSearchSelect';
@@ -117,7 +117,7 @@ const InheritedCustomersTable: React.FC<InheritedCustomersTableProps> = ({ data,
 					<AddButton onClick={() => setDialogOpen(true)} disabled={disabled} />
 				</div>
 				<div className='rounded-[6px] border border-gray-300'>
-					<FlexpriceTable data={data} columns={columns} showEmptyRow />
+					<DataTable data={data} columns={columns} showEmptyRow />
 				</div>
 			</div>
 		</>

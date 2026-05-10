@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react';
 import { Card, FormHeader, AddButton, NoDataCard } from '@/components/atoms';
 import { ActionButton } from '@/components/atoms';
-import FlexpriceTable, { ColumnData } from '@/components/molecules/Table';
+import DataTable, { ColumnData } from '@/components/molecules/Table';
 import EditSubscriptionCreditGrantModal from '@/components/molecules/CreditGrant/EditSubscriptionCreditGrantModal';
 import CancelCreditGrantModal from '@/components/molecules/CreditGrant/CancelCreditGrantModal';
 import { formatExpirationPeriod } from '@/utils/common/credit_grant_helpers';
@@ -110,7 +110,7 @@ const SubscriptionEditCreditGrantsSection: FC<SubscriptionEditCreditGrantsSectio
 						<AddButton onClick={onAddClick} disabled={addDisabled} />
 					</div>
 					<div className='mt-4'>
-						<FlexpriceTable showEmptyRow={false} data={creditGrants} columns={columns} variant='no-bordered' />
+						<DataTable showEmptyRow={false} data={creditGrants} columns={columns} variant='no-bordered' />
 					</div>
 				</Card>
 			) : (

@@ -56,8 +56,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ─── Default ─────────────────────────────────────────────────────────────────
-
 export const Default: Story = {
 	args: {
 		title: 'Monthly Revenue',
@@ -65,8 +63,6 @@ export const Default: Story = {
 		currency: 'USD',
 	},
 };
-
-// ─── Currency Variants ────────────────────────────────────────────────────────
 
 export const EuroCurrency: Story = {
 	args: {
@@ -76,8 +72,6 @@ export const EuroCurrency: Story = {
 	},
 };
 
-// ─── Percentage ───────────────────────────────────────────────────────────────
-
 export const Percentage: Story = {
 	args: {
 		title: 'Churn Rate',
@@ -85,8 +79,6 @@ export const Percentage: Story = {
 		isPercent: true,
 	},
 };
-
-// ─── With Positive Trend ──────────────────────────────────────────────────────
 
 export const PositiveTrend: Story = {
 	args: {
@@ -96,8 +88,6 @@ export const PositiveTrend: Story = {
 		isNegative: false,
 	},
 };
-
-// ─── With Negative Trend ──────────────────────────────────────────────────────
 
 export const NegativeTrend: Story = {
 	args: {
@@ -109,16 +99,12 @@ export const NegativeTrend: Story = {
 	},
 };
 
-// ─── Count (no currency) ──────────────────────────────────────────────────────
-
 export const CountValue: Story = {
 	args: {
 		title: 'Active Customers',
 		value: 1234,
 	},
 };
-
-// ─── Zero Value ───────────────────────────────────────────────────────────────
 
 export const ZeroValue: Story = {
 	args: {
@@ -127,8 +113,6 @@ export const ZeroValue: Story = {
 		currency: 'USD',
 	},
 };
-
-// ─── Dashboard Grid ───────────────────────────────────────────────────────────
 
 export const DashboardGrid: Story = {
 	name: 'Dashboard KPI Grid',

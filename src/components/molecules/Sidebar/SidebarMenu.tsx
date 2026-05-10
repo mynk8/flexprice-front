@@ -63,16 +63,13 @@ const SidebarNav: FC<{ items: NavItem[] }> = ({ items }) => {
 	}, [location.pathname, items]);
 
 	const handleToggle = (itemTitle: string, isOpen: boolean) => {
-		// Use requestAnimationFrame for smoother state updates
-		requestAnimationFrame(() => {
-			if (isOpen) {
-				// If opening, set this as the open item (closing others)
-				setOpenItemTitle(itemTitle);
-			} else {
-				// If closing, clear the open item
-				setOpenItemTitle(null);
-			}
-		});
+		// Always use the latest state via functional update to avoid race conditions
+		// with delayed state updates
+		if (isOpen) {
+			setOpenItemTitle(itemTitle);
+		} else {
+			setOpenItemTitle(null);
+		}
 	};
 
 	return (

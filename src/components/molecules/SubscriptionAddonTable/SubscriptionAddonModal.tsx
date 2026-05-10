@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import AddonApi from '@/api/AddonApi';
 import { Select } from '@/components/atoms';
 import { toSentenceCase } from '@/utils/common/helper_functions';
-import { ColumnData, FlexpriceTable } from '@/components/molecules';
+import { ColumnData, DataTable } from '@/components/molecules';
 import { Price, PRICE_TYPE } from '@/models/Price';
 import { BILLING_PERIOD } from '@/constants/constants';
 import { LineItemCommitmentConfig, LineItemCommitmentsMap } from '@/types/dto/LineItemCommitmentConfig';
@@ -276,7 +276,7 @@ const SubscriptionAddonModal: React.FC<Props> = ({
 						</div>
 						{selectedAddonPrices.length > 0 ? (
 							<div className='rounded-xl border border-gray-200'>
-								<FlexpriceTable columns={addonChargeColumns} data={selectedAddonPrices.map((p) => ({ price: p }))} />
+								<DataTable columns={addonChargeColumns} data={selectedAddonPrices.map((p) => ({ price: p }))} />
 							</div>
 						) : (
 							<div className='rounded-xl border border-gray-200 p-4'>

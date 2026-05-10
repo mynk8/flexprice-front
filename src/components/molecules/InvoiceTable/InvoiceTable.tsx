@@ -1,6 +1,6 @@
 import { Invoice, INVOICE_STATUS } from '@/models/Invoice';
 import { FC } from 'react';
-import FlexpriceTable, { ColumnData, RedirectCell } from '../Table';
+import DataTable, { ColumnData, RedirectCell } from '../Table';
 import { formatDateShort, getCurrencySymbol } from '@/utils/common/helper_functions';
 import { Chip } from '@/components/atoms';
 import { useNavigate } from 'react-router';
@@ -101,7 +101,7 @@ const InvoiceTable: FC<Props> = ({ data }) => {
 
 	return (
 		<div>
-			<FlexpriceTable
+			<DataTable
 				showEmptyRow={true}
 				onRowClick={(row) => {
 					navigate(`/billing/invoices/${row.id}`);

@@ -14,21 +14,37 @@ export interface SelectOption {
 }
 
 export interface SelectProps {
+	/** Array of options to display in the dropdown. */
 	options: SelectOption[];
+	/** Currently selected value. */
 	value?: string;
+	/** Whether the select should be open by default. */
 	defaultOpen?: boolean;
+	/** Placeholder text shown when no value is selected. */
 	placeholder?: string;
+	/** Label text displayed above the select. */
 	label?: string;
+	/** Whether the field is required (displays a red asterisk). */
 	required?: boolean;
+	/** Helper text displayed below the select. */
 	description?: string;
+	/** Error message displayed below the select. Highlights the border in destructive color. */
 	error?: string;
+	/** Callback function triggered when the selection changes. */
 	onChange?: (value: string) => void;
+	/** Whether the select is disabled. */
 	disabled?: boolean;
+	/** If true, uses a radio-style indicator instead of a checkmark for the selected item. */
 	isRadio?: boolean;
+	/** Additional CSS classes for the container. */
 	className?: string;
+	/** Text to display when there are no options. */
 	noOptionsText?: string;
+	/** Whether to hide the default checkmark icon for the selected item. */
 	hideSelectedTick?: boolean;
+	/** Optional custom trigger element. */
 	trigger?: React.ReactNode;
+	/** Additional CSS classes for the dropdown content. */
 	contentClassName?: string;
 }
 
@@ -55,6 +71,17 @@ const RadioSelectItem = React.forwardRef<
 ));
 RadioSelectItem.displayName = 'RadioSelectItem';
 
+/**
+ * Custom Select component built on top of Shadcn UI and Radix UI.
+ * Supports labels, error states, radio-style options, and custom triggers.
+ *
+ * @example
+ * <Select
+ *   label="Status"
+ *   options={[{ label: 'Active', value: 'active' }, { label: 'Archived', value: 'archived' }]}
+ *   onChange={(val) => console.log(val)}
+ * />
+ */
 const FlexPriceSelect: React.FC<SelectProps> = ({
 	disabled = false,
 	options,

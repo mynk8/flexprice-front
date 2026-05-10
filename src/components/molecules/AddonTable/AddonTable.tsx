@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import Addon from '@/models/Addon';
 import { ENTITY_STATUS } from '@/models';
 import { ActionButton, Chip } from '@/components/atoms';
@@ -65,7 +65,7 @@ const AddonTable: FC<Props> = ({ data, onEdit }) => {
 
 	return (
 		<div>
-			<FlexpriceTable
+			<DataTable
 				data={data}
 				columns={columnData}
 				showEmptyRow

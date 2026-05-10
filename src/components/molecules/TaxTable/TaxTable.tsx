@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import FlexpriceTable, { ColumnData, TooltipCell } from '../Table';
+import DataTable, { ColumnData, TooltipCell } from '../Table';
 import { TaxRateResponse } from '@/types/dto/tax';
 import { Chip, ActionButton } from '@/components/atoms';
 import { formatDateShort } from '@/utils/common/helper_functions';
@@ -114,7 +114,7 @@ const TaxTable: FC<Props> = ({ data, onEdit }) => {
 
 	return (
 		<div>
-			<FlexpriceTable onRowClick={(row) => navigate(`${RouteNames.taxes}/${row.id}`)} showEmptyRow={true} columns={columns} data={data} />
+			<DataTable onRowClick={(row) => navigate(`${RouteNames.taxes}/${row.id}`)} showEmptyRow={true} columns={columns} data={data} />
 		</div>
 	);
 };

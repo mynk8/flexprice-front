@@ -1,5 +1,5 @@
 import { FC, useState, useMemo } from 'react';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import { Chip, ActionButton, AddButton, FormHeader } from '@/components/atoms';
 import { Coupon } from '@/models/Coupon';
 import { CouponModal } from '@/components/molecules';
@@ -163,7 +163,7 @@ const SubscriptionDiscountTable: FC<Props> = ({ coupon, onChange, disabled, curr
 					{!coupon && <AddButton onClick={() => setIsModalOpen(true)} disabled={disabled} label='Add' />}
 				</div>
 				<div className='rounded-[6px] border border-gray-300'>
-					<FlexpriceTable data={tableData} columns={columns} showEmptyRow />
+					<DataTable data={tableData} columns={columns} showEmptyRow />
 				</div>
 			</div>
 		</div>

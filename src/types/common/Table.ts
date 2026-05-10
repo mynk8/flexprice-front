@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { Key, MouseEvent, ReactNode } from 'react';
 
 export type ColumnAlign = 'left' | 'center' | 'right' | 'justify';
 export type ColumnVariant = 'default' | 'title' | 'link' | 'icon' | 'interactive' | (string & {});
@@ -15,7 +15,7 @@ interface BaseColumnData<T> {
 	className?: string;
 	fieldVariant?: ColumnVariant;
 	hideOnEmpty?: boolean;
-	onCellClick?: (row: T, e: React.MouseEvent) => void;
+	onCellClick?: (row: T, e: MouseEvent) => void;
 	children?: ReactNode;
 	sortable?: boolean;
 	sortKey?: string;
@@ -41,7 +41,9 @@ export interface TableVirtualizationConfig<T> {
 	height?: number | string;
 	estimateRowHeight?: number;
 	overscan?: number;
-	getRowKey?: (row: T, index: number) => React.Key;
+	getRowKey?: (row: T, index: number) => Key;
+	/** Enables automatic row height measurement after render. Use when row heights vary (e.g. multi-line content). */
+	enableAutoHeight?: boolean;
 }
 
 export interface TableSortState {
@@ -59,7 +61,7 @@ export interface TablePaginationConfig {
 	showPageInfo?: boolean;
 }
 
-export interface FlexpriceTableProps<T> {
+export interface DataTableProps<T> {
 	columns: ColumnData<T>[];
 	data: T[];
 	onRowClick?: (row: T) => void;

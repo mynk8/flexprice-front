@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Button, Card, CardHeader, NoDataCard, Loader } from '@/components/atoms';
 import { Plus } from 'lucide-react';
 import { EntitlementApi } from '@/api';
-import { FlexpriceTable, ColumnData, RedirectCell, AddEntitlementDrawer } from '@/components/molecules';
+import { DataTable, ColumnData, RedirectCell, AddEntitlementDrawer } from '@/components/molecules';
 import { getFeatureTypeChips } from '@/components/molecules/CustomerUsageTable/CustomerUsageTable';
 import { formatAmount } from '@/components/atoms/Input/Input';
 import { Entitlement, ENTITY_STATUS, FEATURE_TYPE, ENTITLEMENT_ENTITY_TYPE, EXPAND, ENTITLEMENT_USAGE_RESET_PERIOD } from '@/models';
@@ -147,7 +147,7 @@ const PlanEntitlementsTab = () => {
 								</Button>
 							}
 						/>
-						<FlexpriceTable showEmptyRow data={entitlements} columns={columnData} />
+						<DataTable showEmptyRow data={entitlements} columns={columnData} />
 					</Card>
 				) : (
 					<NoDataCard

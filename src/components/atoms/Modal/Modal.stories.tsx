@@ -2,22 +2,31 @@ import type { Meta, StoryObj } from '@storybook/react';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { fn } from '@storybook/test';
-import Modal from './Modal';
+import Modal, { DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from './Modal';
 import Button from '../Button/Button';
-import Card, { CardHeader } from '../Card/Card';
+import Card, { CardHeader } from '../Card';
 
 /**
  * ## Modal
  *
- * A centered dialog overlay that renders into a portal (`#modal-root`).
- * Used for focused tasks like confirming deletions, adding new items,
- * or displaying detailed information that requires breaking out of the page flow.
+ * A centered dialog overlay built on Radix UI Dialog primitives via `ui/dialog`.
+ * Now uses proper compound component composition — `DialogHeader`, `DialogFooter`,
+ * `DialogClose` can be used directly within `children`.
  *
  * ### Props
  * - `isOpen` — Controls visibility
- * - `onOpenChange` — Callback when the modal attempts to close (e.g. clicking overlay or X button)
+ * - `onOpenChange` — Callback when dialog opens/closes
  * - `showOverlay` — Whether to show the dark backdrop (default: true)
- * - `className` — Applied to the inner content wrapper
+ * - `showCloseButton` — Whether to show the built-in close button (default: true)
+ * - `size` — Width preset (default: `max-w-lg`)
+ * - `className` — Applied to the content wrapper
+ *
+ * ### Compound Components (use inside children)
+ * - `DialogHeader` — Title + description wrapper
+ * - `DialogTitle` — Large dialog title
+ * - `DialogDescription` — Supporting description text
+ * - `DialogFooter` — Action buttons wrapper
+ * - `DialogClose` — Accessible close button
  */
 const meta = {
 	title: 'Atoms/Modal',
@@ -26,10 +35,9 @@ const meta = {
 		layout: 'centered',
 		docs: {
 			description: {
-				component: 'Portal-based centered dialog modal for focused interactions.',
+				component:
+					'Radix-based dialog modal using compound component pattern. Built on `ui/dialog`. Use `DialogHeader`, `DialogTitle`, `DialogDescription`, `DialogFooter`, and `DialogClose` inside children for structured content.',
 			},
-			// The modal renders into a portal, which can sometimes be tricky in docs view.
-			// Setting a min-height ensures we can see it if it renders inline.
 			story: { inline: false, iframeHeight: 500 },
 		},
 	},
@@ -37,11 +45,18 @@ const meta = {
 	argTypes: {
 		isOpen: { control: 'boolean' },
 		showOverlay: { control: 'boolean' },
+		showCloseButton: { control: 'boolean' },
+		size: {
+			control: 'select',
+			options: ['max-w-sm', 'max-w-md', 'max-w-lg', 'max-w-xl', 'max-w-2xl', 'max-w-full'],
+		},
 	},
 	args: {
 		isOpen: false,
 		onOpenChange: fn(),
 		showOverlay: true,
+		showCloseButton: true,
+		size: 'max-w-lg',
 	},
 } satisfies Meta<typeof Modal>;
 
@@ -50,7 +65,7 @@ type Story = StoryObj<typeof meta>;
 
 type InteractiveModalHarnessProps = Omit<React.ComponentProps<typeof Modal>, 'children' | 'isOpen' | 'onOpenChange'> & {
 	triggerLabel: string;
-	children: (setIsOpen: (open: boolean) => void) => ReactNode;
+	children: ReactNode;
 };
 
 const InteractiveModalHarness = ({ triggerLabel, children, ...modalProps }: InteractiveModalHarnessProps) => {
@@ -59,19 +74,21 @@ const InteractiveModalHarness = ({ triggerLabel, children, ...modalProps }: Inte
 		<div>
 			<Button onClick={() => setIsOpen(true)}>{triggerLabel}</Button>
 			<Modal {...modalProps} isOpen={isOpen} onOpenChange={setIsOpen}>
-				{children(setIsOpen)}
+				{children}
 			</Modal>
 		</div>
 	);
 };
 
+// ─── Default ─────────────────────────────────────────────────────────────────
+
 export const Default: Story = {
 	render: (args) => (
-		<Modal {...args} className='bg-white rounded-lg shadow-xl w-[400px]'>
+		<Modal {...args} className='bg-card rounded-lg shadow-xl'>
 			<Card noPadding className='border-none'>
 				<div className='p-6'>
 					<CardHeader title='Confirm Deletion' />
-					<p className='text-sm text-gray-600 mb-6 mt-2'>
+					<p className='text-sm text-muted-foreground mb-6 mt-2'>
 						Are you sure you want to delete this customer? This action cannot be undone and will immediately cancel all their active
 						subscriptions.
 					</p>
@@ -90,58 +107,67 @@ export const Default: Story = {
 	},
 };
 
-export const ComplexForm: Story = {
-	name: 'With Form Content',
+// ─── With Compound Components ────────────────────────────────────────────────
+
+export const WithCompoundComponents: Story = {
+	name: 'With Compound Components',
 	render: (args) => (
-		<Modal {...args} className='bg-white rounded-lg shadow-xl w-[500px]'>
-			<div className='p-6'>
-				<h3 className='text-lg font-semibold mb-4 text-gray-900'>Create new API Key</h3>
-				<div className='space-y-4 mb-6'>
-					<div>
-						<label className='block text-sm font-medium text-gray-700 mb-1'>Key Name</label>
-						<input
-							type='text'
-							className='w-full border border-gray-300 rounded-md px-3 py-2 text-sm'
-							placeholder='e.g. Production Billing'
-						/>
-					</div>
-					<div>
-						<label className='block text-sm font-medium text-gray-700 mb-1'>Environment</label>
-						<select className='w-full border border-gray-300 rounded-md px-3 py-2 text-sm'>
-							<option>Production</option>
-							<option>Sandbox</option>
-						</select>
-					</div>
+		<Modal {...args} className='bg-card rounded-lg shadow-xl'>
+			<DialogHeader>
+				<DialogTitle>Create new API Key</DialogTitle>
+				<DialogDescription>Generate a secure API key for authenticating requests to the FlexPrice API.</DialogDescription>
+			</DialogHeader>
+			<div className='space-y-4 py-4'>
+				<div>
+					<label className='block text-sm font-medium text-foreground mb-1'>Key Name</label>
+					<input
+						type='text'
+						className='w-full border border-input rounded-md px-3 py-2 text-sm bg-background'
+						placeholder='e.g. Production Billing'
+					/>
 				</div>
-				<div className='flex justify-end gap-3 pt-4 border-t border-gray-100'>
-					<Button variant='outline'>Cancel</Button>
-					<Button>Generate Key</Button>
+				<div>
+					<label className='block text-sm font-medium text-foreground mb-1'>Environment</label>
+					<select className='w-full border border-input rounded-md px-3 py-2 text-sm bg-background'>
+						<option>Production</option>
+						<option>Sandbox</option>
+					</select>
 				</div>
 			</div>
+			<DialogFooter>
+				<Button variant='outline'>Cancel</Button>
+				<Button>Generate Key</Button>
+			</DialogFooter>
 		</Modal>
 	),
 	args: {
 		isOpen: true,
-		onOpenChange: fn(),
-		showOverlay: true,
+		showCloseButton: false,
 	},
 };
+
+// ─── Interactive Example ──────────────────────────────────────────────────────
 
 export const InteractiveExample: Story = {
 	name: 'Interactive Trigger Example',
 	render: (args) => (
-		<InteractiveModalHarness triggerLabel='Open Modal' showOverlay={args.showOverlay} className='bg-white rounded-lg shadow-xl w-[400px]'>
-			{(setIsOpen: (open: boolean) => void) => (
-				<div className='p-6'>
-					<h3 className='text-lg font-semibold mb-4'>Interactive Modal</h3>
-					<p className='text-sm text-gray-600 mb-6'>This modal is controlled by local state in the harness.</p>
-					<div className='flex justify-end gap-3'>
-						<Button variant='outline' onClick={() => setIsOpen(false)}>
-							Close
-						</Button>
-					</div>
+		<InteractiveModalHarness triggerLabel='Open Modal' showOverlay={args.showOverlay} className='bg-card rounded-lg shadow-xl w-[400px]'>
+			<>
+				<DialogHeader>
+					<DialogTitle>Interactive Modal</DialogTitle>
+					<DialogDescription>Controlled by local state in the harness.</DialogDescription>
+				</DialogHeader>
+				<div className='py-4'>
+					<p className='text-sm text-muted-foreground'>
+						This modal is controlled by local React state. Close by clicking the X button, the overlay, or the Cancel button.
+					</p>
 				</div>
-			)}
+				<DialogFooter>
+					<DialogClose asChild>
+						<Button variant='outline'>Close</Button>
+					</DialogClose>
+				</DialogFooter>
+			</>
 		</InteractiveModalHarness>
 	),
 	args: {

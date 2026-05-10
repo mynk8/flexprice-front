@@ -63,7 +63,7 @@ const SearchBarWithValueDemo = () => {
 	return (
 		<div className='w-72'>
 			<SearchBar value={query} onChange={setQuery} placeholder='Search customers...' />
-			{query && <p className='mt-2 text-xs text-gray-500'>Query: "{query}"</p>}
+			{query && <p className='mt-2 text-xs text-muted-foreground'>Query: "{query}"</p>}
 		</div>
 	);
 };
@@ -75,13 +75,13 @@ const SearchBarDebounceDemo = () => {
 	return (
 		<div className='w-80 space-y-3'>
 			<SearchBar value={input} onChange={setInput} placeholder='Type to see debounce...' />
-			<div className='text-xs space-y-1 p-3 bg-gray-50 rounded border'>
+			<div className='text-xs space-y-1 p-3 bg-muted/40 rounded border border-border'>
 				<div>
-					<span className='text-gray-500'>Immediate: </span>
+					<span className='text-muted-foreground'>Immediate: </span>
 					<span className='font-mono'>{input || '(empty)'}</span>
 				</div>
 				<div>
-					<span className='text-gray-500'>Debounced: </span>
+					<span className='text-muted-foreground'>Debounced: </span>
 					<span className='font-mono text-blue-600'>{debounced || '(empty)'}</span>
 				</div>
 			</div>
@@ -97,7 +97,7 @@ const SearchBarTableContextDemo = () => {
 	return (
 		<div className='w-96 space-y-3'>
 			<div className='flex justify-between items-center'>
-				<h3 className='text-sm font-semibold text-gray-800'>Customers ({filtered.length})</h3>
+				<h3 className='text-sm font-semibold text-foreground'>Customers ({filtered.length})</h3>
 				<div className='w-48'>
 					<SearchBar placeholder='Search customers...' onChange={setQuery} />
 				</div>
@@ -105,12 +105,12 @@ const SearchBarTableContextDemo = () => {
 			<div className='border rounded-lg overflow-hidden'>
 				{filtered.length > 0 ? (
 					filtered.map((name) => (
-						<div key={name} className='px-4 py-2.5 border-b last:border-b-0 text-sm text-gray-700'>
+						<div key={name} className='px-4 py-2.5 border-b border-border last:border-b-0 text-sm text-foreground'>
 							{name}
 						</div>
 					))
 				) : (
-					<div className='px-4 py-6 text-center text-sm text-gray-400'>No customers found</div>
+					<div className='px-4 py-6 text-center text-sm text-muted-foreground'>No customers found</div>
 				)}
 			</div>
 		</div>

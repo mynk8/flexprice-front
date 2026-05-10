@@ -30,7 +30,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<div className='h-[400px] border border-dashed border-gray-300 rounded-lg relative bg-gray-50'>
+		<div className='h-[400px] border border-dashed border-border rounded-lg relative bg-muted/30'>
 			<Loader />
 		</div>
 	),
@@ -39,8 +39,8 @@ export const Default: Story = {
 export const FullPageLoader: Story = {
 	name: 'PageLoader (Full Screen)',
 	render: () => (
-		<div className='border border-dashed border-gray-300 rounded-lg relative overflow-hidden h-[600px] bg-white'>
-			<div className='absolute top-4 left-4 font-mono text-xs text-gray-400'>Mock Browser Window</div>
+		<div className='border border-dashed border-border rounded-lg relative overflow-hidden h-[600px] bg-card'>
+			<div className='absolute top-4 left-4 font-mono text-xs text-muted-foreground'>Mock Browser Window</div>
 			<PageLoader />
 		</div>
 	),

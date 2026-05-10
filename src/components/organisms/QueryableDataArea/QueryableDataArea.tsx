@@ -99,6 +99,8 @@ export interface PaginationConfig {
  * Shown when no data is available after filtering.
  */
 export interface EmptyStateConfig {
+	/** React node icon for the empty state */
+	icon?: React.ReactNode;
 	/** Heading text for empty state */
 	heading?: string;
 	/** Description text for empty state */

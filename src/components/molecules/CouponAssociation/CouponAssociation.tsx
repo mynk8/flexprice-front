@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import { AddButton, FormHeader, Button } from '@/components/atoms';
 import { Coupon } from '@/models/Coupon';
 import { CouponModal } from '@/components/molecules';
@@ -82,7 +82,7 @@ const CouponAssociation: FC<Props> = ({ data, onChange, currency, disabled }) =>
 			</div>
 
 			<div className='rounded-xl border border-gray-300 space-y-6 mt-2'>
-				<FlexpriceTable data={data} columns={columns} showEmptyRow />
+				<DataTable data={data} columns={columns} showEmptyRow />
 			</div>
 
 			<CouponModal

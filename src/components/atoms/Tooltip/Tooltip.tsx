@@ -19,6 +19,15 @@ export interface TooltipProps {
 	className?: string;
 }
 
+/**
+ * Tooltip component for displaying additional information on hover or focus.
+ * Built on top of Radix UI Tooltip primitive.
+ *
+ * @example
+ * <Tooltip content="This is a helpful tip">
+ *   <button>Hover me</button>
+ * </Tooltip>
+ */
 const Tooltip: React.FC<TooltipProps> = ({
 	children,
 	content,

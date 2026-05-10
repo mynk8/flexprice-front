@@ -1,6 +1,6 @@
-export * from './Table';
-export { default } from './Table';
-export type { ColumnData, FlexpriceTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from './Table';
-export { default as TooltipCell } from './TooltipCell';
+import DataTable from './Table';
+export default DataTable;
+export { DataTable, Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from './Table';
 export { default as RedirectCell } from './RedirectCell';
-export { default as Toolbar, type ToolbarFilterState } from './Toolbar';
+export { default as TooltipCell } from './TooltipCell';
+export type { ColumnData, DataTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from './Table';

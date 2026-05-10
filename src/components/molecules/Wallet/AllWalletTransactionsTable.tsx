@@ -1,4 +1,4 @@
-import FlexpriceTable, { ColumnData } from '@/components/molecules/Table';
+import DataTable, { ColumnData } from '@/components/molecules/Table';
 import { RedirectCell } from '@/components/molecules';
 import { cn } from '@/lib/utils';
 import { WALLET_TRANSACTION_REASON } from '@/models/Wallet';
@@ -139,7 +139,7 @@ const AllWalletTransactionsTable: FC<Props> = ({ data }) => {
 			},
 		},
 	];
-	return <FlexpriceTable showEmptyRow columns={columnData} data={data} />;
+	return <DataTable showEmptyRow columns={columnData} data={data} />;
 };
 
 export default AllWalletTransactionsTable;

@@ -1,6 +1,6 @@
 import { Card, CardHeader, NoDataCard, Chip, Tooltip } from '@/components/atoms';
 import type { SubscriptionCommitmentInfo } from '@/models/Subscription';
-import { ChargeValueCell, ColumnData, FlexpriceTable, TerminateLineItemModal, DropdownMenu } from '@/components/molecules';
+import { ChargeValueCell, ColumnData, DataTable, TerminateLineItemModal, DropdownMenu } from '@/components/molecules';
 import { PriceTooltip } from '@/components/molecules/PriceTooltip';
 import { LineItem, SUBSCRIPTION_LINE_ITEM_ENTITY_TYPE } from '@/models/Subscription';
 import { FC, useState, useCallback, useMemo } from 'react';
@@ -478,7 +478,7 @@ const SubscriptionLineItemTable: FC<Props> = ({
 			)}
 
 			{hideCardWrapper ? (
-				<FlexpriceTable
+				<DataTable
 					showEmptyRow={isEmpty}
 					data={processedLineItems ?? []}
 					columns={columns}
@@ -488,7 +488,7 @@ const SubscriptionLineItemTable: FC<Props> = ({
 			) : (
 				<Card variant='notched'>
 					<CardHeader title='Charges' />
-					<FlexpriceTable
+					<DataTable
 						showEmptyRow={isEmpty}
 						data={processedLineItems ?? []}
 						columns={columns}

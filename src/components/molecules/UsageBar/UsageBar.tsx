@@ -1,11 +1,16 @@
-import React from 'react';
 import Progress from '@/components/atoms/Progress';
+import { cn } from '@/lib/utils';
 
 export interface UsageBarProps {
+	/** The name of the feature or metric being metered. */
 	featureName: string;
+	/** Current usage count. */
 	used: number;
+	/** Maximum entitlement or limit for this feature. */
 	limit: number;
+	/** Unit name for the metric (e.g., 'API calls', 'seats'). */
 	unit?: string;
+	/** Whether to display the percentage value in the label. */
 	showPercentage?: boolean;
 }
 
@@ -19,7 +24,7 @@ const getIndicatorColor = (percent: number): string => {
 const getLabelColor = (percent: number): string => {
 	if (percent >= 95) return 'text-red-600';
 	if (percent >= 80) return 'text-orange-600';
-	return 'text-gray-600';
+	return 'text-muted-foreground';
 };
 
 const formatUsage = (value: number): string => {
@@ -28,8 +33,21 @@ const formatUsage = (value: number): string => {
 	return value.toLocaleString();
 };
 
-const UsageBar: React.FC<UsageBarProps> = ({ featureName, used, limit, unit = '', showPercentage = false }) => {
-	const percent = Math.min(100, Math.round((used / limit) * 100));
+/**
+ * UsageBar displays metered consumption against a limit using a progress bar.
+ * Colors change from green to red as usage approaches or exceeds the limit.
+ *
+ * @example
+ * <UsageBar
+ *   featureName="API Requests"
+ *   used={8500}
+ *   limit={10000}
+ *   unit="requests"
+ *   showPercentage
+ * />
+ */
+const UsageBar = ({ featureName, used, limit, unit = '', showPercentage = false }: UsageBarProps) => {
+	const percent = limit > 0 ? Math.min(100, Math.round((used / limit) * 100)) : 0;
 	const indicatorColor = getIndicatorColor(percent);
 	const labelColor = getLabelColor(percent);
 	const isAtLimit = percent >= 100;
@@ -37,8 +55,8 @@ const UsageBar: React.FC<UsageBarProps> = ({ featureName, used, limit, unit = ''
 	return (
 		<div className='space-y-1.5'>
 			<div className='flex justify-between items-baseline'>
-				<span className='text-sm font-medium text-gray-700'>{featureName}</span>
-				<span className={`text-xs font-medium ${labelColor}`}>
+				<span className='text-sm font-medium text-foreground'>{featureName}</span>
+				<span className={cn('text-xs font-medium', labelColor)}>
 					{formatUsage(used)}
 					{unit && ` ${unit}`} / {formatUsage(limit)}
 					{unit && ` ${unit}`}

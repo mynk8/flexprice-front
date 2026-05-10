@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import FlexpriceTable, { ColumnData, RedirectCell, TooltipCell } from '../Table';
+import DataTable, { ColumnData, RedirectCell, TooltipCell } from '../Table';
 import { TaxApplied } from '@/models/Tax';
 import { formatDateShort } from '@/utils/common/helper_functions';
 import { TAX_RATE_TYPE } from '@/models/Tax';
@@ -118,7 +118,7 @@ const AppliedTaxesTable: FC<Props> = ({ data }) => {
 
 	return (
 		<div>
-			<FlexpriceTable variant='no-bordered' showEmptyRow={false} columns={columns} data={data} />
+			<DataTable variant='no-bordered' showEmptyRow={false} columns={columns} data={data} />
 		</div>
 	);
 };

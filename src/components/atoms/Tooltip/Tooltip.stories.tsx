@@ -150,14 +150,14 @@ export const RichContent: Story = {
 		content: (
 			<div className='space-y-1'>
 				<p className='font-medium'>Graduated Pricing</p>
-				<p className='text-xs text-gray-400'>
+				<p className='text-xs text-muted-foreground'>
 					Each unit tier is priced independently. The first 100 units are $0.01 each, the next 900 units are $0.008 each.
 				</p>
 			</div>
 		),
 	},
 	render: (args) => (
-		<Tooltip {...args} className='bg-white border border-gray-200 shadow-lg text-sm text-gray-900 px-4 py-3 rounded-[6px] max-w-[280px]'>
+		<Tooltip {...args} className='bg-card border border-border shadow-lg text-sm text-foreground px-4 py-3 rounded-[6px] max-w-[280px]'>
 			<Button variant='outline' size='sm'>
 				<Info className='size-3.5 mr-1' />
 				What is graduated pricing?
@@ -176,7 +176,7 @@ export const OnFormLabel: Story = {
 		<div className='flex items-center gap-1'>
 			<label className='text-sm font-medium'>Usage Threshold</label>
 			<Tooltip content='Alert sent when usage exceeds this percentage of the entitled amount' delayDuration={100} side='right'>
-				<button type='button' className='text-gray-400 hover:text-gray-600'>
+				<button type='button' className='text-muted-foreground hover:text-foreground'>
 					<HelpCircle className='size-3.5' />
 				</button>
 			</Tooltip>

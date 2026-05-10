@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import FlexpriceTable, { ColumnData, TooltipCell } from '../Table';
+import DataTable, { ColumnData, TooltipCell } from '../Table';
 import { formatDateWithMilliseconds } from '@/utils/common/format_date';
 import EventPropertiesDrawer from './EventPropertiesDrawer';
 import { Event } from '@/models/Event';
@@ -50,7 +50,7 @@ const EventsTable: FC<Props> = ({ data }) => {
 
 	return (
 		<div>
-			<FlexpriceTable showEmptyRow columns={columns} data={data} onRowClick={handleRowClick} />
+			<DataTable showEmptyRow columns={columns} data={data} onRowClick={handleRowClick} />
 			<EventPropertiesDrawer isOpen={isDrawerOpen} onOpenChange={setIsDrawerOpen} event={selectedEvent} />
 		</div>
 	);

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import { PriceUnit } from '@/models/PriceUnit';
 import { ENTITY_STATUS } from '@/models';
 import { ActionButton, Chip } from '@/components/atoms';
@@ -87,7 +87,7 @@ const PriceUnitTable: FC<Props> = ({ data, onEdit }) => {
 
 	return (
 		<div>
-			<FlexpriceTable data={data} columns={columnData} showEmptyRow />
+			<DataTable data={data} columns={columnData} showEmptyRow />
 		</div>
 	);
 };

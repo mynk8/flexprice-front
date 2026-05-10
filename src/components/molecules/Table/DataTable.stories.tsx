@@ -2,14 +2,15 @@ import * as React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, within } from '@storybook/test';
 import { useMemo, useState } from 'react';
-import FlexpriceTable, { ColumnData, FlexpriceTableProps } from './Table';
+import DataTable, { ColumnData, DataTableProps } from './Table';
 import Chip from '@/components/atoms/Chip';
 import { Button } from '@/components/atoms/Button';
 import Input from '@/components/atoms/Input';
 import useFilterStore from '@/store/useFilterStore';
+import { cn } from '@/lib/utils';
 
 /**
- * ## DataTable (FlexpriceTable)
+ * ## DataTable
  *
  * A feature-rich data table used throughout FlexPrice for displaying customers,
  * invoices, subscriptions, plans, and more. Supports:
@@ -35,7 +36,7 @@ import useFilterStore from '@/store/useFilterStore';
  */
 const meta = {
 	title: 'Molecules/DataTable',
-	component: FlexpriceTable as React.ComponentType<FlexpriceTableProps<Customer>>,
+	component: DataTable as React.ComponentType<DataTableProps<Customer>>,
 	parameters: {
 		layout: 'padded',
 		docs: {
@@ -59,13 +60,11 @@ const meta = {
 		sort: { control: false },
 		pagination: { control: false },
 	},
-} satisfies Meta<FlexpriceTableProps<Customer>>;
+} satisfies Meta<DataTableProps<Customer>>;
 
 export default meta;
-type CustomerStory = StoryObj<FlexpriceTableProps<Customer>>;
-type InvoiceStory = StoryObj<FlexpriceTableProps<Invoice>>;
-
-// ─── Sample Data ─────────────────────────────────────────────────────────────
+type CustomerStory = StoryObj<DataTableProps<Customer>>;
+type InvoiceStory = StoryObj<DataTableProps<Invoice>>;
 
 interface Customer {
 	id: string;
@@ -137,8 +136,8 @@ const customerColumns = [
 		fieldVariant: 'title',
 		render: (row) => (
 			<div>
-				<div className='font-medium text-gray-900'>{row.name}</div>
-				<div className='text-xs text-gray-500'>{row.id}</div>
+				<div className='font-medium text-foreground'>{row.name}</div>
+				<div className='text-xs text-muted-foreground'>{row.id}</div>
 			</div>
 		),
 	},
@@ -239,8 +238,6 @@ const invoiceColumns = [
 	{ title: 'Due Date', fieldName: 'dueDate' },
 ] satisfies ColumnData<Invoice>[];
 
-// ─── Default ─────────────────────────────────────────────────────────────────
-
 export const Default: CustomerStory = {
 	args: {
 		columns: customerColumns,
@@ -250,13 +247,10 @@ export const Default: CustomerStory = {
 	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement);
 		const rows = canvas.getAllByRole('row');
-		// Click the first data row (index 1, skipping header)
 		await userEvent.click(rows[1]);
 		await expect(args.onRowClick).toHaveBeenCalled();
 	},
 };
-
-// ─── Invoices Table ───────────────────────────────────────────────────────────
 
 export const InvoicesTable: InvoiceStory = {
 	name: 'Invoice Table with Status Chips',
@@ -265,8 +259,6 @@ export const InvoicesTable: InvoiceStory = {
 		data: invoiceData,
 	},
 };
-
-// ─── Empty State ─────────────────────────────────────────────────────────────
 
 export const EmptyState: CustomerStory = {
 	args: {
@@ -294,7 +286,7 @@ const SortablePaginatedDemo = () => {
 	const pageRows = useMemo(() => sortedRows.slice((page - 1) * pageSize, page * pageSize), [page, sortedRows]);
 
 	return (
-		<FlexpriceTable
+		<DataTable
 			columns={sortableCustomerColumns}
 			data={pageRows}
 			sort={{
@@ -330,8 +322,6 @@ export const SortableWithPagination: CustomerStory = {
 	},
 };
 
-// ─── No Border Variant ────────────────────────────────────────────────────────
-
 export const NoBorderVariant: InvoiceStory = {
 	name: 'Borderless Variant',
 	args: {
@@ -340,8 +330,6 @@ export const NoBorderVariant: InvoiceStory = {
 		variant: 'no-bordered',
 	},
 };
-
-// ─── Large Dataset (Virtual List Demo) ───────────────────────────────────────
 
 const generateLargeDataset = (count: number): Customer[] =>
 	Array.from({ length: count }, (_, i) => ({
@@ -365,7 +353,7 @@ export const LargeDataset: CustomerStory = {
 	},
 	render: () => (
 		<div className='max-h-96 overflow-y-auto border rounded-lg'>
-			<FlexpriceTable columns={customerColumns} data={generateLargeDataset(100)} onRowClick={handleLargeRowClick} />
+			<DataTable columns={customerColumns} data={generateLargeDataset(100)} onRowClick={handleLargeRowClick} />
 		</div>
 	),
 };
@@ -374,7 +362,7 @@ const VirtualizedTableDemo = () => {
 	const rows = useMemo(() => generateLargeDataset(10000), []);
 
 	return (
-		<FlexpriceTable
+		<DataTable
 			columns={customerColumns}
 			data={rows}
 			virtualization={{
@@ -398,11 +386,96 @@ export const VirtualizedTenThousandRows: CustomerStory = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Uses @tanstack/react-virtual to mount only visible rows plus overscan while preserving the FlexpriceTable column API.',
+				story: 'Uses @tanstack/react-virtual to mount only visible rows plus overscan while preserving the DataTable column API.',
 			},
 		},
 	},
 	render: () => <VirtualizedTableDemo />,
+};
+
+interface RichInvoice {
+	id: string;
+	customer: string;
+	plan: string;
+	notes: string;
+	amount: string;
+	status: string;
+}
+
+const richInvoices: RichInvoice[] = Array.from({ length: 500 }, (_, i) => ({
+	id: `INV-${String(i + 1).padStart(4, '0')}`,
+	customer: ['Acme Corp', 'TechStart Inc', 'GlobalPay Ltd', 'CloudNine SaaS'][i % 4],
+	plan: ['Starter', 'Growth', 'Enterprise'][i % 3],
+	notes:
+		i % 3 === 0
+			? 'Customer requested extended billing terms. Approved by finance team. Reference: PO-2024-1132'
+			: i % 3 === 1
+				? 'Multi-line item: platform fee, API overage charges, and seat-based licensing.'
+				: '',
+	amount: `$${((i + 1) * 137).toLocaleString()}.00`,
+	status: ['Paid', 'Draft', 'Overdue', 'Void'][i % 4],
+}));
+
+const richInvoiceColumns: ColumnData<RichInvoice>[] = [
+	{ title: 'Invoice #', fieldName: 'id', fieldVariant: 'title', width: 120 },
+	{ title: 'Customer', fieldName: 'customer' },
+	{
+		title: 'Notes',
+		flex: 2,
+		render: (row: RichInvoice) => (
+			<span className={cn('text-[14px]', row.notes ? 'text-foreground' : 'text-muted-foreground italic')}>{row.notes || 'No notes'}</span>
+		),
+	},
+	{ title: 'Amount', fieldName: 'amount', align: 'right' as const, width: 100 },
+];
+
+const richInvoiceStatusMap: Record<string, 'success' | 'info' | 'failed' | 'warning' | 'default'> = {
+	Paid: 'success',
+	Draft: 'info',
+	Overdue: 'failed',
+	Void: 'default',
+};
+
+const richInvoiceColumnsWithStatus: ColumnData<RichInvoice>[] = [
+	...richInvoiceColumns,
+	{
+		title: 'Status',
+		align: 'center' as const,
+		width: 100,
+		render: (row: RichInvoice) => <Chip label={row.status} variant={richInvoiceStatusMap[row.status] ?? 'default'} />,
+	},
+];
+
+export const VirtualizedWithAutoHeight: CustomerStory = {
+	name: 'Virtualized with Dynamic Row Height',
+	args: {
+		columns: customerColumns,
+		data: [],
+	},
+	parameters: {
+		docs: {
+			description: {
+				story:
+					'Enables `enableAutoHeight` so rows with variable content (e.g. multi-line notes) are measured after render and the virtualizer adjusts scroll position accordingly. Useful for invoice tables with expandable or long-form notes.',
+			},
+		},
+	},
+	render: () => (
+		<div className='max-h-[420px] overflow-y-auto rounded-md border border-border'>
+			<DataTable
+				columns={richInvoiceColumnsWithStatus}
+				data={richInvoices}
+				virtualization={{
+					enabled: true,
+					height: 420,
+					estimateRowHeight: 44,
+					overscan: 5,
+					enableAutoHeight: true,
+					getRowKey: (row: RichInvoice) => row.id,
+				}}
+			/>
+		</div>
+	),
 };
 
 const FilterPersistenceDemo = () => {
@@ -424,7 +497,7 @@ const FilterPersistenceDemo = () => {
 
 	return (
 		<div className='space-y-4'>
-			<div className='flex flex-wrap items-end gap-3 rounded-md border border-[#E2E8F0] bg-white p-3'>
+			<div className='flex flex-wrap items-end gap-3 rounded-md border border-border bg-card p-3'>
 				<div className='w-72'>
 					<Input
 						label='Customer search'
@@ -433,7 +506,7 @@ const FilterPersistenceDemo = () => {
 						onChange={(value) => setFilter('search', value)}
 					/>
 				</div>
-				<label className='flex flex-col gap-2 text-sm font-medium text-gray-700'>
+				<label className='flex flex-col gap-2 text-sm font-medium text-foreground'>
 					Status
 					<select
 						className='h-10 rounded-md border border-input bg-background px-3 text-sm'
@@ -448,14 +521,14 @@ const FilterPersistenceDemo = () => {
 				<Button variant='outline' onClick={resetFilters}>
 					Reset
 				</Button>
-				<div className='ml-auto text-xs text-gray-500'>
+				<div className='ml-auto text-xs text-muted-foreground'>
 					<div>storage: {storageKey}</div>
 					<div>
 						URL: {urlParam}={fingerprint}
 					</div>
 				</div>
 			</div>
-			<FlexpriceTable columns={customerColumns} data={filteredRows} showEmptyRow />
+			<DataTable columns={customerColumns} data={filteredRows} showEmptyRow />
 		</div>
 	);
 };
@@ -477,8 +550,6 @@ export const WithFilterPersistence: CustomerStory = {
 	render: () => <FilterPersistenceDemo />,
 };
 
-// ─── Clickable Rows ───────────────────────────────────────────────────────────
-
 export const ClickableRows: CustomerStory = {
 	name: 'Clickable Rows (with hover)',
 	args: {
@@ -487,8 +558,6 @@ export const ClickableRows: CustomerStory = {
 		onRowClick: fn(),
 	},
 };
-
-// ─── Single Column ────────────────────────────────────────────────────────────
 
 export const SingleColumn: CustomerStory = {
 	args: {

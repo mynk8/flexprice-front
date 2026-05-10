@@ -1,17 +1,11 @@
 import * as React from 'react';
-import { useRef } from 'react';
+import { useRef, type ReactNode } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { ArrowDown, ArrowUp, ArrowUpDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { ColumnData, FlexpriceTableProps, SortDirection } from '@/types/common/Table';
+import type { ColumnAlign, ColumnData, DataTableProps, SortDirection } from '@/types/common/Table';
 
-export type {
-	ColumnData,
-	FlexpriceTableProps,
-	TablePaginationConfig,
-	TableSortState,
-	TableVirtualizationConfig,
-} from '@/types/common/Table';
+export type { ColumnData, DataTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from '@/types/common/Table';
 
 const isInteractiveElement = (element: HTMLElement | null): boolean => {
 	if (!element) return false;
@@ -22,6 +16,13 @@ const isInteractiveElement = (element: HTMLElement | null): boolean => {
 	if (element.tagName && interactiveElements.includes(element.tagName.toLowerCase())) return true;
 
 	return element.closest('[data-interactive="true"]') !== null;
+};
+
+const textAlign: Record<ColumnAlign, string> = {
+	left: 'text-left',
+	center: 'text-center',
+	right: 'text-right',
+	justify: 'text-justify',
 };
 
 interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
@@ -50,11 +51,7 @@ TableBody.displayName = 'TableBody';
 const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(({ className, ...props }, ref) => (
 	<tr
 		ref={ref}
-		className={cn(
-			'border-b border-[#E2E8F0] h-[36px] transition-colors hover:bg-muted/50',
-			'align-middle', // Vertically align middle
-			className,
-		)}
+		className={cn('border-b border-border h-[36px] transition-colors hover:bg-muted/50', 'align-middle', className)}
 		{...props}
 	/>
 ));
@@ -72,11 +69,11 @@ const TableHead = React.forwardRef<
 		ref={ref}
 		style={{ textAlign: align, width: width ? (typeof width === 'number' ? `${width}px` : width) : undefined, ...style }}
 		className={cn(
-			'h-12 px-4 text-[14px] font-medium text-[#64748B]',
-			`text-${align}`,
+			'h-12 px-4 text-[14px] font-medium text-muted-foreground',
+			textAlign[align],
 			'align-middle',
 			className,
-			variant === 'default' && 'border-b border-[#E2E8F0]',
+			variant === 'default' && 'border-b border-border',
 		)}
 		{...props}
 	/>
@@ -90,7 +87,7 @@ const TableCell = React.forwardRef<
 	<td
 		ref={ref}
 		style={{ textAlign: align, width: width ? (typeof width === 'number' ? `${width}px` : width) : undefined, ...style }}
-		className={cn('px-4 py-2 !max-h-9 text-[14px] font-medium', `text-${align}`, 'align-middle', className)}
+		className={cn('px-4 py-2 !max-h-9 text-[14px] font-medium', textAlign[align], 'align-middle', className)}
 		{...props}
 	/>
 ));
@@ -137,10 +134,28 @@ const CellContent = <T,>({
 	}
 
 	const value = name ? row[name] : null;
-	return <div className={contentWrapperClasses}>{value as React.ReactNode}</div>;
+	return <div className={contentWrapperClasses}>{value as ReactNode}</div>;
 };
 
-const FlexpriceTable = <T,>({
+/**
+ * DataTable is a powerful, customizable data table component.
+ * Supports virtualization, sorting, pagination, loading states, and custom cell rendering.
+ * Built with @tanstack/react-virtual for high-performance rendering of large datasets.
+ *
+ * @template T - The data type of each row.
+ *
+ * @example
+ * <DataTable
+ *   data={customers}
+ *   columns={[
+ *     { fieldName: 'name', title: 'Name' },
+ *     { fieldName: 'email', title: 'Email' },
+ *     { title: 'Actions', render: (row) => <button>Edit</button> }
+ *   ]}
+ *   pagination={{ page: 1, pageSize: 10, totalItems: 100, onPageChange: (p) => setPage(p) }}
+ * />
+ */
+const DataTable = <T,>({
 	onRowClick,
 	columns,
 	data,
@@ -153,7 +168,7 @@ const FlexpriceTable = <T,>({
 	loadingRowCount = 5,
 	sort,
 	pagination,
-}: FlexpriceTableProps<T>) => {
+}: DataTableProps<T>) => {
 	const parentRef = useRef<HTMLDivElement>(null);
 	const virtualizationThreshold = virtualization?.threshold ?? 100;
 
@@ -169,6 +184,7 @@ const FlexpriceTable = <T,>({
 		getScrollElement: () => parentRef.current,
 		estimateSize: () => virtualization?.estimateRowHeight ?? 44,
 		overscan: virtualization?.overscan || 10,
+		measureElement: virtualization?.enableAutoHeight ? (element) => element?.getBoundingClientRect().height : undefined,
 	});
 
 	const handleRowClick = (row: T, e: React.MouseEvent) => {
@@ -211,14 +227,14 @@ const FlexpriceTable = <T,>({
 	const renderTableHeader = () => (
 		<TableHeader
 			className={cn(
-				variant === 'default' ? 'h-8 bg-muted border-b border-[#E2E8F0] rounded-t-[6px]' : 'h-8',
+				variant === 'default' ? 'h-8 bg-muted border-b border-border rounded-t-[6px]' : 'h-8',
 				variant === 'no-bordered' && 'bg-transparent',
 				shouldVirtualize && 'sticky top-0 z-10 bg-muted/95 shadow-sm',
 			)}>
 			<TableRow
-				className={cn(variant === 'default' ? 'rounded-t-[6px] border-b border-[#E2E8F0]' : '', variant === 'no-bordered' && 'border-b-0')}>
+				className={cn(variant === 'default' ? 'rounded-t-[6px] border-b border-border' : '', variant === 'no-bordered' && 'border-b-0')}>
 				{columns.map((column, index) => {
-					const { title, flex = 1, width, color = '#64748B', align = 'left', className, children } = column;
+					const { title, flex = 1, width, color, align = 'left', className, children } = column;
 					const content = children ? children : title;
 					const sortKey = getColumnSortKey(column, index);
 
@@ -227,11 +243,11 @@ const FlexpriceTable = <T,>({
 							variant={variant}
 							key={getColumnKey(column, index)}
 							aria-sort={column.sortable && sort?.key === sortKey ? (sort.direction === 'asc' ? 'ascending' : 'descending') : undefined}
-							style={{ flex: width ? undefined : flex }}
+							style={{ flex: width ? undefined : flex, color }}
 							width={width}
 							align={align}
 							className={cn(
-								color ? `text-[${color}] !text-black` : 'text-black',
+								!color && 'text-muted-foreground',
 								'font-sans font-medium px-3',
 								variant === 'default' && index === 0 ? 'rounded-tl-[6px]' : '',
 								variant === 'default' && index === columns.length - 1 ? 'rounded-tr-[6px]' : '',
@@ -266,7 +282,7 @@ const FlexpriceTable = <T,>({
 				onClick={(e) => handleRowClick(row, e)}
 				className={cn(
 					'transition-colors hover:bg-muted/50',
-					variant === 'default' && !lastRow && 'border-b border-[#E2E8F0]',
+					variant === 'default' && !lastRow && 'border-b border-border',
 					onRowClick && 'cursor-pointer hover:bg-muted/50',
 					lastRow && hideBottomBorder && 'border-b-0',
 					'!py-1',
@@ -281,16 +297,16 @@ const FlexpriceTable = <T,>({
 							key={getColumnKey(column, colIndex)}
 							data-interactive={fieldVariant === 'interactive'}
 							className={cn(
-								textColor ? `text-[${textColor}]` : 'text-gray-700',
+								textColor ? '' : 'text-muted-foreground',
 								variant === 'default' ? 'font-normal' : 'font-light',
 								'!max-h-8 px-3 py-3 text-[14px]',
 								onCellClick && 'cursor-pointer hover:bg-muted/50',
-								fieldVariant === 'title' ? 'font-regular text-foreground' : '!font-light text-gray-700',
+								fieldVariant === 'title' ? 'font-regular text-foreground' : '!font-light text-muted-foreground',
 								fieldVariant === 'link' && 'cursor-pointer text-primary hover:underline',
 								fieldVariant === 'icon' && 'w-10',
 								fieldVariant === 'interactive' && 'cursor-default',
 							)}
-							style={{ flex: width ? undefined : flex }}
+							style={{ flex: width ? undefined : flex, color: textColor !== 'inherit' ? textColor : undefined }}
 							width={width}
 							align={align}>
 							<CellContent row={row} column={column} colIndex={colIndex} onCellClick={onCellClick} />
@@ -312,12 +328,12 @@ const FlexpriceTable = <T,>({
 						<TableCell
 							key={getColumnKey(columns[colIndex], colIndex)}
 							className={cn(
-								textColor ? `text-[${textColor}]` : 'text-[#09090B] w-full ',
+								textColor ? '' : 'text-foreground w-full ',
 								'font-normal',
 								'!max-h-8 px-4 py-2 text-[14px]',
 								lastRow ? 'text-center' : '',
 							)}
-							style={{ flex: width ? undefined : flex }}
+							style={{ flex: width ? undefined : flex, color: textColor !== 'inherit' ? textColor : undefined }}
 							width={width}
 							align={align}>
 							{lastRow && hideOnEmpty ? '' : '--'}
@@ -380,7 +396,7 @@ const FlexpriceTable = <T,>({
 		const endItem = Math.min(clampedPage * pageSize, totalItems);
 
 		return (
-			<div className='flex items-center justify-between border-t border-[#E2E8F0] px-3 py-3 text-sm text-muted-foreground'>
+			<div className='flex items-center justify-between border-t border-border px-3 py-3 text-sm text-muted-foreground'>
 				<div>
 					Showing <span className='font-medium text-foreground'>{startItem}</span> to{' '}
 					<span className='font-medium text-foreground'>{endItem}</span> of{' '}
@@ -417,8 +433,8 @@ const FlexpriceTable = <T,>({
 		<div
 			className={cn(
 				'overflow-hidden',
-				variant === 'default' && 'rounded-[6px] border border-[#E2E8F0]',
-				variant === 'default' && !hideBottomBorder && 'border-b border-[#E2E8F0]',
+				variant === 'default' && 'rounded-[6px] border border-border',
+				variant === 'default' && !hideBottomBorder && 'border-b border-border',
 				variant === 'no-bordered' && 'border-0',
 			)}>
 			<Table
@@ -433,5 +449,5 @@ const FlexpriceTable = <T,>({
 	);
 };
 
-export default FlexpriceTable;
-export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell };
+export default DataTable;
+export { DataTable, Table, TableHeader, TableBody, TableRow, TableHead, TableCell };

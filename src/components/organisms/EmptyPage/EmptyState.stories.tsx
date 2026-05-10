@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import { FileText, Users, CreditCard, Layers2, Zap } from 'lucide-react';
+import { FileText, Users, Layers2, Zap } from 'lucide-react';
 import EmptyState from './EmptyState';
 
 /**
@@ -62,7 +62,6 @@ export const Default: Story = {
 export const PlansEmpty: Story = {
 	name: 'Plans — No Data',
 	args: {
-		icon: <Layers2 size={60} strokeWidth={1} />,
 		heading: 'No plans created yet',
 		description: 'Plans define the pricing structure for your product. Create your first plan to start billing customers.',
 		buttonLabel: 'Create Plan',
@@ -72,7 +71,6 @@ export const PlansEmpty: Story = {
 export const CustomersEmpty: Story = {
 	name: 'Customers — No Data',
 	args: {
-		icon: <Users size={60} strokeWidth={1} />,
 		heading: 'No customers yet',
 		description: 'Add your first customer to start creating subscriptions and generating invoices.',
 		buttonLabel: 'Add Customer',
@@ -82,7 +80,6 @@ export const CustomersEmpty: Story = {
 export const CreditsEmpty: Story = {
 	name: 'Credits — No Data',
 	args: {
-		icon: <CreditCard size={60} strokeWidth={1} />,
 		heading: 'No credit grants',
 		description:
 			"Grant credits to customers to offset future invoices. Credits are applied automatically before charging a customer's payment method.",
@@ -93,7 +90,6 @@ export const CreditsEmpty: Story = {
 export const EventsEmpty: Story = {
 	name: 'Events — No Data',
 	args: {
-		icon: <Zap size={60} strokeWidth={1} />,
 		heading: 'No usage events received',
 		description: "Send usage events to FlexPrice via the API or SDK to start metering your customers' consumption.",
 		buttonLabel: 'View API Docs',
@@ -103,7 +99,6 @@ export const EventsEmpty: Story = {
 export const WithoutCTA: Story = {
 	name: 'Without CTA Button',
 	args: {
-		icon: <FileText size={60} strokeWidth={1} />,
 		heading: 'No data available',
 		description: 'There are no records matching your current filters. Try adjusting your search or date range.',
 	},
@@ -121,9 +116,9 @@ export const AllPagesShowcase: Story = {
 	render: () => (
 		<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
 			<div>
-				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Plans</p>
+				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Plans</p>
 				<EmptyState
-					icon={<Layers2 size={48} strokeWidth={1} className='text-gray-300' />}
+					icon={<Layers2 size={48} strokeWidth={1} className='text-zinc-400' />}
 					heading='No plans yet'
 					description='Create your first pricing plan.'
 					buttonLabel='Create Plan'
@@ -131,9 +126,9 @@ export const AllPagesShowcase: Story = {
 				/>
 			</div>
 			<div>
-				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Customers</p>
+				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Customers</p>
 				<EmptyState
-					icon={<Users size={48} strokeWidth={1} className='text-gray-300' />}
+					icon={<Users size={48} strokeWidth={1} className='text-zinc-400' />}
 					heading='No customers yet'
 					description='Add customers to manage subscriptions.'
 					buttonLabel='Add Customer'
@@ -141,17 +136,17 @@ export const AllPagesShowcase: Story = {
 				/>
 			</div>
 			<div>
-				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Invoices</p>
+				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Invoices</p>
 				<EmptyState
-					icon={<FileText size={48} strokeWidth={1} className='text-gray-300' />}
+					icon={<FileText size={48} strokeWidth={1} className='text-zinc-400' />}
 					heading='No invoices yet'
 					description='Invoices appear after billing runs.'
 				/>
 			</div>
 			<div>
-				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Events</p>
+				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Events</p>
 				<EmptyState
-					icon={<Zap size={48} strokeWidth={1} className='text-gray-300' />}
+					icon={<Zap size={48} strokeWidth={1} className='text-zinc-400' />}
 					heading='No events received'
 					description='Send usage events via the API.'
 					buttonLabel='View Docs'

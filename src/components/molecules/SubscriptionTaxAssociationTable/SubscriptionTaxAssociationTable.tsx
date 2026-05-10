@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import { TaxRateOverride } from '@/types/dto/tax';
 import { Chip, ActionButton, AddButton, FormHeader } from '@/components/atoms';
 import TaxAssociationDialog from '../TaxAssociationDialog/TaxAssociationDialog';
@@ -118,7 +118,7 @@ const SubscriptionTaxAssociationTable: FC<Props> = ({ data, onChange, disabled }
 					/>
 				</div>
 				<div className='rounded-[6px] border border-gray-300'>
-					<FlexpriceTable data={data} columns={columns} showEmptyRow />
+					<DataTable data={data} columns={columns} showEmptyRow />
 				</div>
 			</div>
 		</div>

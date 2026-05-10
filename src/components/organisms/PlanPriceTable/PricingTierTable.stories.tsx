@@ -10,7 +10,7 @@ import PricingTierTable, { type TierRow } from './PricingTierTable';
  * Used on Plan detail pages and pricing configuration screens.
  *
  * This story demonstrates various pricing tier configurations using the same
- * FlexpriceTable pattern used in production.
+ * DataTable pattern used in production.
  */
 
 const flatRateTiers: TierRow[] = [

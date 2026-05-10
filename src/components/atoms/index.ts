@@ -81,3 +81,5 @@ export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as Tooltip } from './Tooltip';
 
 export { CopyIdButton } from './CopyIdButton';
+
+export { Badge, badgeVariants } from './Badge';

@@ -1,6 +1,6 @@
 import { FC, useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { FlexpriceTable, ColumnData } from '@/components/molecules';
+import { DataTable, ColumnData } from '@/components/molecules';
 import { Chip, Select, ShortPagination, Spacer, ActionButton } from '@/components/atoms';
 import TaskRunApi, { TaskRun } from '@/api/TaskRunApi';
 import { formatDistanceToNow } from 'date-fns';
@@ -242,7 +242,7 @@ const TaskRunsTable: FC<TaskRunsTableProps> = ({ scheduledTaskId, taskType = 'EX
 			</div>
 
 			{/* Table */}
-			<FlexpriceTable columns={columns} data={filteredRuns} showEmptyRow={filteredRuns.length === 0 && !isLoading} />
+			<DataTable columns={columns} data={filteredRuns} showEmptyRow={filteredRuns.length === 0 && !isLoading} />
 
 			{filteredRuns.length === 0 && !isLoading && (
 				<div className='text-center py-8 text-gray-500'>No task runs found for the selected filters.</div>

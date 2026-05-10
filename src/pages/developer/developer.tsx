@@ -1,5 +1,5 @@
 import { Button, Page, ShortPagination, SectionHeader } from '@/components/atoms';
-import { ColumnData, FlexpriceTable, SecretKeyDrawer, ApiDocsContent } from '@/components/molecules';
+import { ColumnData, DataTable, SecretKeyDrawer, ApiDocsContent } from '@/components/molecules';
 import SecretKeysApi from '@/api/SecretKeysApi';
 import { useQuery } from '@tanstack/react-query';
 import { SecretKey } from '@/models/SecretKey';
@@ -222,7 +222,7 @@ const DeveloperPage = () => {
 						</Button>
 					</SectionHeader>
 					<div className='pb-12 mt-2'>
-						<FlexpriceTable showEmptyRow columns={columns} data={secretKeys?.items || []} />
+						<DataTable showEmptyRow columns={columns} data={secretKeys?.items || []} />
 						<ShortPagination unit='Secret Keys' totalItems={secretKeys?.pagination.total || 0} />
 					</div>
 				</Page>

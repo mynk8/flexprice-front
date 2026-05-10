@@ -1,28 +1,42 @@
-import React from 'react';
-import { Plus } from 'lucide-react';
+import type { ReactNode } from 'react';
 import Button from '@/components/atoms/Button/Button';
+import { cn } from '@/lib/utils';
+import { getTypographyClass } from '@/lib/typography';
 
 export interface EmptyStateProps {
-	icon?: React.ReactNode;
+	/** Large icon to display above the heading. */
+	icon?: ReactNode;
+	/** Primary headline text. */
 	heading?: string;
+	/** Descriptive subtext guiding the user. */
 	description?: string;
+	/** Text for the CTA button. */
 	buttonLabel?: string;
+	/** Click handler for the CTA button. */
 	buttonAction?: () => void;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ icon, heading, description, buttonLabel, buttonAction }) => {
+/**
+ * EmptyState is a full-section component displayed when a page or table has no data.
+ * It provides a clear headline, descriptive text, and a Call to Action (CTA).
+ *
+ * @example
+ * <EmptyState
+ *   icon={<Users size={60} />}
+ *   heading="No customers yet"
+ *   description="Add your first customer to get started."
+ *   buttonLabel="Add Customer"
+ *   buttonAction={() => setDrawerOpen(true)}
+ * />
+ */
+const EmptyState = ({ icon, heading, description, buttonLabel, buttonAction }: EmptyStateProps) => {
 	return (
-		<div className='bg-[#fafafa] border border-[#E9E9E9] rounded-[6px] w-full h-[360px] flex flex-col items-center justify-center mx-auto'>
-			{icon && <div className='mb-8 text-gray-300'>{icon}</div>}
-			{heading && <div className='font-medium text-[20px] leading-normal text-gray-700 mb-4 text-center'>{heading}</div>}
-			{description && (
-				<div className='font-normal bg-[#F9F9F9] text-[16px] leading-normal text-gray-400 mb-8 text-center max-w-[350px]'>
-					{description}
-				</div>
-			)}
+		<div className='bg-white border border-border rounded-[6px] w-full h-[360px] flex flex-col items-center justify-center mx-auto shadow-sm'>
+			{icon && <div className='mb-8 text-zinc-400'>{icon}</div>}
+			{heading && <h2 className={cn(getTypographyClass('form-title'), 'mb-2 text-center text-zinc-950')}>{heading}</h2>}
+			{description && <p className={cn(getTypographyClass('body-large'), 'text-zinc-500 mb-8 text-center max-w-[450px]')}>{description}</p>}
 			{buttonAction && buttonLabel && (
-				<Button variant='outline' onClick={buttonAction} className='!p-5 !bg-[#fbfbfb] !border-[#CFCFCF]'>
-					<Plus className='size-4 mr-1' />
+				<Button variant='outline' onClick={buttonAction} className='px-6 h-10 border-zinc-200 text-zinc-950 hover:bg-zinc-50'>
 					{buttonLabel}
 				</Button>
 			)}

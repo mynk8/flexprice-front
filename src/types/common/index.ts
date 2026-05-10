@@ -15,4 +15,4 @@ export type { CurrencyOption, PriceUnitOption, CurrencyPriceUnitOption, Currency
 export { currencyToOption, priceUnitToOption, isCurrencyOption, isPriceUnitOption } from './PriceUnitSelector';
 
 // Table types
-export type { ColumnData, FlexpriceTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from './Table';
+export type { ColumnData, DataTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from './Table';

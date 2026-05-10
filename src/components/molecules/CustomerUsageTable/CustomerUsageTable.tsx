@@ -1,5 +1,5 @@
 import { Chip, Progress, Tooltip } from '@/components/atoms';
-import { ColumnData, FlexpriceTable, RedirectCell } from '@/components/molecules';
+import { ColumnData, DataTable, RedirectCell } from '@/components/molecules';
 import { RouteNames } from '@/core/routes/Routes';
 import { FEATURE_TYPE } from '@/models/Feature';
 import { FC } from 'react';
@@ -216,7 +216,7 @@ const CustomerUsageTable: FC<Props> = ({ data, allowRedirect = true }) => {
 
 	return (
 		<div>
-			<FlexpriceTable showEmptyRow data={data} columns={columnData} variant='no-bordered' />
+			<DataTable showEmptyRow data={data} columns={columnData} variant='no-bordered' />
 		</div>
 	);
 };

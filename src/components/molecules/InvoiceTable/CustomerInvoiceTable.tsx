@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import FlexpriceTable, { ColumnData, RedirectCell } from '../Table';
+import DataTable, { ColumnData, RedirectCell } from '../Table';
 import { getCurrencySymbol } from '@/utils/common/helper_functions';
 import { formatBillingPeriod } from '@/utils/common/format_date';
 import { Invoice, INVOICE_STATUS, INVOICE_TYPE } from '@/models/Invoice';
@@ -96,7 +96,7 @@ const CustomerInvoiceTable: FC<Props> = ({ data, onRowClick }) => {
 
 	return (
 		<div>
-			<FlexpriceTable showEmptyRow onRowClick={onRowClick} columns={columnData} data={data ?? []} />
+			<DataTable showEmptyRow onRowClick={onRowClick} columns={columnData} data={data ?? []} />
 		</div>
 	);
 };

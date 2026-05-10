@@ -1,6 +1,6 @@
 import { FC, useState, useMemo } from 'react';
 import { Chip } from '@/components/atoms';
-import { FlexpriceTable, ColumnData } from '@/components/molecules';
+import { DataTable, ColumnData } from '@/components/molecules';
 import { FEATURE_TYPE } from '@/models';
 import { Pencil, Info } from 'lucide-react';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
@@ -248,7 +248,7 @@ const EntitlementOverridesTable: FC<EntitlementOverridesTableProps> = ({ entitle
 
 	return (
 		<>
-			<FlexpriceTable showEmptyRow columns={columns} data={enrichedEntitlements} variant='no-bordered' />
+			<DataTable showEmptyRow columns={columns} data={enrichedEntitlements} variant='no-bordered' />
 			<EditEntitlementDrawer
 				isOpen={drawerOpen}
 				onOpenChange={handleCloseDrawer}

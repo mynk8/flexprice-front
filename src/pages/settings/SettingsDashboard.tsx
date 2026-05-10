@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { Page, AddButton, Card, CardHeader, Loader, Button, Input, ShortPagination, Dialog } from '@/components/atoms';
-import { FlatTabs, FlexpriceTable } from '@/components/molecules';
+import { FlatTabs, DataTable } from '@/components/molecules';
 import { UserApi } from '@/api/UserApi';
 import { User } from '@/models';
 import toast from 'react-hot-toast';
@@ -199,7 +199,7 @@ function MembersSection() {
 				{!isLoading && !isError && (
 					<>
 						<div className='border-t border-gray-100 pt-4 -mx-6 px-6'>
-							<FlexpriceTable columns={columns} data={members} showEmptyRow />
+							<DataTable columns={columns} data={members} showEmptyRow />
 							<div className='text-zinc-500'>
 								<ShortPagination
 									prefix={PAGINATION_PREFIX.SETTINGS_MEMBERS}

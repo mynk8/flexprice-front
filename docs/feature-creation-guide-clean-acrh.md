@@ -206,7 +206,7 @@ export const map[FeatureName]ToViewModel = (feature: [FeatureName]): [FeatureNam
 
 ```typescript
 import { FC } from 'react';
-import FlexpriceTable, { ColumnData } from '@/components/molecules/Table';
+import DataTable, { ColumnData } from '@/components/molecules/Table';
 import [FeatureName] from '@/models/[FeatureName]';
 import { ActionButton, Chip } from '@/components/atoms';
 import { useNavigate } from 'react-router';
@@ -269,7 +269,7 @@ const [FeatureName]Table: FC<Props> = ({ data, showEmptyRow }) => {
 
   return (
     <div>
-      <FlexpriceTable
+      <DataTable
         data={viewModels}
         columns={columnData}
         showEmptyRow={showEmptyRow}

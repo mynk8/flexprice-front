@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState, useMemo, useEffect } from 'react';
 import { Button, Card, CardHeader, Chip, Tooltip, Loader } from '@/components/atoms';
 import {
-	FlexpriceTable,
+	DataTable,
 	ColumnData,
 	DropdownMenu,
 	TerminatePriceModal,
@@ -498,7 +498,7 @@ const PlanPriceTable: FC<PlanChargesTableProps> = ({ plan, onPriceUpdate }) => {
 					</div>
 				) : (
 					<>
-						<FlexpriceTable showEmptyRow columns={chargeColumns} data={tableItems} />
+						<DataTable showEmptyRow columns={chargeColumns} data={tableItems} />
 						{(totalItems > 0 || page > 1) && (
 							<ShortPagination unit='Charges' totalItems={totalItems} pageSize={limit} prefix={PAGINATION_PREFIX.PLAN_CHARGES} />
 						)}

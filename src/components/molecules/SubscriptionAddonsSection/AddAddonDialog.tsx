@@ -9,7 +9,7 @@ import { AddAddonRequest, SubscriptionResponse } from '@/types/dto/Subscription'
 import { AddonResponse, ADDON_CADENCE, ADDON_PRORATION_BEHAVIOR } from '@/types/dto/Addon';
 import toast from 'react-hot-toast';
 import { refetchQueries } from '@/core/services/tanstack/ReactQueryProvider';
-import { ColumnData, FlexpriceTable } from '@/components/molecules';
+import { ColumnData, DataTable } from '@/components/molecules';
 import { Price, PRICE_TYPE } from '@/models/Price';
 import { BILLING_PERIOD } from '@/constants/constants';
 import { LineItemCommitmentConfig, LineItemCommitmentsMap } from '@/types/dto/LineItemCommitmentConfig';
@@ -282,7 +282,7 @@ const AddAddonDialog: React.FC<Props> = ({ isOpen, onOpenChange, subscriptionId,
 						</div>
 						{selectedAddonPrices.length > 0 ? (
 							<div className='rounded-xl border border-gray-200'>
-								<FlexpriceTable columns={addonChargeColumns} data={selectedAddonPrices.map((p) => ({ price: p }))} />
+								<DataTable columns={addonChargeColumns} data={selectedAddonPrices.map((p) => ({ price: p }))} />
 							</div>
 						) : (
 							<div className='rounded-xl border border-gray-200 p-4'>

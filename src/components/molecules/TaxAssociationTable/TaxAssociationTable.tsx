@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import FlexpriceTable, { ColumnData, RedirectCell } from '../Table';
+import DataTable, { ColumnData, RedirectCell } from '../Table';
 import { TaxAssociationResponse } from '@/types/dto/tax';
 import { Chip, ActionButton } from '@/components/atoms';
 import { formatDateShort } from '@/utils/common/helper_functions';
@@ -70,7 +70,7 @@ const TaxAssociationTable: FC<Props> = ({ data, onEdit, showDelete = true }) => 
 
 	return (
 		<div>
-			<FlexpriceTable showEmptyRow={true} columns={columns} data={data} />
+			<DataTable showEmptyRow={true} columns={columns} data={data} />
 		</div>
 	);
 };

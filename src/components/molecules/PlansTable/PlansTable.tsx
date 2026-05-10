@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ActionButton, Chip } from '@/components/atoms';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import { Plan } from '@/models/Plan';
 import { ENTITY_STATUS } from '@/models';
 import formatChips from '@/utils/common/format_chips';
@@ -59,7 +59,7 @@ const PlansTable: FC<PlansTableProps> = ({ data, onEdit }) => {
 	];
 
 	return (
-		<FlexpriceTable
+		<DataTable
 			columns={columns}
 			data={mappedData}
 			showEmptyRow

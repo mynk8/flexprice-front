@@ -70,23 +70,48 @@ const getInputPattern = (variant: InputVariant, options: NumberFormatOptions = D
 };
 
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'size'> {
+	/** Optional label for the input. */
 	label?: string;
+	/** Optional helper text or node to display below the input. */
 	description?: React.ReactNode;
+	/** Error message to display below the input. Highlights the border in destructive color. */
 	error?: string;
+	/** HTML input type (e.g., 'text', 'password', 'email'). Defaults to 'text'. */
 	type?: React.HTMLInputTypeAttribute;
+	/** Callback function triggered when the value changes. Receives the raw string value. */
 	onChange?: (value: string) => void;
+	/** Whether the input is disabled. */
 	disabled?: boolean;
+	/** Optional element to display at the end of the input (e.g., currency suffix). */
 	suffix?: React.ReactNode;
+	/** Additional CSS classes for the input container. */
 	className?: string;
+	/** Input placeholder text. */
 	placeholder?: string;
+	/** Unique ID for the input. Used for labels and accessibility. */
 	id?: string;
+	/** Optional element to display at the start of the input (e.g., an icon or currency symbol). */
 	inputPrefix?: React.ReactNode;
+	/** Additional CSS classes for the label. */
 	labelClassName?: string;
+	/** Visual and functional variant of the input. Handles formatting for numbers. */
 	variant?: InputVariant;
+	/** Options for number formatting (separators, decimals, etc.) when using 'formatted-number' variant. */
 	formatOptions?: NumberFormatOptions;
+	/** Size variant of the input (sm, md, lg, default). */
 	size?: SizeVariant;
 }
 
+/**
+ * Standard Input component for forms.
+ * Supports labels, descriptions, error states, prefixes, and suffixes.
+ * Includes built-in formatting for numbers and integers.
+ *
+ * @example
+ * <Input label="Email" placeholder="Enter your email" type="email" />
+ * <Input label="Price" variant="formatted-number" inputPrefix="$" suffix="USD" />
+ * <Input label="Password" type="password" error="Password is required" />
+ */
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
 	(
 		{

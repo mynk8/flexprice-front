@@ -35,6 +35,7 @@ const meta = {
 			description: 'Whether to show the leading status icon',
 			table: { defaultValue: { summary: 'true' } },
 		},
+		className: { control: false },
 	},
 	args: {
 		status: 'paid',
@@ -119,10 +120,10 @@ export const InTableContext: Story = {
 		return (
 			<div className='border rounded-[6px] overflow-hidden'>
 				<table className='w-full text-sm'>
-					<thead className='bg-gray-50 border-b border-gray-200'>
+					<thead className='bg-muted/40 border-b border-border'>
 						<tr>
 							{['Invoice', 'Customer', 'Amount', 'Status', 'Date'].map((h) => (
-								<th key={h} className='px-4 py-3 text-left font-medium text-gray-600'>
+								<th key={h} className='px-4 py-3 text-left font-medium text-muted-foreground'>
 									{h}
 								</th>
 							))}
@@ -130,14 +131,14 @@ export const InTableContext: Story = {
 					</thead>
 					<tbody>
 						{invoices.map((inv, i) => (
-							<tr key={inv.id} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}>
-								<td className='px-4 py-3 font-medium text-gray-800'>{inv.id}</td>
-								<td className='px-4 py-3 text-gray-600'>{inv.customer}</td>
+							<tr key={inv.id} className={`border-b border-border ${i % 2 === 0 ? 'bg-card' : 'bg-muted/20'}`}>
+								<td className='px-4 py-3 font-medium text-foreground'>{inv.id}</td>
+								<td className='px-4 py-3 text-muted-foreground'>{inv.customer}</td>
 								<td className='px-4 py-3 font-medium'>{inv.amount}</td>
 								<td className='px-4 py-3'>
 									<InvoiceStatusBadge status={inv.status} />
 								</td>
-								<td className='px-4 py-3 text-gray-600'>{inv.date}</td>
+								<td className='px-4 py-3 text-muted-foreground'>{inv.date}</td>
 							</tr>
 						))}
 					</tbody>

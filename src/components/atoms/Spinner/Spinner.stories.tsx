@@ -64,7 +64,7 @@ export const ExtraLarge: Story = {
 
 export const PrimaryColor: Story = {
 	name: 'Color: Primary (Navy)',
-	args: { size: 32, className: 'text-[#092E44]' },
+	args: { size: 32, className: 'text-primary' },
 };
 
 export const BlueColor: Story = {
@@ -84,7 +84,7 @@ export const RedColor: Story = {
 
 export const GrayColor: Story = {
 	name: 'Color: Muted Gray',
-	args: { size: 32, className: 'text-gray-400' },
+	args: { size: 32, className: 'text-muted-foreground' },
 };
 
 export const InButton: Story = {
@@ -92,7 +92,7 @@ export const InButton: Story = {
 	render: () => (
 		<button
 			disabled
-			className='inline-flex items-center gap-2 px-4 py-2 bg-[#092E44] text-white rounded-[7px] text-sm font-medium opacity-70'>
+			className='inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-[7px] text-sm font-medium opacity-70'>
 			<Spinner size={16} className='text-white' />
 			Saving...
 		</button>
@@ -102,10 +102,10 @@ export const InButton: Story = {
 export const FullPageLoading: Story = {
 	name: 'Full-Page Loading State',
 	render: () => (
-		<div className='w-64 h-48 flex items-center justify-center bg-white border rounded-lg'>
+		<div className='w-64 h-48 flex items-center justify-center bg-card border border-border rounded-lg'>
 			<div className='flex flex-col items-center gap-3'>
-				<Spinner size={40} className='text-[#092E44]' />
-				<p className='text-sm text-gray-500'>Loading customers...</p>
+				<Spinner size={40} className='text-primary' />
+				<p className='text-sm text-muted-foreground'>Loading customers...</p>
 			</div>
 		</div>
 	),
@@ -117,8 +117,8 @@ export const AllSizes: Story = {
 		<div className='flex items-end gap-6'>
 			{[16, 24, 32, 48, 64].map((size) => (
 				<div key={size} className='flex flex-col items-center gap-2'>
-					<Spinner size={size} className='text-[#092E44]' />
-					<span className='text-xs text-gray-500'>{size}px</span>
+					<Spinner size={size} className='text-primary' />
+					<span className='text-xs text-muted-foreground'>{size}px</span>
 				</div>
 			))}
 		</div>

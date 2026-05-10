@@ -1,7 +1,9 @@
 import { FormHeader, Loader, Page, Button, AddButton } from '@/components/atoms';
+import { cn } from '@/lib/utils';
+import { getTypographyClass } from '@/lib/typography';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
-import { ArrowLeft, Trash2, Eye, Plus } from 'lucide-react';
+import { ArrowLeft, Trash2, Eye } from 'lucide-react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { TaskApi, ConnectionApi } from '@/api';
 import { ENTITY_STATUS } from '@/models';
@@ -119,17 +121,18 @@ const ExportManagement = () => {
 					</div>
 				</div>
 			) : (
-				<div className='card text-center !py-12'>
-					<div className='text-gray-500 mb-4'>
-						<h3 className='text-lg font-medium text-gray-900 mb-2'>No Export Tasks</h3>
-						<p className='text-gray-500 mb-4 max-w-[500px] mx-auto'>Create your first export task to start syncing data to S3.</p>
+				<div className='card text-center !py-12 bg-white shadow-sm border-border'>
+					<div className='text-zinc-500 mb-4'>
+						<h2 className={cn(getTypographyClass('form-title'), 'mb-2 text-center text-zinc-950')}>No Export Tasks</h2>
+						<p className={cn(getTypographyClass('body-large'), 'text-zinc-500 mb-8 text-center max-w-[500px] mx-auto')}>
+							Create your first export task to start syncing data to S3.
+						</p>
 						<Button
 							variant='outline'
 							onClick={() => {
 								setIsDrawerOpen(true);
 							}}
-							className='!p-5 !bg-[#fbfbfb] !border-[#CFCFCF] flex items-center gap-2 mx-auto'>
-							<Plus className='w-4 h-4' />
+							className='flex items-center gap-2 mx-auto px-6 h-10 border-zinc-200 text-zinc-950 hover:bg-zinc-50 font-medium'>
 							Add Export Task
 						</Button>
 					</div>

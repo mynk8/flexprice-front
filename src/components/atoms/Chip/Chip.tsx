@@ -7,11 +7,11 @@ const chipVariants = cva(
 	{
 		variants: {
 			variant: {
-				success: 'border-[#d1e9ca] bg-[#ECFBE4] text-[#377E6A]',
-				default: 'border-[#F0F2F5] bg-[#F0F2F5] text-[#57646E]',
-				failed: 'border-[#FEE2E2] bg-[#FEE2E2] text-[#DC2626]',
-				info: 'border-[#EFF8FF] bg-[#EFF8FF] text-[#2F6FE2]',
-				warning: 'border-[#FFF7ED] bg-[#FFF7ED] text-[#C2410C]',
+				success: 'border-emerald-200 bg-emerald-50 text-emerald-700',
+				default: 'border-muted bg-muted text-muted-foreground',
+				failed: 'border-red-200 bg-red-50 text-red-600',
+				info: 'border-blue-200 bg-blue-50 text-blue-600',
+				warning: 'border-amber-200 bg-amber-50 text-amber-700',
 			},
 			interactive: {
 				true: 'cursor-pointer hover:opacity-90 active:scale-95',
@@ -48,6 +48,15 @@ export interface ChipProps extends VariantProps<typeof chipVariants> {
 	borderColor?: string;
 }
 
+/**
+ * Chip component used for status indicators, badges, and small labels.
+ * Supports multiple semantic variants (success, failed, info, warning) and custom colors.
+ * Can be made interactive with an onClick handler.
+ *
+ * @example
+ * <Chip variant="success" label="Active" />
+ * <Chip variant="info" label="Draft" icon={<FileIcon />} />
+ */
 const Chip: FC<ChipProps> = ({
 	label,
 	variant = 'default',

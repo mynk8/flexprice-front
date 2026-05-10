@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AddButton, FormHeader, ActionButton } from '@/components/atoms';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import CreditGrantModal from './CreditGrantModal';
 import { formatBillingPeriodForPrice } from '@/utils/common/helper_functions';
 import { formatExpirationPeriod } from '@/utils/common/credit_grant_helpers';
@@ -144,7 +144,7 @@ const SubscriptionCreditGrantTable: React.FC<Props> = ({
 					<AddButton onClick={() => setIsOpen(true)} disabled={disabled} />
 				</div>
 				<div className='rounded-[6px] border border-gray-300'>
-					<FlexpriceTable data={data} columns={columns} showEmptyRow />
+					<DataTable data={data} columns={columns} showEmptyRow />
 				</div>
 			</div>
 		</>

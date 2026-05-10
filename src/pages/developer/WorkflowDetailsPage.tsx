@@ -1,5 +1,5 @@
 import { Button, Card, CardHeader, Chip, Loader, Page, Spacer } from '@/components/atoms';
-import { ApiDocsContent, ColumnData, DetailsCard, FlexpriceTable, TooltipCell } from '@/components/molecules';
+import { ApiDocsContent, ColumnData, DetailsCard, DataTable, TooltipCell } from '@/components/molecules';
 import { useParams, useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowLeft } from 'lucide-react';
@@ -102,7 +102,7 @@ const WorkflowDetailsPage = () => {
 				<Card variant='notched'>
 					<CardHeader title='Activities' />
 					{wf.activities?.length ? (
-						<FlexpriceTable columns={activityColumns} data={wf.activities} showEmptyRow={false} />
+						<DataTable columns={activityColumns} data={wf.activities} showEmptyRow={false} />
 					) : (
 						<p className='text-sm text-muted-foreground'>No activities recorded.</p>
 					)}

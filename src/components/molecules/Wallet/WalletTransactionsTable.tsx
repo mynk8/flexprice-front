@@ -1,4 +1,4 @@
-import FlexpriceTable, { ColumnData } from '@/components/molecules/Table';
+import DataTable, { ColumnData } from '@/components/molecules/Table';
 import { cn } from '@/lib/utils';
 import { WALLET_TRANSACTION_REASON } from '@/models/Wallet';
 import { WalletTransaction } from '@/models/WalletTransaction';
@@ -82,7 +82,7 @@ const CustomerWalletTransactionsTable: FC<Props> = ({ data }) => {
 			},
 		},
 	];
-	return <FlexpriceTable columns={columnData} data={data} />;
+	return <DataTable columns={columnData} data={data} />;
 };
 
 export default CustomerWalletTransactionsTable;

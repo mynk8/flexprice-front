@@ -5,7 +5,7 @@ import SubscriptionApi from '@/api/SubscriptionApi';
 import { useQuery } from '@tanstack/react-query';
 import { Country } from 'country-state-city';
 import { CreateCustomerDrawer, Detail, DetailsCard, MetadataModal, SaveCardModal } from '@/components/molecules';
-import FlexpriceTable, { ColumnData } from '@/components/molecules/Table';
+import DataTable, { ColumnData } from '@/components/molecules/Table';
 import { useParams, useOutletContext, useNavigate } from 'react-router';
 import { Pencil, CreditCard, Share2 } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
@@ -281,7 +281,7 @@ const CustomerInformationTab = () => {
 						{isInvoicedSubsLoading || isSubscribersCustomersLoading ? (
 							<Skeleton className='h-40 w-full mt-2' />
 						) : (
-							<FlexpriceTable
+							<DataTable
 								data={invoicedSubscriberRows}
 								columns={invoicedSubscribersColumns}
 								showEmptyRow

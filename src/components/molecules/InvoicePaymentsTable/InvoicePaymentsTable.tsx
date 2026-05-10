@@ -1,6 +1,6 @@
 import { FC, useMemo, useCallback } from 'react';
 import { Payment } from '@/models/Payment';
-import FlexpriceTable, { ColumnData, TooltipCell } from '../Table';
+import DataTable, { ColumnData, TooltipCell } from '../Table';
 import { formatDateShort, toSentenceCase, getCurrencySymbol } from '@/utils/common/helper_functions';
 import { Chip, NoDataCard } from '@/components/atoms';
 import { CreditCard, Banknote, Receipt, CircleDollarSign, ExternalLink, Copy, Eye } from 'lucide-react';
@@ -178,7 +178,7 @@ const InvoicePaymentsTable: FC<Props> = ({ data }) => {
 
 	return (
 		<div>
-			<FlexpriceTable showEmptyRow columns={columns} data={data} />
+			<DataTable showEmptyRow columns={columns} data={data} />
 		</div>
 	);
 };

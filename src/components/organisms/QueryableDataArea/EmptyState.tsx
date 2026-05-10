@@ -2,13 +2,14 @@ import { Button } from '@/components/atoms';
 import { ApiDocsContent } from '@/components/molecules';
 import type { EmptyStateConfig } from './QueryableDataArea';
 import TutorialCards from './TutorialCards';
+import { cn } from '@/lib/utils';
+import { getTypographyClass } from '@/lib/typography';
 
 interface EmptyStateProps {
 	config: EmptyStateConfig;
 }
 
 const EmptyState = ({ config }: EmptyStateProps) => {
-	// If custom component is provided, use it and still show tutorials/docs if configured
 	if (config.customComponent) {
 		return (
 			<div className='space-y-6'>
@@ -19,18 +20,19 @@ const EmptyState = ({ config }: EmptyStateProps) => {
 		);
 	}
 
-	// Default empty state
 	return (
 		<div className='space-y-6'>
-			<div className='bg-[#fafafa] border border-[#E9E9E9] rounded-[6px] w-full h-[360px] flex flex-col items-center justify-center mx-auto'>
-				{config.heading && <div className='font-medium text-[20px] leading-normal text-gray-700 mb-4 text-center'>{config.heading}</div>}
+			<div className='bg-white border border-border rounded-[6px] w-full h-[360px] flex flex-col items-center justify-center mx-auto shadow-sm'>
+				{config.icon && <div className='mb-6 text-zinc-400'>{config.icon}</div>}
+				{config.heading && <h2 className={cn(getTypographyClass('form-title'), 'mb-2 text-center text-zinc-950')}>{config.heading}</h2>}
 				{config.description && (
-					<div className='font-normal bg-[#F9F9F9] text-[16px] leading-normal text-gray-400 mb-8 text-center max-w-[350px]'>
-						{config.description}
-					</div>
+					<p className={cn(getTypographyClass('body-large'), 'text-zinc-500 mb-8 text-center max-w-[450px]')}>{config.description}</p>
 				)}
 				{config.buttonAction && config.buttonLabel && (
-					<Button variant='outline' onClick={config.buttonAction} className='!p-5 !bg-[#fbfbfb] !border-[#CFCFCF]'>
+					<Button
+						variant='outline'
+						onClick={config.buttonAction}
+						className='px-6 h-10 border-zinc-200 text-zinc-950 hover:bg-zinc-50 font-medium'>
 						{config.buttonLabel}
 					</Button>
 				)}

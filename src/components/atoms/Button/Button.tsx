@@ -33,13 +33,30 @@ const buttonVariants = cva(
 		},
 	},
 );
+/**
+ * Props for the Button component.
+ * Extends standard HTML button attributes and variant props from CVA.
+ */
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-	asChild?: boolean;
+	/** Whether the button is in a loading state. Shows a spinner and disables the button. */
 	isLoading?: boolean;
+	/** Optional icon to display after the button text. */
 	suffixIcon?: ReactNode;
+	/** Optional icon to display before the button text. */
 	prefixIcon?: ReactNode;
+	/** Whether the button should render as a child component (using Radix Slot). */
+	asChild?: boolean;
 }
 
+/**
+ * Button component used throughout the FlexPrice application.
+ * Supports multiple variants (default, black, destructive, outline, etc.) and sizes.
+ * Can be used as a standard button or as a child component (asChild).
+ *
+ * @example
+ * <Button variant="default" size="default">Click me</Button>
+ * <Button isLoading prefixIcon={<Plus />}>Add Item</Button>
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	(
 		{ className, variant, size, asChild = false, isLoading = false, children, suffixIcon, prefixIcon, disabled, onClick, ...props },

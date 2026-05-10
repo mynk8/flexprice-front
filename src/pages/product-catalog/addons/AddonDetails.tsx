@@ -1,7 +1,7 @@
 import { ActionButton, Button, CardHeader, Chip, Loader, Page, Spacer, NoDataCard, Card } from '@/components/atoms';
 import {
 	ColumnData,
-	FlexpriceTable,
+	DataTable,
 	ApiDocsContent,
 	AddonDrawer,
 	AddEntitlementDrawer,
@@ -274,7 +274,7 @@ const AddonDetails = () => {
 								</Button>
 							}
 						/>
-						<FlexpriceTable columns={chargeColumns} data={addonData?.prices ?? []} />
+						<DataTable columns={chargeColumns} data={addonData?.prices ?? []} />
 					</Card>
 				) : (
 					<NoDataCard
@@ -299,7 +299,7 @@ const AddonDetails = () => {
 								</Button>
 							}
 						/>
-						<FlexpriceTable showEmptyRow data={addonData.entitlements || []} columns={getEntitlementColumns(addonData.id)} />
+						<DataTable showEmptyRow data={addonData.entitlements || []} columns={getEntitlementColumns(addonData.id)} />
 					</Card>
 				) : (
 					<NoDataCard

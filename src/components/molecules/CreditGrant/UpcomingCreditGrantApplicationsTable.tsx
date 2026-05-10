@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormHeader, Chip, Tooltip } from '@/components/atoms';
-import FlexpriceTable, { ColumnData, RedirectCell } from '../Table';
+import DataTable, { ColumnData, RedirectCell } from '../Table';
 import { CreditGrantApplication, APPLICATION_STATUS } from '@/models';
 import { formatDateShort } from '@/utils/common/helper_functions';
 import { formatDateTimeWithSecondsAndTimezone } from '@/utils/common/format_date';
@@ -83,7 +83,7 @@ const UpcomingCreditGrantApplicationsTable: React.FC<UpcomingCreditGrantApplicat
 		<Card className='card mt-8'>
 			<FormHeader title='Upcoming Credits' variant='sub-header' titleClassName='font-semibold' />
 			<div className='mt-4'>
-				<FlexpriceTable data={data} columns={columns} showEmptyRow={false} />
+				<DataTable data={data} columns={columns} showEmptyRow={false} />
 			</div>
 		</Card>
 	);

@@ -1,7 +1,7 @@
 import { AddAddonToSubscriptionRequest } from '@/types/dto/Addon';
 import React, { useCallback, useMemo, useState, memo } from 'react';
 import { AddButton, FormHeader, ActionButton } from '@/components/atoms';
-import FlexpriceTable, { ColumnData } from '../Table';
+import DataTable, { ColumnData } from '../Table';
 import SubscriptionAddonModal from './SubscriptionAddonModal';
 import { useQuery } from '@tanstack/react-query';
 import AddonApi from '@/api/AddonApi';
@@ -202,7 +202,7 @@ const SubscriptionAddonTable: React.FC<Props> = ({
 					<AddButton onClick={handleOpenCreate} disabled={disabled} />
 				</div>
 				<div className='rounded-[6px] border border-gray-300'>
-					<FlexpriceTable data={extendedData} columns={columns} showEmptyRow />
+					<DataTable data={extendedData} columns={columns} showEmptyRow />
 				</div>
 			</div>
 		</>

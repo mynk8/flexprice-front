@@ -133,11 +133,11 @@ export const CreditUsage: Story = {
 export const MultipleMeters: Story = {
 	name: 'Multiple Usage Meters',
 	render: () => (
-		<div className='space-y-5 w-80 p-5 border rounded-lg bg-white'>
-			<h3 className='font-semibold text-sm text-gray-800 mb-3'>Feature Entitlements</h3>
+		<div className='space-y-5 w-80 p-5 border border-border rounded-lg bg-card'>
+			<h3 className='font-semibold text-sm text-foreground mb-3'>Feature Entitlements</h3>
 
 			<div className='space-y-1'>
-				<div className='flex justify-between text-xs text-gray-600'>
+				<div className='flex justify-between text-xs text-muted-foreground'>
 					<span>API Calls</span>
 					<span className='font-medium'>8,500 / 10,000</span>
 				</div>
@@ -145,7 +145,7 @@ export const MultipleMeters: Story = {
 			</div>
 
 			<div className='space-y-1'>
-				<div className='flex justify-between text-xs text-gray-600'>
+				<div className='flex justify-between text-xs text-muted-foreground'>
 					<span>Data Storage</span>
 					<span className='font-medium'>2.4 / 5 GB</span>
 				</div>
@@ -153,7 +153,7 @@ export const MultipleMeters: Story = {
 			</div>
 
 			<div className='space-y-1'>
-				<div className='flex justify-between text-xs text-gray-600'>
+				<div className='flex justify-between text-xs text-muted-foreground'>
 					<span>Active Users</span>
 					<span className='font-medium'>12 / 50</span>
 				</div>
@@ -161,7 +161,7 @@ export const MultipleMeters: Story = {
 			</div>
 
 			<div className='space-y-1'>
-				<div className='flex justify-between text-xs text-gray-600'>
+				<div className='flex justify-between text-xs text-muted-foreground'>
 					<span>Reports Generated</span>
 					<span className='font-medium'>100 / 100</span>
 				</div>

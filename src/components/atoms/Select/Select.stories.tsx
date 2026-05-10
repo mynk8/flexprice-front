@@ -121,6 +121,33 @@ const SearchableSelectHarness = (props: React.ComponentProps<typeof SearchableSe
 	);
 };
 
+const SelectFormDemo = () => {
+	const [currency, setCurrency] = useState('');
+	const [period, setPeriod] = useState('');
+	const [chargeType, setChargeType] = useState('');
+
+	return (
+		<div className='space-y-4 w-80 p-6 border border-border rounded-lg bg-card'>
+			<h3 className='font-semibold text-sm text-foreground'>Configure Plan Pricing</h3>
+			<FlexPriceSelect options={currencyOptions} label='Currency' value={currency} onChange={setCurrency} placeholder='Select currency' />
+			<FlexPriceSelect
+				options={billingPeriodOptions}
+				label='Billing Period'
+				value={period}
+				onChange={setPeriod}
+				placeholder='Select period'
+			/>
+			<FlexPriceSelect
+				options={planTypeOptions}
+				label='Charge Type'
+				value={chargeType}
+				onChange={setChargeType}
+				placeholder='Select charge type'
+			/>
+		</div>
+	);
+};
+
 export const Default: Story = {
 	render: (args) => <InteractiveSelectHarness {...args} />,
 	args: {
@@ -221,30 +248,5 @@ export const FormExample: Story = {
 	args: {
 		options: billingPeriodOptions,
 	},
-	render: () => {
-		const [currency, setCurrency] = useState('');
-		const [period, setPeriod] = useState('');
-		const [chargeType, setChargeType] = useState('');
-
-		return (
-			<div className='space-y-4 w-80 p-6 border rounded-lg'>
-				<h3 className='font-semibold text-sm text-gray-800'>Configure Plan Pricing</h3>
-				<FlexPriceSelect options={currencyOptions} label='Currency' value={currency} onChange={setCurrency} placeholder='Select currency' />
-				<FlexPriceSelect
-					options={billingPeriodOptions}
-					label='Billing Period'
-					value={period}
-					onChange={setPeriod}
-					placeholder='Select period'
-				/>
-				<FlexPriceSelect
-					options={planTypeOptions}
-					label='Charge Type'
-					value={chargeType}
-					onChange={setChargeType}
-					placeholder='Select charge type'
-				/>
-			</div>
-		);
-	},
+	render: () => <SelectFormDemo />,
 };

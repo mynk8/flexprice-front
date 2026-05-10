@@ -21,10 +21,9 @@ import { subDays, subMonths, startOfMonth, endOfMonth } from 'date-fns';
  * - `className` — Custom classes for the trigger button width
  */
 const meta = {
-	title: 'Molecules/DateRangePicker',
+	title: 'Atoms/DateRangePicker',
 	component: DateRangePicker,
 	parameters: {
-		layout: 'centered',
 		docs: {
 			description: {
 				component:
@@ -50,8 +49,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Harness for interactive demonstration
-const InteractivePickerHarness = (props: React.ComponentProps<typeof DateRangePicker>) => {
+const InteractivePicker = (props: React.ComponentProps<typeof DateRangePicker>) => {
 	const [start, setStart] = useState<Date | undefined>(props.startDate);
 	const [end, setEnd] = useState<Date | undefined>(props.endDate);
 	return (
@@ -69,7 +67,7 @@ const InteractivePickerHarness = (props: React.ComponentProps<typeof DateRangePi
 };
 
 export const Default: Story = {
-	render: (args) => <InteractivePickerHarness {...args} />,
+	render: (args) => <InteractivePicker {...args} />,
 };
 
 export const WithTitle: Story = {
@@ -109,45 +107,14 @@ export const WithDateConstraints: Story = {
 	name: 'With Min/Max Constraints',
 	render: (args) => (
 		<div className='space-y-2'>
-			<InteractivePickerHarness
+			<InteractivePicker
 				{...args}
 				title='Report Period'
 				minDate={subMonths(new Date(), 3)}
 				maxDate={new Date()}
 				placeholder='Last 3 months only'
 			/>
-			<p className='text-xs text-gray-500'>Only dates within the last 3 months are selectable.</p>
+			<p className='text-xs text-muted-foreground'>Only dates within the last 3 months are selectable.</p>
 		</div>
 	),
-};
-
-export const InAnalyticsToolbar: Story = {
-	name: 'Analytics Toolbar (Interactive)',
-	render: () => {
-		const [start, setStart] = useState<Date>(subDays(new Date(), 30));
-		const [end, setEnd] = useState<Date>(new Date());
-
-		return (
-			<div className='flex items-end gap-4 p-4 border rounded-lg bg-white'>
-				<div>
-					<label className='block text-xs font-medium text-gray-600 mb-1'>Metric</label>
-					<select className='h-8 px-3 text-sm border rounded-[6px] text-gray-700'>
-						<option>Revenue</option>
-						<option>Usage</option>
-						<option>MRR</option>
-					</select>
-				</div>
-				<DateRangePicker
-					title='Period'
-					startDate={start}
-					endDate={end}
-					onChange={({ startDate, endDate }) => {
-						if (startDate) setStart(startDate);
-						if (endDate) setEnd(endDate);
-					}}
-				/>
-				<button className='h-8 px-4 bg-[#092E44] text-white text-sm rounded-[6px] whitespace-nowrap'>Apply Filter</button>
-			</div>
-		);
-	},
 };
