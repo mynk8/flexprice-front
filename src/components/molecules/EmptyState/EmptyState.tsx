@@ -1,7 +1,5 @@
 import type { ReactNode } from 'react';
 import Button from '@/components/atoms/Button/Button';
-import { cn } from '@/lib/utils';
-import { getTypographyClass } from '@/lib/typography';
 
 export interface EmptyStateProps {
 	/** Large icon to display above the heading. */
@@ -31,12 +29,19 @@ export interface EmptyStateProps {
  */
 const EmptyState = ({ icon, heading, description, buttonLabel, buttonAction }: EmptyStateProps) => {
 	return (
-		<div className='bg-white border border-border rounded-[6px] w-full h-[360px] flex flex-col items-center justify-center mx-auto shadow-sm'>
-			{icon && <div className='mb-8 text-zinc-400'>{icon}</div>}
-			{heading && <h2 className={cn(getTypographyClass('form-title'), 'mb-2 text-center text-zinc-950')}>{heading}</h2>}
-			{description && <p className={cn(getTypographyClass('body-large'), 'text-zinc-500 mb-8 text-center max-w-[450px]')}>{description}</p>}
+		<div className='bg-[#fafafa] border border-[#E9E9E9] rounded-[6px] w-full h-[360px] flex flex-col items-center justify-center mx-auto shadow-sm'>
+			{icon && <div className='mb-8 text-gray-400'>{icon}</div>}
+			{heading && <div className='font-medium text-[20px] leading-normal text-gray-700 mb-4 text-center'>{heading}</div>}
+			{description && (
+				<div className='font-normal bg-[#F9F9F9] text-[16px] leading-normal text-gray-400 mb-8 text-center max-w-[350px]'>
+					{description}
+				</div>
+			)}
 			{buttonAction && buttonLabel && (
-				<Button variant='outline' onClick={buttonAction} className='px-6 h-10 border-zinc-200 text-zinc-950 hover:bg-zinc-50'>
+				<Button
+					variant='outline'
+					onClick={buttonAction}
+					className='!p-5 !bg-[#fbfbfb] !border-[#CFCFCF] text-gray-700 font-medium hover:bg-gray-50'>
 					{buttonLabel}
 				</Button>
 			)}

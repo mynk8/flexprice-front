@@ -117,9 +117,9 @@ export const AllPagesShowcase: Story = {
 	render: () => (
 		<div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
 			<div>
-				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Plans</p>
+				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Plans</p>
 				<EmptyState
-					icon={<Layers2 size={48} strokeWidth={1} className='text-zinc-400' />}
+					icon={<Layers2 size={48} strokeWidth={1} className='text-gray-400' />}
 					heading='No plans yet'
 					description='Create your first pricing plan.'
 					buttonLabel='Create Plan'
@@ -127,9 +127,9 @@ export const AllPagesShowcase: Story = {
 				/>
 			</div>
 			<div>
-				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Customers</p>
+				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Customers</p>
 				<EmptyState
-					icon={<Users size={48} strokeWidth={1} className='text-zinc-400' />}
+					icon={<Users size={48} strokeWidth={1} className='text-gray-400' />}
 					heading='No customers yet'
 					description='Add customers to manage subscriptions.'
 					buttonLabel='Add Customer'
@@ -137,17 +137,17 @@ export const AllPagesShowcase: Story = {
 				/>
 			</div>
 			<div>
-				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Invoices</p>
+				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Invoices</p>
 				<EmptyState
-					icon={<FileText size={48} strokeWidth={1} className='text-zinc-400' />}
+					icon={<FileText size={48} strokeWidth={1} className='text-gray-400' />}
 					heading='No invoices yet'
 					description='Invoices appear after billing runs.'
 				/>
 			</div>
 			<div>
-				<p className='text-xs font-medium text-zinc-500 mb-2 uppercase tracking-wide'>Events</p>
+				<p className='text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide'>Events</p>
 				<EmptyState
-					icon={<Zap size={48} strokeWidth={1} className='text-zinc-400' />}
+					icon={<Zap size={48} strokeWidth={1} className='text-gray-400' />}
 					heading='No events received'
 					description='Send usage events via the API.'
 					buttonLabel='View Docs'
