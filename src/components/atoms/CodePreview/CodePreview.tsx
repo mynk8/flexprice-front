@@ -5,6 +5,7 @@ import { Copy } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Button } from '../Button';
 
+// React 18 compatibility wrapper for prism-react-renderer types
 const CodeHighlighter = Highlight as unknown as FC<HighlightProps>;
 
 interface Props {

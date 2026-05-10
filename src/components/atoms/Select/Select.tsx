@@ -13,7 +13,7 @@ export interface SelectOption {
 	disabled?: boolean;
 }
 
-interface Props {
+export interface SelectProps {
 	options: SelectOption[];
 	value?: string;
 	defaultOpen?: boolean;
@@ -43,20 +43,19 @@ const RadioSelectItem = React.forwardRef<
 			className,
 		)}
 		{...props}>
-		{/* Checkbox Icon - Show Empty when Not Selected, Filled when Selected */}
 		<span className='absolute left-2 top-[10px] flex h-4 w-4  justify-center'>
 			<SelectPrimitive.ItemIndicator className='flex items-center justify-center w-full h-full'>
 				<Circle className='size-2 text-black fill-current' />
 			</SelectPrimitive.ItemIndicator>
-			{/* Default Unselected Checkbox */}
 			<Circle className='size-4 text-gray-400 absolute' />
 		</span>
 
 		<SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
 	</SelectPrimitive.Item>
 ));
+RadioSelectItem.displayName = 'RadioSelectItem';
 
-const FlexPriceSelect: React.FC<Props> = ({
+const FlexPriceSelect: React.FC<SelectProps> = ({
 	disabled = false,
 	options,
 	value,

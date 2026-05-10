@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { Slot } from '@radix-ui/react-slot';
+import { Slot, Slottable } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
 import { LoaderCircleIcon } from 'lucide-react';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 const buttonVariants = cva(
 	'inline-flex !py-0 !my-0 items-center justify-center gap-2 whitespace-nowrap rounded-[7px] text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
@@ -41,18 +41,40 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-	({ className, variant, size, asChild = false, isLoading = false, children, suffixIcon, prefixIcon, ...props }, ref) => {
+	(
+		{ className, variant, size, asChild = false, isLoading = false, children, suffixIcon, prefixIcon, disabled, onClick, ...props },
+		ref,
+	) => {
 		const Comp = asChild ? Slot : 'button';
+		const isDisabled = isLoading || disabled;
+
+		const handleClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
+			if (isDisabled && asChild) {
+				event.preventDefault();
+				event.stopPropagation();
+				return;
+			}
+
+			onClick?.(event);
+		};
+
 		return (
-			<Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} disabled={isLoading || props.disabled} {...props}>
+			<Comp
+				className={cn(buttonVariants({ variant, size, className }))}
+				ref={ref}
+				disabled={asChild ? undefined : isDisabled}
+				aria-disabled={asChild && isDisabled ? true : undefined}
+				data-disabled={asChild && isDisabled ? '' : undefined}
+				onClick={handleClick}
+				{...props}>
 				{isLoading ? (
 					<LoaderCircleIcon className='size-4 animate-spin ' />
 				) : (
-					<div className='flex items-center gap-[5px]'>
+					<>
 						{prefixIcon}
-						{children}
+						<Slottable>{children}</Slottable>
 						{suffixIcon}
-					</div>
+					</>
 				)}
 			</Comp>
 		);

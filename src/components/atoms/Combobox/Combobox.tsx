@@ -34,6 +34,7 @@ const Combobox = ({
 	placeholder = 'Select an option',
 	emptyText = 'No options found.',
 	searchPlaceholder = 'Search...',
+	className,
 	triggerClassName,
 	contentClassName,
 	disabled = false,
@@ -65,6 +66,7 @@ const Combobox = ({
 	}, [options, searchQuery]);
 
 	const selectedOption = useMemo(() => options.find((option) => option.value === value), [options, value]);
+	const triggerWidth = typeof width === 'number' ? `${width}px` : width;
 
 	const handleSelect = useCallback(
 		(currentValue: string) => {
@@ -84,15 +86,16 @@ const Combobox = ({
 					role='combobox'
 					aria-expanded={open}
 					disabled={disabled}
-					className={cn('justify-between', typeof width === 'number' ? `w-[${width}px]` : `w-[${width}]`, triggerClassName)}>
-					<p className='font-normal'>{selectedOption?.label || placeholder}</p>
+					style={{ width: triggerWidth }}
+					className={cn('justify-between', className, triggerClassName)}>
+					<p className='truncate font-normal'>{selectedOption?.label || placeholder}</p>
 					<ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent
 				className={cn('p-0', contentClassName)}
 				style={{
-					width: typeof width === 'number' ? `${width}px` : width,
+					width: triggerWidth,
 				}}>
 				<Command>
 					<CommandInput placeholder={searchPlaceholder} value={searchQuery} onValueChange={setSearchQuery} />

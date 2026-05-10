@@ -14,7 +14,7 @@ export interface SelectOption {
 	disabled?: boolean;
 }
 
-interface SearchableSelectProps {
+export interface SearchableSelectProps {
 	options: SelectOption[];
 	value?: string;
 	defaultOpen?: boolean;
@@ -63,8 +63,6 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
 		}
 	}, []);
 
-	// Let Command component handle filtering since we're using option.label as the value
-
 	const selectedOption = useMemo(() => options.find((option) => option.value === value), [options, value]);
 
 	const handleSelect = useCallback(
@@ -89,7 +87,6 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
 				'focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
 				option.disabled && 'select-none cursor-not-allowed',
 			)}>
-			{/* Radio Icon */}
 			<span className='absolute left-2 top-[10px] flex h-4 w-4 justify-center'>
 				{value === option.value ? <Circle className='size-2 text-black fill-current' /> : null}
 				<Circle className='size-4 text-gray-400 absolute' />
@@ -148,6 +145,8 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
 			<Popover open={open} onOpenChange={handleOpenChange}>
 				<PopoverTrigger asChild>
 					<button
+						role='combobox'
+						aria-expanded={open}
 						className={cn(
 							'flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background',
 							'placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
