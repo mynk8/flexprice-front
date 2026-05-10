@@ -1,5 +1,5 @@
 import { Loader, Page } from '@/components/atoms';
-import { ApiDocsContent } from '@/components/molecules/ApiDocs/ApiDocs';
+import { ApiDocsContent } from '@/components/molecules';
 import { EmptyState } from '@/components/organisms';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
