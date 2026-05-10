@@ -1,5 +1,6 @@
 import { Button, Page, ShortPagination, SectionHeader } from '@/components/atoms';
-import { ColumnData, DataTable, SecretKeyDrawer, ApiDocsContent, EmptyState } from '@/components/molecules';
+import { ColumnData, DataTable, SecretKeyDrawer, ApiDocsContent } from '@/components/molecules';
+import { EmptyState } from '@/components/organisms';
 import SecretKeysApi from '@/api/SecretKeysApi';
 import { useQuery } from '@tanstack/react-query';
 import { SecretKey } from '@/models/SecretKey';

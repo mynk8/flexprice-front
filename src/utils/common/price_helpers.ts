@@ -248,3 +248,48 @@ export const calculateDiscountedPrice = (price: Price, coupon: any) => {
 		savings: originalAmount - discountedAmount,
 	};
 };
+
+/**
+ * Calculates the total price based on usage and tiers.
+ * Supports both 'volume' and 'graduated' (slab) models.
+ *
+ * @param usage - The number of units consumed
+ * @param tiers - Array of pricing tiers
+ * @param mode - 'volume' (all units at rate) or 'graduated' (bracketed rates)
+ * @returns Total calculated price
+ */
+export const calculateTieredPrice = (usage: number, tiers: any[], mode: 'volume' | 'graduated'): number => {
+	if (!usage || usage <= 0 || !tiers || tiers.length === 0) return 0;
+
+	if (mode === 'volume') {
+		// Find the tier that applies to the total usage
+		const activeTier =
+			tiers.find((tier) => {
+				const upTo = tier.up_to;
+				return upTo === null || usage <= upTo;
+			}) || tiers[tiers.length - 1];
+
+		return usage * parseFloat(activeTier.unit_amount || '0');
+	}
+
+	if (mode === 'graduated') {
+		let total = 0;
+		let remainingUsage = usage;
+
+		for (let i = 0; i < tiers.length; i++) {
+			const tier = tiers[i];
+			const upTo = tier.up_to;
+			const prevUpTo = i > 0 ? tiers[i - 1].up_to : 0;
+			const tierLimit = upTo === null ? Infinity : upTo - prevUpTo;
+
+			const unitsInTier = Math.min(remainingUsage, tierLimit);
+			total += unitsInTier * parseFloat(tier.unit_amount || '0');
+
+			remainingUsage -= unitsInTier;
+			if (remainingUsage <= 0) break;
+		}
+		return total;
+	}
+
+	return 0;
+};

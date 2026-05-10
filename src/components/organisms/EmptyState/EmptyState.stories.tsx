@@ -23,7 +23,7 @@ import EmptyState from './EmptyState';
  * - `buttonAction` — CTA click handler
  */
 const meta = {
-	title: 'Molecules/EmptyState',
+	title: 'Organisms/EmptyState',
 	component: EmptyState,
 	parameters: {
 		layout: 'padded',

@@ -1,4 +1,5 @@
 export { CommandPalette } from './CommandPalette';
+export { default as EmptyState } from './EmptyState/EmptyState';
 export { default as EntityChargesPage, ENTITY_TYPE } from './EntityChargesPage';
 export { default as PlanPriceTable } from './PlanPriceTable';
 export { SubscriptionPriceTable, SubscriptionActionButton, SubscriptionForm, SubscriptionTable, UsageTable } from './Subscription';

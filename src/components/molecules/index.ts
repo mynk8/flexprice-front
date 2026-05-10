@@ -11,7 +11,6 @@ export { default as Pagination } from './Pagination';
 
 // Tables & Data Display
 export { default as DataTable, Table, TableHeader, TableBody, TableHead, TableRow, TableCell, TooltipCell, RedirectCell } from './Table';
-export { default as EmptyState } from './EmptyState/EmptyState';
 export type { ColumnData, DataTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from './Table';
 
 // Charts & Analytics

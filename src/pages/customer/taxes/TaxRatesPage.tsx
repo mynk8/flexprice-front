@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Page, Spacer, Loader, ShortPagination, AddButton } from '@/components/atoms';
-import { ApiDocsContent, EmptyState } from '@/components/molecules';
+import { ApiDocsContent } from '@/components/molecules';
+import { EmptyState } from '@/components/organisms';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import usePagination from '@/hooks/usePagination';

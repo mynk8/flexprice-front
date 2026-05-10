@@ -1,6 +1,7 @@
 import { Button, Chip, Loader, Page, ShortPagination } from '@/components/atoms';
 import { API_DOCS_TAGS } from '@/constants/apiDocsTags';
-import { ApiDocsContent, ColumnData, DataTable, EmptyState, ImportFileDrawer } from '@/components/molecules';
+import { ApiDocsContent, ColumnData, DataTable, ImportFileDrawer } from '@/components/molecules';
+import { EmptyState } from '@/components/organisms';
 import usePagination from '@/hooks/usePagination';
 import { ImportTask } from '@/models/ImportTask';
 import TaskApi from '@/api/TaskApi';

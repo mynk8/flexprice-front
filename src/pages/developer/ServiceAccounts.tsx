@@ -1,5 +1,6 @@
 import { Button, Page, ShortPagination, SectionHeader } from '@/components/atoms';
-import { ColumnData, DataTable, ApiDocsContent, EmptyState } from '@/components/molecules';
+import { ColumnData, DataTable, ApiDocsContent } from '@/components/molecules';
+import { EmptyState } from '@/components/organisms';
 import { UserApi } from '@/api/UserApi';
 import { useQuery } from '@tanstack/react-query';
 import { User } from '@/models';
