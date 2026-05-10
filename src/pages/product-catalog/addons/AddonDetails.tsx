@@ -1,6 +1,14 @@
-import { ActionButton, Button, CardHeader, Chip, Loader, Page, Spacer, NoDataCard } from '@/components/atoms';
-import { ApiDocsContent, ColumnData, FlexpriceTable, AddonDrawer, AddEntitlementDrawer, RedirectCell } from '@/components/molecules';
-import { DetailsCard } from '@/components/molecules';
+import { ActionButton, Button, CardHeader, Chip, Loader, Page, Spacer, NoDataCard, Card } from '@/components/atoms';
+import {
+	ColumnData,
+	FlexpriceTable,
+	ApiDocsContent,
+	AddonDrawer,
+	AddEntitlementDrawer,
+	RedirectCell,
+	DetailsCard,
+	ChargeValueCell,
+} from '@/components/molecules';
 import { RouteNames } from '@/core/routes/Routes';
 import { Price } from '@/models/Price';
 import { useBreadcrumbsStore } from '@/store/useBreadcrumbsStore';
@@ -12,17 +20,13 @@ import { EyeOff, Plus, Pencil, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router';
-import { Card } from '@/components/atoms';
 import formatChips from '@/utils/common/format_chips';
-import { ChargeValueCell } from '@/components/molecules';
 import { BILLING_PERIOD } from '@/constants/constants';
 import { FEATURE_TYPE } from '@/models/Feature';
 import { getFeatureTypeChips } from '@/components/molecules/CustomerUsageTable/CustomerUsageTable';
 import { formatAmount } from '@/components/atoms/Input/Input';
-import { Entitlement } from '@/models/Entitlement';
+import { Entitlement, ENTITLEMENT_ENTITY_TYPE } from '@/models/Entitlement';
 import { ENTITY_STATUS } from '@/models';
-import { ENTITLEMENT_ENTITY_TYPE } from '@/models/Entitlement';
-import { EntitlementResponse } from '@/types/dto';
 
 const formatBillingPeriod = (billingPeriod: string) => {
 	switch (billingPeriod.toUpperCase()) {
@@ -61,37 +65,37 @@ type Params = {
 const chargeColumns: ColumnData<Price>[] = [
 	{
 		title: 'Display Name',
-		render(rowData) {
+		render(rowData: Price) {
 			return <span>{rowData.display_name ?? '--'}</span>;
 		},
 	},
 	{
 		title: 'Charge Type',
-		render: (row) => {
+		render: (row: Price) => {
 			return <span>{getPriceTypeLabel(row.type)}</span>;
 		},
 	},
 	{
 		title: 'Billing Timing',
-		render(rowData) {
+		render(rowData: Price) {
 			return <span>{formatInvoiceCadence(rowData.invoice_cadence as string)}</span>;
 		},
 	},
 	{
 		title: 'Billing Period',
-		render(rowData) {
+		render(rowData: Price) {
 			return <span>{formatBillingPeriod(rowData.billing_period as string)}</span>;
 		},
 	},
 	{
 		title: 'Value',
-		render(rowData) {
+		render(rowData: Price) {
 			return <ChargeValueCell data={rowData} />;
 		},
 	},
 ];
 
-const getEntitlementColumns = (_addonId: string): ColumnData<EntitlementResponse>[] => [
+const getEntitlementColumns = (_addonId: string): ColumnData<Entitlement>[] => [
 	{
 		title: 'Feature Name',
 		render(row) {
@@ -111,7 +115,7 @@ const getEntitlementColumns = (_addonId: string): ColumnData<EntitlementResponse
 		},
 	},
 	{
-		fieldVariant: 'interactive',
+		fieldVariant: 'interactive' as const,
 		width: '30px',
 		hideOnEmpty: true,
 		render(row) {
@@ -141,7 +145,6 @@ const getFeatureValue = (entitlement: Entitlement) => {
 		case FEATURE_TYPE.STATIC:
 			return entitlement.static_value;
 		case FEATURE_TYPE.METERED: {
-			// Safely access feature properties with fallbacks
 			const unitPlural = entitlement.feature?.unit_plural || 'units';
 			const unitSingular = entitlement.feature?.unit_singular || 'unit';
 			return (

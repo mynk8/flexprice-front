@@ -2,7 +2,7 @@ import { FC, useState, useMemo } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { Plus, Trash2 } from 'lucide-react';
 import { Button, Card, CardHeader, Chip, Dialog, NoDataCard } from '@/components/atoms';
-import { FlexpriceTable, ColumnData, AddEntitlementDrawer } from '@/components/molecules';
+import { FlexpriceTable, AddEntitlementDrawer } from '@/components/molecules';
 import SubscriptionApi from '@/api/SubscriptionApi';
 import EntitlementApi from '@/api/EntitlementApi';
 import { FEATURE_TYPE } from '@/models/Feature';
@@ -128,7 +128,7 @@ const SubscriptionEntitlementsSection: FC<SubscriptionEntitlementsSectionProps> 
 		setEntitlementToDelete(null);
 	};
 
-	const columns: ColumnData<any>[] = [
+	const columns = [
 		{
 			title: 'Feature Name',
 			render: (row: any) => <span>{row.feature?.name || 'Unknown Feature'}</span>,
@@ -144,7 +144,7 @@ const SubscriptionEntitlementsSection: FC<SubscriptionEntitlementsSectionProps> 
 		{
 			title: '',
 			width: '30px',
-			fieldVariant: 'interactive',
+			fieldVariant: 'interactive' as const,
 			hideOnEmpty: true,
 			render: (row: any) => {
 				// Only show actions if there's a subscription source

@@ -3,7 +3,7 @@ import FlexpriceTable, { ColumnData, TooltipCell } from '../Table';
 import { TaxRateResponse } from '@/types/dto/tax';
 import { Chip, ActionButton } from '@/components/atoms';
 import { formatDateShort } from '@/utils/common/helper_functions';
-import { TAX_RATE_TYPE, TAX_RATE_STATUS, TaxRate } from '@/models/Tax';
+import { TAX_RATE_TYPE, TAX_RATE_STATUS } from '@/models/Tax';
 import TaxApi from '@/api/TaxApi';
 import formatChips from '@/utils/common/format_chips';
 import { RouteNames } from '@/core/routes/Routes';
@@ -60,7 +60,7 @@ const formatTaxValue = (tax: TaxRateResponse) => {
 
 const TaxTable: FC<Props> = ({ data, onEdit }) => {
 	const navigate = useNavigate();
-	const columns: ColumnData<TaxRate>[] = [
+	const columns: ColumnData<TaxRateResponse>[] = [
 		{
 			title: 'Name',
 			fieldName: 'name',
@@ -80,7 +80,7 @@ const TaxTable: FC<Props> = ({ data, onEdit }) => {
 		{
 			title: 'Status',
 			render: (row) => {
-				const label = formatChips(row?.status);
+				const label = formatChips(row?.tax_rate_status);
 				return <Chip variant={label === 'Active' ? 'success' : 'default'} label={label} />;
 			},
 		},

@@ -47,7 +47,8 @@ import { formatInvoiceCadence } from '@/pages/product-catalog/plans/PlanDetailsP
 import { AlertSettings } from '@/models/Feature';
 import { generateExpandQueryParams } from '@/utils/common/api_helper';
 import { EXPAND } from '@/models/expand';
-import { GetPriceResponse } from '@/types/dto/Price';
+import { PriceResponse } from '@/types/dto/Price';
+import { getErrorMessage } from '@/utils/errorMessage';
 
 export const formatAggregationType = (data: string): string => {
 	const aggregationTypeMap: Record<string, string> = {
@@ -63,10 +64,10 @@ export const formatAggregationType = (data: string): string => {
 	return aggregationTypeMap[data] || data;
 };
 
-const priceColumns: ColumnData<GetPriceResponse>[] = [
+const priceColumns: ColumnData<PriceResponse>[] = [
 	{
 		title: 'Plan/Addon',
-		render: (row: GetPriceResponse) => {
+		render: (row) => {
 			return (
 				<RedirectCell
 					redirectUrl={
@@ -326,9 +327,8 @@ const FeatureDetails = () => {
 						setShowAlertDialog(false);
 						refetchQueries(['fetchFeatureDetails', featureId]);
 						toast.success('Alert settings updated successfully');
-					} catch (e: any) {
-						const errorMessage = e?.response?.data?.error?.message || e?.message || 'Failed to update alert settings';
-						toast.error(errorMessage);
+					} catch (error: unknown) {
+						toast.error(getErrorMessage(error) || 'Failed to update alert settings');
 					}
 				}}
 				onClose={() => setShowAlertDialog(false)}

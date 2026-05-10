@@ -12,7 +12,7 @@ const EventsTable: FC<Props> = ({ data }) => {
 	const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-	const columns: ColumnData[] = [
+	const columns: ColumnData<Event>[] = [
 		{
 			title: 'Event Name',
 			render(rowData) {

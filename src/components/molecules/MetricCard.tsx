@@ -2,7 +2,7 @@ import { formatNumber } from '@/utils/common';
 import { getCurrencySymbol } from '@/utils/common/helper_functions';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 
-interface MetricCardProps {
+export interface MetricCardProps {
 	title: string;
 	value: number;
 	currency?: string;

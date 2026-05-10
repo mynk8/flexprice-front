@@ -57,7 +57,7 @@ const columns: ColumnData<ImportTask>[] = [
 const ImportExport = () => {
 	const [drawerOpen, setdrawerOpen] = useState(false);
 	const { limit, offset, page } = usePagination();
-	const [activeTask, setactiveTask] = useState();
+	const [activeTask, setactiveTask] = useState<string | undefined>();
 
 	useEffect(() => {
 		if (!drawerOpen) {

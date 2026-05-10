@@ -289,7 +289,7 @@ const InvoicesPage = () => {
 			},
 			{
 				title: 'Amount',
-				render: (row) => <span>{`${getCurrencySymbol(row.currency)}${row.amount_due}`}</span>,
+				render: (row: Invoice) => <span>{`${getCurrencySymbol(row.currency)}${row.amount_due}`}</span>,
 			},
 			{
 				title: 'Invoice Status',

@@ -50,7 +50,7 @@ export const getPaymentStatusChip = (status: string) => {
 const InvoiceTable: FC<Props> = ({ data }) => {
 	const navigate = useNavigate();
 
-	const columns: ColumnData[] = [
+	const columns: ColumnData<Invoice>[] = [
 		{
 			title: 'Invoice Number',
 			render: (row: Invoice) =>

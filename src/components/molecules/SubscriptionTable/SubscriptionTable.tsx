@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { ActionButton, Chip, Tooltip } from '@/components/atoms';
-import FlexpriceTable, { ColumnData } from '../Table';
+import FlexpriceTable from '../Table/Table';
 import formatDate from '@/utils/common/format_date';
 import { Subscription, SUBSCRIPTION_STATUS } from '@/models/Subscription';
 import { useNavigate } from 'react-router';
@@ -36,36 +36,37 @@ const SubscriptionTable: FC<Props> = ({ data, onEdit }) => {
 	const navigate = useNavigate();
 	const [cancelSubscriptionId, setCancelSubscriptionId] = useState<string | null>(null);
 
-	const columns: ColumnData<SubscriptionResponse>[] = [
+	const columns = [
 		{
 			title: 'Customer',
-			render: (row) => (
+			render: (row: SubscriptionResponse) => (
 				<RedirectCell redirectUrl={`${RouteNames.customers}/${row.customer_id}`}>{row.customer?.name || row.customer_id}</RedirectCell>
 			),
 		},
 		{
 			title: 'Plan',
-			render: (row) => <RedirectCell redirectUrl={`${RouteNames.plan}/${row.plan_id}`}>{row.plan?.name || row.plan_id}</RedirectCell>,
+			render: (row: SubscriptionResponse) => (
+				<RedirectCell redirectUrl={`${RouteNames.plan}/${row.plan_id}`}>{row.plan?.name || row.plan_id}</RedirectCell>
+			),
 		},
-
 		{
 			title: 'Status',
-			render: (row) => {
+			render: (row: SubscriptionResponse) => {
 				const label = getSubscriptionStatusChip(row.subscription_status);
 				return label;
 			},
 		},
 		{
 			title: 'Start Date',
-			render: (row) => formatDate(row.start_date),
+			render: (row: SubscriptionResponse) => formatDate(row.start_date),
 		},
 		{
 			title: 'Renewal Date',
-			render: (row) => formatDate(row.current_period_end),
+			render: (row: SubscriptionResponse) => formatDate(row.current_period_end),
 		},
 		{
-			fieldVariant: 'interactive',
-			render: (row) => {
+			fieldVariant: 'interactive' as const,
+			render: (row: SubscriptionResponse) => {
 				if (isInheritedSubscription(row)) {
 					return (
 						<Tooltip delayDuration={0} content='Inherited subscriptions are read-only. Make changes on the parent subscription.'>

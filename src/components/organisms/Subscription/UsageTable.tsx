@@ -7,14 +7,20 @@ export interface UsageTableProps {
 	data: SubscriptionUsage;
 }
 
+interface UsageRow {
+	name: string;
+	quantity: number;
+	amount: string;
+}
+
 const UsageTable: FC<UsageTableProps> = ({ data }) => {
-	const mappedData = (data?.charges ?? []).map((usage) => ({
+	const mappedData: UsageRow[] = (data?.charges ?? []).map((usage) => ({
 		name: usage.meter_display_name,
 		quantity: usage.quantity,
 		amount: usage.display_amount,
 	}));
 
-	const columns: ColumnData[] = [
+	const columns: ColumnData<UsageRow>[] = [
 		{
 			fieldName: 'name',
 			title: 'Feature Name',

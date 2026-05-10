@@ -4,7 +4,9 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { ArrowUpDown, GripVertical, Trash2, X } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import { Combobox, Button, Select } from '@/components/atoms';
+import { Combobox } from '@/components/atoms/Combobox';
+import Button from '@/components/atoms/Button/Button';
+import Select from '@/components/atoms/Select/Select';
 import { SortOption, SortDirection } from '@/types/common/QueryBuilder';
 import { sanitizeSortConditions } from '@/types/formatters/QueryBuilder';
 interface Props {

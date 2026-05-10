@@ -1,10 +1,14 @@
 import { NODE_ENV, NodeEnv } from '@/types';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 
 const isSelfHosted = NODE_ENV === NodeEnv.SELF_HOSTED;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const shouldUseMockClient = isSelfHosted || import.meta.env.MODE === 'test' || !supabaseUrl || !supabaseKey;
+
 // Create a mock client for self-hosted mode
-const createMockClient = () => {
-	return {
+const createMockClient = (): SupabaseClient =>
+	({
 		auth: {
 			signIn: async () => ({ user: null, error: null }),
 			signOut: async () => ({ error: null }),
@@ -17,13 +21,8 @@ const createMockClient = () => {
 			update: async () => ({ data: null, error: null }),
 			delete: async () => ({ data: null, error: null }),
 		}),
-	};
-};
+	}) as unknown as SupabaseClient;
 
-// Use real Supabase client only if not in self-hosted mode
-const supabaseUrl = isSelfHosted ? '' : import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseKey = isSelfHosted ? '' : import.meta.env.VITE_SUPABASE_ANON_KEY || '';
-
-const supabase = isSelfHosted ? (createMockClient() as any) : createClient(supabaseUrl, supabaseKey);
+const supabase = shouldUseMockClient ? createMockClient() : createClient(supabaseUrl, supabaseKey);
 
 export default supabase;

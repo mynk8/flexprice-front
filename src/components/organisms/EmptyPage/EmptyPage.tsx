@@ -3,7 +3,6 @@ import { FC, ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { ApiDocsContent } from '@/components/molecules/ApiDocs/ApiDocs';
 import { motion } from 'framer-motion';
-import { TutorialItem } from '@/pages';
 import { cn } from '@/lib/utils';
 
 interface EmptyStateCardItem {
@@ -17,6 +16,13 @@ interface EmptyStateCardItem {
 export interface CardItem {
 	imageUrl?: string;
 	heading?: string;
+	description?: string;
+	onClick?: () => void;
+}
+
+export interface TutorialItem {
+	imageUrl?: string;
+	title?: string;
 	description?: string;
 	onClick?: () => void;
 }
