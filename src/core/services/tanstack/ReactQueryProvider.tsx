@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { PropsWithChildren, createContext, useContext, useState } from 'react';
+import { createQueryClientConfig } from './queryConfig';
 
 interface LoadingContextType {
 	isLoading: boolean;
@@ -14,22 +15,7 @@ export const useGlobalLoading = () => {
 	return context;
 };
 
-export const queryClient = new QueryClient({
-	defaultOptions: {
-		queries: {
-			staleTime: 0,
-			refetchOnWindowFocus: false,
-			refetchOnMount: false,
-			refetchOnReconnect: false,
-			refetchInterval: false,
-			refetchIntervalInBackground: false,
-			gcTime: 0,
-		},
-		mutations: {
-			retry: false,
-		},
-	},
-});
+export const queryClient = new QueryClient(createQueryClientConfig());
 
 export const refetchQueries = async (queryKeys?: string | string[]) => {
 	const keys = typeof queryKeys === 'string' ? [queryKeys] : (queryKeys ?? []);

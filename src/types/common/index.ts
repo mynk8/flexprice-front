@@ -13,3 +13,6 @@ export type { Filters } from './Filters';
 // Currency and Price Unit Selector types
 export type { CurrencyOption, PriceUnitOption, CurrencyPriceUnitOption, CurrencyPriceUnitSelection } from './PriceUnitSelector';
 export { currencyToOption, priceUnitToOption, isCurrencyOption, isPriceUnitOption } from './PriceUnitSelector';
+
+// Table types
+export type { ColumnData, FlexpriceTableProps, TablePaginationConfig, TableSortState, TableVirtualizationConfig } from './Table';

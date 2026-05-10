@@ -3,7 +3,18 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { ArrowUpDown, Search } from 'lucide-react';
 import { ReactNode } from 'react';
 
-// Define more comprehensive filter and configuration types
+// ─── Toolbar-specific filter state ────────────────────────────────────────────
+// This shape is scoped to the Toolbar UI — search + sort only.
+// Do NOT conflate with RouteFilterState from the store; they have different shapes.
+
+export interface ToolbarFilterState {
+	searchQuery: string;
+	sortBy?: string;
+	sortDirection?: 'asc' | 'desc';
+}
+
+// ─── Config Interfaces ────────────────────────────────────────────────────────
+
 export interface FilterOption {
 	key: string;
 	label: string;
@@ -25,16 +36,12 @@ export interface ToolbarConfig {
 	customActions?: ReactNode[];
 }
 
-export interface FilterState {
-	searchQuery: string;
-	sortBy?: string;
-	sortDirection?: 'asc' | 'desc';
-}
+// ─── Component ─────────────────────────────────────────────────────────────────
 
 interface ToolbarProps {
 	config: ToolbarConfig;
-	filters: FilterState;
-	onFilterChange: (filterState: Partial<FilterState>) => void;
+	filters: ToolbarFilterState;
+	onFilterChange: (filterState: Partial<ToolbarFilterState>) => void;
 }
 
 // TODO: Deprecate this component and use QueryBuilder instead
