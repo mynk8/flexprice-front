@@ -1,5 +1,5 @@
 import { Button, Page, ShortPagination, SectionHeader } from '@/components/atoms';
-import { ColumnData, DataTable, SecretKeyDrawer, ApiDocsContent } from '@/components/molecules';
+import { ColumnData, DataTable, SecretKeyDrawer, ApiDocsContent, EmptyState } from '@/components/molecules';
 import SecretKeysApi from '@/api/SecretKeysApi';
 import { useQuery } from '@tanstack/react-query';
 import { SecretKey } from '@/models/SecretKey';
@@ -8,8 +8,6 @@ import { formatDateShort } from '@/utils/common/helper_functions';
 import { Plus, Loader, TrashIcon, User2, Bot, LucideIcon, Eye, ShieldCheck, EyeOff, PencilIcon } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { EmptyPage } from '@/components/organisms';
-import GUIDES from '@/constants/guides';
 import ActionButton from '@/components/atoms/ActionButton/ActionButton';
 
 // Utility function to format permissions for display
@@ -201,18 +199,14 @@ const DeveloperPage = () => {
 
 			{/* API Keys Section */}
 			{secretKeys?.items.length === 0 && (
-				<EmptyPage
-					heading='API Keys'
-					onAddClick={handleAddSecretKey}
-					emptyStateCard={{
-						heading: 'Generate A Secret Key',
-						description: 'Generate a secret key to authenticate API requests and secure access.',
-						buttonLabel: 'Create Secret Key',
-						buttonAction: handleAddSecretKey,
-					}}
-					tutorials={GUIDES.secrets.tutorials}
-					tags={['secrets']}
-				/>
+				<Page heading='API Keys' headingCTA={<Button onClick={handleAddSecretKey}>Add</Button>}>
+					<EmptyState
+						heading='Generate A Secret Key'
+						description='Generate a secret key to authenticate API requests and secure access.'
+						buttonLabel='Create Secret Key'
+						buttonAction={handleAddSecretKey}
+					/>
+				</Page>
 			)}
 			{(secretKeys?.items.length || 0) > 0 && (
 				<Page>

@@ -1,10 +1,9 @@
 import { Loader, Page } from '@/components/atoms';
-import { ApiDocsContent } from '@/components/molecules/ApiDocs/ApiDocs';
+import { ApiDocsContent, EmptyState } from '@/components/molecules';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { AppPortal } from 'svix-react';
 import 'svix-react/style.css';
-import { EmptyPage } from '@/components/organisms';
 import { useMemo } from 'react';
 import useEnvironment from '@/hooks/useEnvironment';
 import { PREFETCH_REGISTRY, PrefetchQueryKey } from '@/config/prefetchConfig';
@@ -53,14 +52,11 @@ const WebhookDashboard = () => {
 		toast.error(`Error fetching webhook dashboard: ${error?.message || 'Unknown error'}`);
 		return (
 			<Page className='h-full w-full' heading='Webhooks'>
-				<ApiDocsContent tags={['Webhooks']} />
-				<EmptyPage
-					heading='Webhooks'
-					emptyStateCard={{
-						heading: 'Unable to Load Webhooks',
-						description: 'There was an error loading the webhook dashboard. Please try refreshing the page.',
-					}}
+				<EmptyState
+					heading='Unable to Load Webhooks'
+					description='There was an error loading the webhook dashboard. Please try refreshing the page.'
 				/>
+				<ApiDocsContent tags={['Webhooks']} />
 			</Page>
 		);
 	}
@@ -68,14 +64,8 @@ const WebhookDashboard = () => {
 	if (!data?.svix_enabled) {
 		return (
 			<Page className='h-full w-full' heading='Webhooks'>
+				<EmptyState heading='Webhooks' description='Webhooks are not enabled. Please contact support to enable webhooks.' />
 				<ApiDocsContent tags={['Webhooks']} />
-				<EmptyPage
-					heading='Webhooks'
-					emptyStateCard={{
-						heading: 'Webhooks',
-						description: 'Webhooks are not enabled. Please contact support to enable webhooks.',
-					}}
-				/>
 			</Page>
 		);
 	}

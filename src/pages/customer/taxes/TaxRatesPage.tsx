@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { Page, Spacer, Loader, ShortPagination, AddButton } from '@/components/atoms';
-import { ApiDocsContent } from '@/components/molecules';
+import { ApiDocsContent, EmptyState } from '@/components/molecules';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import usePagination from '@/hooks/usePagination';
 import TaxApi from '@/api/TaxApi';
-import { EmptyPage } from '@/components/organisms';
-import GUIDES from '@/constants/guides';
 import TaxTable from '@/components/molecules/TaxTable/TaxTable';
 import TaxDrawer from '@/components/molecules/TaxDrawer/TaxDrawer';
 import { TaxRateResponse } from '@/types/dto/tax';
@@ -53,24 +51,21 @@ const TaxPage = () => {
 
 	if ((taxData?.items ?? []).length === 0) {
 		return (
-			<EmptyPage
-				heading='Tax Rates'
-				tags={['Taxes', 'Tax', 'Tax Rates']}
-				emptyStateCard={{
-					heading: 'Create Your First Tax Rate',
-					description: 'Set up tax rates to automatically calculate taxes on invoices and ensure compliance with local regulations.',
-					buttonLabel: 'Create Tax Rate',
-					buttonAction: handleCreateNew,
-				}}
-				tutorials={GUIDES.taxes.tutorials}
-				onAddClick={handleCreateNew}>
+			<Page heading='Tax Rates' headingCTA={<AddButton onClick={handleCreateNew} />}>
+				<EmptyState
+					heading='Create Your First Tax Rate'
+					description='Set up tax rates to automatically calculate taxes on invoices and ensure compliance with local regulations.'
+					buttonLabel='Create Tax Rate'
+					buttonAction={handleCreateNew}
+				/>
+				<ApiDocsContent tags={['Taxes', 'Tax', 'Tax Rates']} />
 				<TaxDrawer
 					data={activeTax as TaxRate | null}
 					open={taxDrawerOpen}
 					onOpenChange={setTaxDrawerOpen}
 					refetchQueryKeys={['fetchTaxRates']}
 				/>
-			</EmptyPage>
+			</Page>
 		);
 	}
 

@@ -1,12 +1,10 @@
 import { Page, Spacer, Loader, ShortPagination } from '@/components/atoms';
 import { CreditNoteTable } from '@/components/molecules/CreditNoteTable';
-import { ApiDocsContent } from '@/components/molecules';
+import { ApiDocsContent, EmptyState } from '@/components/molecules';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import usePagination from '@/hooks/usePagination';
 import CreditNoteApi from '@/api/CreditNoteApi';
-import { EmptyPage } from '@/components/organisms';
-import GUIDES from '@/constants/guides';
 
 const CreditNotesPage = () => {
 	const { limit, offset, page } = usePagination();
@@ -38,15 +36,10 @@ const CreditNotesPage = () => {
 
 	if ((creditNoteData?.items ?? []).length === 0) {
 		return (
-			<EmptyPage
-				heading='Credit Notes'
-				tags={['Credit Notes']}
-				tutorials={GUIDES.creditNotes?.tutorials || []}
-				emptyStateCard={{
-					heading: 'Issue A Credit Note',
-					description: 'Add a credit note to adjust or refund customer invoices.',
-				}}
-			/>
+			<Page heading='Credit Notes'>
+				<EmptyState heading='Issue A Credit Note' description='Add a credit note to adjust or refund customer invoices.' />
+				<ApiDocsContent tags={['Credit Notes']} />
+			</Page>
 		);
 	}
 

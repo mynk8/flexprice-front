@@ -1,5 +1,5 @@
 import { Button, Page, ShortPagination, SectionHeader } from '@/components/atoms';
-import { ColumnData, DataTable, ApiDocsContent } from '@/components/molecules';
+import { ColumnData, DataTable, ApiDocsContent, EmptyState } from '@/components/molecules';
 import { UserApi } from '@/api/UserApi';
 import { useQuery } from '@tanstack/react-query';
 import { User } from '@/models';
@@ -8,7 +8,6 @@ import { formatDateShort } from '@/utils/common/helper_functions';
 import { Plus, Loader, Bot } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { EmptyPage } from '@/components/organisms';
 import ServiceAccountDrawer from '@/components/molecules/ServiceAccountDrawer/ServiceAccountDrawer';
 
 const ServiceAccountsPage = () => {
@@ -103,17 +102,14 @@ const ServiceAccountsPage = () => {
 
 			{/* Service Accounts Section */}
 			{serviceAccountsResponse?.items.length === 0 && (
-				<EmptyPage
-					heading='Service Accounts'
-					onAddClick={handleAddServiceAccount}
-					emptyStateCard={{
-						heading: 'Create A Service Account',
-						description: 'Create a service account to manage programmatic access with specific roles and permissions.',
-						buttonLabel: 'Create Service Account',
-						buttonAction: handleAddServiceAccount,
-					}}
-					tags={['Users']}
-				/>
+				<Page heading='Service Accounts' headingCTA={<Button onClick={handleAddServiceAccount}>Add</Button>}>
+					<EmptyState
+						heading='Create A Service Account'
+						description='Create a service account to manage programmatic access with specific roles and permissions.'
+						buttonLabel='Create Service Account'
+						buttonAction={handleAddServiceAccount}
+					/>
+				</Page>
 			)}
 			{(serviceAccountsResponse?.items.length || 0) > 0 && (
 				<Page>
